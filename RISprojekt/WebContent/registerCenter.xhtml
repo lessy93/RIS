@@ -52,10 +52,10 @@ type="text/javascript"></script>
 				<p:inputText id="lokacija" value="#{center.lokacija}" required="true" requiredMessage="Vnesite lokacijo!"/>	
 				<p:message for="lokacija" class="error_message"></p:message> 
 				
-				<p:gmap center="41.381542, 2.122893" zoom="15" type="hybrid" style="width:600px;height:400px" />
+				
 
 				
-				<h:commandButton value="Registracija" actionListener="#{uporabnik.dodajUporabnika}" />
+				<h:commandButton value="Registracija" actionListener="#{center.dodajCenter()}" />
 	          	    	
 				</h:panelGrid>		
 			</h:form>

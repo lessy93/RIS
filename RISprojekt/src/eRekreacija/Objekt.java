@@ -16,6 +16,7 @@ public class Objekt {
 	private String cena_Objekta;
 	private SportniCenter sportniCenter;
 	private TipSporta tipSporta;
+	
 	public int getId_Objekta() {
 		return id_Objekta;
 	}

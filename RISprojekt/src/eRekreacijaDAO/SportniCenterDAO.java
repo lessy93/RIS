@@ -43,8 +43,15 @@ static DataSource baza;
 			st.setFloat(5, sportniCenter.getMapsLat());
 			st.setFloat(6, sportniCenter.getMapsLng());
 			
+			
+			
 		
 			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs.next()) {
+				sportniCenter.setId_SportniCenter(rs.getInt(1));
+				System.out.println("Id vnosa: " + rs.getInt(1));
+			}
 		}catch(Exception e){
 			System.out.println("Napaka! ShraniSportniCenter!" + e.toString());
 		} finally{				

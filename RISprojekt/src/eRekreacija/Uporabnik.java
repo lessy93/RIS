@@ -19,7 +19,7 @@ public class Uporabnik {
 	private String email;
 	private String geslo;
 	private Boolean aktiven_Uporabnik;
-	private SportniCenter sportniCenter= new SportniCenter();
+	private SportniCenter sportniCenter;
 	private boolean status_admin= false;
 	
 	
@@ -46,7 +46,7 @@ public class Uporabnik {
 	public void dodajUporabnika() throws Exception{
 		try{
 		UporabnikDAO uporDAO= new UporabnikDAO(baza);
-		//sportniCenter= new SportniCenter();
+		sportniCenter= new SportniCenter();
 		if(status_admin==true){
 			sportniCenter.dodajCenter(); 
 			System.out.println("Novi center");

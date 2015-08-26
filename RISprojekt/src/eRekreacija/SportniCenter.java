@@ -43,12 +43,18 @@ public class SportniCenter {
 		try{
 		SportniCenterDAO centerDAO= new SportniCenterDAO(baza);
 		
-		System.out.println("Centeradasdsafs:" + naziv_SportniCenter);
+		System.out.println("Center:" + naziv_SportniCenter);
 		noviCenter= new SportniCenter(id_SportniCenter, naziv_SportniCenter, opis_SportniCenter, lokacija, 1, 1, true);
 		System.out.println("Center:"+ noviCenter.getNaziv_SportniCenter()+" "+ noviCenter.lokacija);
 		centerDAO.shraniSportniCenter(noviCenter);
 		
+		
 		System.out.println("Center dodan!");
+		System.out.println(noviCenter.toString());
+		
+	
+		
+		
 		FacesMessage message = new FacesMessage("Registracija uspešna! ");
         FacesContext.getCurrentInstance().addMessage(null, message);
      
