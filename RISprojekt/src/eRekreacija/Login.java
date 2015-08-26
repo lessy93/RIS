@@ -20,7 +20,7 @@ import eRekreacijaDAO.UporabnikDAO;
  
 @ManagedBean(name = "loginBean")
 @SessionScoped
-public class LoginBean implements Serializable {
+public class Login implements Serializable {
  
 	/**
 	 * 
@@ -64,6 +64,8 @@ public class LoginBean implements Serializable {
             session.setAttribute("uporabnik", uporabnik);
             System.out.println("sesion id: "+session.getId());
             FacesMessage message = new FacesMessage("Prijava uspešna! ");
+            
+            
             FacesContext.getCurrentInstance().addMessage(null, message);
             FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml"); 
            

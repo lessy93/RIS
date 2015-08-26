@@ -1,9 +1,12 @@
 package eRekreacija;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.sql.DataSource;
 
@@ -46,22 +49,26 @@ public class Uporabnik {
 	public void dodajUporabnika() throws Exception{
 		try{
 		UporabnikDAO uporDAO= new UporabnikDAO(baza);
-		sportniCenter= new SportniCenter();
-		if(status_admin==true){
-			sportniCenter.dodajCenter(); 
-			System.out.println("Novi center");
-		}else{
-			sportniCenter.setId_SportniCenter(1);;
-			System.out.println("Default center!");
-		}
-		
-		
+			
 	
-		Uporabnik upor= new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, sportniCenter );
+		SportniCenter noviSportniCenter= new SportniCenter();
+		noviSportniCenter.setId_SportniCenter(1);
+		
+		Uporabnik upor= new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviSportniCenter );
+		System.out.println("Uporabnik1111:"+ upor.toString());
 		uporDAO.shraniUporabnika(upor);
 		System.out.println("Uporabnik:"+ upor);
 		System.out.println("Uporabnik dodan!");
 		FacesMessage message = new FacesMessage("Registracija uspešna! ");
+		
+		ExternalContext context = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		try {
+			context.redirect("profile.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
         FacesContext.getCurrentInstance().addMessage(null, message);
 		}catch(Exception e){
 			System.out.println("Napaka! dodaj Uporabnika!"+ e.toString());

@@ -20,24 +20,24 @@ type="text/javascript"></script>
 			<h:panelGrid columns="3" border="0">
 			
 				<p:outputLabel for="ime" value="Ime:"/>
-				<p:inputText id="ime" value="#{uporabnik.ime}" required="true" requiredMessage="Vnesite ime!"/>
+				<p:inputText id="ime" value="#{center.ime }" required="true" requiredMessage="Vnesite ime!"/>
  				<p:message for="ime" class="error_message"></p:message>
 				
 				<p:outputLabel for="priimek" value="Priimek:"/>
-				<p:inputText id="priimek" value="#{uporabnik.priimek}" required="true" requiredMessage="Vnesite priimek!"/>
+				<p:inputText id="priimek" value="#{center.priimek}" required="true" requiredMessage="Vnesite priimek!"/>
 				<p:message for="priimek" class="error_message"></p:message> 
 				
 				<p:outputLabel for="email" value="Email:" />
-				<p:inputText id="email" value="#{uporabnik.email}" required="true" requiredMessage="Vnesite email!"/>
+				<p:inputText id="email" value="#{center.email}" required="true" requiredMessage="Vnesite email!"/>
 				<p:message for="email" class="error_message"></p:message> 
 				      
         		<p:outputLabel for="pass1" value="Geslo:" />
-        		<p:password id="pass1" value="#{uporabnik.geslo}"  match="pass2"  label="Geslo 1" required="true"  feedback="true" requiredMessage="Vnesite geslo!" />
+        		<p:password id="pass1" value="#{center.geslo}"  match="pass2"  label="Geslo 1" required="true"  feedback="true" requiredMessage="Vnesite geslo!" />
  				<p:message for="pass1" class="error_message"></p:message> 
  				
  				
         		<p:outputLabel for="pass2" value="Ponovi Geslo:" />
-       		 	<p:password id="pass2" value="#{uporabnik.geslo}" label="Geslo 2" required="true"  requiredMessage="Ponovno vnesite geslo!"  />
+       		 	<p:password id="pass2" value="#{center.geslo}" label="Geslo 2" required="true"  requiredMessage="Ponovno vnesite geslo!"  />
     			<p:message for="pass2" class="error_message"></p:message>
     			
 				<p:outputLabel>Naziv centra:</p:outputLabel>
