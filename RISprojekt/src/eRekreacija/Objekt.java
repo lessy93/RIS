@@ -1,7 +1,9 @@
 package eRekreacija;
 
+import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.sql.DataSource;
 
 @ManagedBean(name = "objekt")
 @SessionScoped
@@ -17,6 +19,9 @@ public class Objekt {
 	public int getId_Objekta() {
 		return id_Objekta;
 	}
+	@Resource(lookup="java:jboss/datasources/eRekreacija/")
+	DataSource baza;
+	
 	public void setId_Objekta(int id_Objekta) {
 		this.id_Objekta = id_Objekta;
 	}
