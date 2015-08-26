@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" >
+<h:head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</h:head>
+<h:body>
+
+<ui:composition template="commonLayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<h:form id="form">
+				<p:dataScroller   value="#{center.seznamVsehCentrov}" var="tempCenter"   chunkSize="10">	  
+       				<f:facet name="header">
+            			Seznam športnih Centrov
+       				</f:facet>
+ 
+	        	<h:panelGrid columns="3" style="width:90%; padding-left:100px;" border="0" columnClasses="logo,detail">
+	        		
+	        		<f:facet name="header">                   		              
+		                    <h:outputText value="#{tempCenter.naziv_SportniCenter}" style="font-weight: bold"/>
+		  			</f:facet>
+		  			
+	            	<p:graphicImage  name="/images/no_image.png" height="190px" />  
+			    
+		            <p:outputPanel >
+		                <h:panelGrid border="0" columns="2" cellpadding="15" width="500px">
+		               
+		                    <h:outputText value="Opis:" />
+		                    <h:outputText value="#{tempCenter.opis_SportniCenter}" style="font-weight: bold"/>
+		 
+		                    <h:outputText value="Lokacija:" />
+		                    <h:outputText value="#{tempCenter.lokacija}" style="font-weight: bold"/>
+			               	  	<f:facet name="footer">
+			               	  	<p:commandButton  type="submit" value="Podrobnosti" icon="ui-icon-info" update=":form:centerDetail" oncomplete="PF('centerDialog').show()" title="Podrobnosti"  style="float:center; margin-right:10px">
+		            				<f:setPropertyActionListener value="#{tempCenter}" target="#{center.izbraniSportniCenter}" />
+		            			
+		     				    </p:commandButton>
+								</f:facet>
+		                </h:panelGrid>
+		                      		
+		            </p:outputPanel>      
+		            	<h:panelGrid border="0" columns="1" cellpadding="10">
+		              		<f:facet name="header"> 
+            					Tipi športov 
+         					</f:facet> 
+	
+
+		                </h:panelGrid>   
+		                  
+	       		</h:panelGrid>
+	       		 <p:separator />
+	   		</p:dataScroller>
+			    <p:dialog width="300px"  header="#{center.naziv_SportniCenter}" widgetVar="centerDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true">
+			        <p:outputPanel  id="centerDetail" style="text-align:center;">
+			            <p:panelGrid   columns="2" rendered="#{not empty center.izbraniSportniCenter}" columnClasses="label,value">
+			                <f:facet name="header">
+			                   <p:graphicImage name="/images/no_image.png" height="150px" />  
+			                </f:facet>
+			                <h:outputText value="Naziv:" />
+			                <h:outputText value="#{center.izbraniSportniCenter.naziv_SportniCenter}" style="font-weight: bold"/>
+			 
+			                <h:outputText value="Opis:" />
+			                <h:outputText value="#{center.izbraniSportniCenter.opis_SportniCenter}" style="font-weight: bold"/>
+			 
+			             	<h:outputText value="Lokacija:" />
+			                <h:outputText value="#{center.izbraniSportniCenter.lokacija}" style="font-weight: bold"/>
+			                <h:outputText value="id" />
+			                <h:outputText value="#{center.izbraniSportniCenter.id_SportniCenter}" />
+			            </p:panelGrid>
+			        </p:outputPanel>
+			    </p:dialog>		
+			</h:form>		
+		</f:view>
+	</ui:define>	
+</ui:composition>
+</h:body>
+</html>
+
+
+			

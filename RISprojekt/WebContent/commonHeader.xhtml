@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+	<html
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui" >
+	<h:head>
+	<meta charset="UTF-8"/>
+
+	</h:head>
+	<h:body>
+	    <ui:composition>
+ 			<h:outputStylesheet library="css" name="styles.css" />
+			<p:commandLink action="index.xhtml">
+			<p:graphicImage name="/images/logo.jpg" height="150px" alt="logo"  ></p:graphicImage>
+			</p:commandLink>
+			<h:form id="formMenu">  
+ 
+<!--   rendered="#{loginBean.username==null}" -->
+    <p:menubar>
+    	<p:menuitem value="Domov" url="index.xhtml" icon="ui-icon-home"  />
+    	<p:menuitem value="Iskanje" url="search.xhtml" icon="ui-icon-search"  />
+    	<p:menuitem value="Rezervacije" url="reservations.xhtml" icon="ui-icon-document"  />
+    	<p:menuitem value="Registracija"  url="register.xhtml"  icon="ui-icon-pencil" />
+    	<p:menuitem value="Registracija centra"  url="registerCenter.xhtml"  icon="ui-icon-pencil" />
+    	<p:menuitem value="Profil" url="profile.xhtml" icon="ui-icon-person" />
+  		<p:menuitem value="Prijava" url="login.xhtml" icon="ui-icon-extlink" />
+  		<p:menuitem value="Moji objekti" url="dodajObjekt.xhtml" icon="ui-icon-person" />
+  
+      		
+            <p:menuitem  type="button" value="Odjava" action="#{loginBean.logout}" icon="ui-icon-extlink" />
+     	 <p:menuitem>
+     	      	  <p:outputLabel value="#{username}" ></p:outputLabel>
+     	 </p:menuitem>
+
+      
+        <p:separator />
+    </p:menubar>
+
+       
+    		</h:form>	      
+		</ui:composition>
+    </h:body>
+</html>

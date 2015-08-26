@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+body { 
+    background-color:#E2E2FF 
+}
+
+.error_message{
+	
+	font-style: italic;
+	color: red;
+}
+
+.buttonPanel {
+     text-align: center;
+     width:50%;
+     margin:0px auto;
+}
+
+.left {
+    text-align: left;
+}
+ 
+.center {
+     text-align: center;
+}
+ 
+.right {
+     text-align: right;
+}

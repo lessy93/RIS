@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" >
+<head>
+<script src="http://maps.google.com/maps/api/js?sensor=true|false"
+type="text/javascript"></script> 
+<meta charset="UTF-8"/>
+<title>Registracija</title>
+   
+
+</head>
+<body>
+<ui:composition template="commonLayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+			<h:form>
+			<h:panelGrid columns="3" border="0">
+			
+				<p:outputLabel for="ime" value="Ime:"/>
+				<p:inputText id="ime" value="#{uporabnik.ime}" required="true" requiredMessage="Vnesite ime!"/>
+ 				<p:message for="ime" class="error_message"></p:message>
+				
+				<p:outputLabel for="priimek" value="Priimek:"/>
+				<p:inputText id="priimek" value="#{uporabnik.priimek}" required="true" requiredMessage="Vnesite priimek!"/>
+				<p:message for="priimek" class="error_message"></p:message> 
+				
+				<p:outputLabel for="email" value="Email:" />
+				<p:inputText id="email" value="#{uporabnik.email}" required="true" requiredMessage="Vnesite email!"/>
+				<p:message for="email" class="error_message"></p:message> 
+				      
+        		<p:outputLabel for="pass1" value="Geslo:" />
+        		<p:password id="pass1" value="#{uporabnik.geslo}"  match="pass2"  label="Geslo 1" required="true"  feedback="true" requiredMessage="Vnesite geslo!" />
+ 				<p:message for="pass1" class="error_message"></p:message> 
+ 				
+ 				
+        		<p:outputLabel for="pass2" value="Ponovi Geslo:" />
+       		 	<p:password id="pass2" value="#{uporabnik.geslo}" label="Geslo 2" required="true"  requiredMessage="Ponovno vnesite geslo!"  />
+    			<p:message for="pass2" class="error_message"></p:message>
+    			
+				<p:outputLabel>Naziv centra:</p:outputLabel>
+				<p:inputText id="naziv" value="#{center.naziv_SportniCenter}" required="true" requiredMessage="Vnesite naziv Sportnega Centra!"/>
+ 				<p:message for="naziv" class="error_message"></p:message>
+				
+				<p:outputLabel>Opis centra:</p:outputLabel>
+				<p:inputTextarea id="opis" value="#{center.opis_SportniCenter}" required="true" requiredMessage="Vnesite opis!"></p:inputTextarea>
+				<p:message for="opis" class="error_message"></p:message> 
+				
+				<p:outputLabel>Lokacija centra: </p:outputLabel>
+				<p:inputText id="lokacija" value="#{center.lokacija}" required="true" requiredMessage="Vnesite lokacijo!"/>	
+				<p:message for="lokacija" class="error_message"></p:message> 
+				
+				<p:gmap center="41.381542, 2.122893" zoom="15" type="hybrid" style="width:600px;height:400px" />
+
+				
+				<h:commandButton value="Registracija" actionListener="#{uporabnik.dodajUporabnika}" />
+	          	    	
+				</h:panelGrid>		
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</body>
+</html>

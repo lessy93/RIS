@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" >
+<head>
+<meta charset="UTF-8"/>
+<title>Registracija</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	
+    $("#status_admin").change(function(){
+        $("prikaz").hide();
+    });
+    $("#status_admin").click(function(){
+        $("prikaz").show();
+    });
+});
+</script>
+
+</head>
+<body>
+<ui:composition template="commonLayout.xhtml">
+	<ui:define name="content">
+		<f:view>
+		
+			<h:form  id="registracija">
+			<p:growl id="messages" showDetail="true" />
+			<p:panelGrid  columns="3" border="0"  styleClass="buttonPanel" columnClasses="left,middle,right" >
+				
+				<f:facet name="header">
+					Registracija
+				</f:facet>
+				<p:outputLabel for="ime" value="Ime:"/>
+				<p:inputText id="ime" value="#{uporabnik.ime}" required="true" requiredMessage="Vnesite ime!"/>
+ 				<p:message for="ime" class="error_message"></p:message>
+				
+				<p:outputLabel for="priimek" value="Priimek:"/>
+				<p:inputText id="priimek" value="#{uporabnik.priimek}" required="true" requiredMessage="Vnesite priimek!"/>
+				<p:message for="priimek" class="error_message"></p:message> 
+				
+				<p:outputLabel for="email" value="Email:" />
+				<p:inputText id="email" value="#{uporabnik.email}" required="true" requiredMessage="Vnesite email!"/>
+				<p:message for="email" class="error_message"></p:message> 
+				      
+        		<p:outputLabel for="pass1" value="Geslo:" />
+        		<p:password id="pass1" value="#{uporabnik.geslo}"  match="pass2"  label="Geslo 1" required="true"  feedback="true" requiredMessage="Vnesite geslo!" />
+ 				<p:message for="pass1" class="error_message"></p:message> 
+ 				
+ 				
+        		<p:outputLabel for="pass2" value="Ponovi Geslo:" />
+       		 	<p:password id="pass2" value="#{uporabnik.geslo}" label="Geslo 2" required="true"  requiredMessage="Ponovno vnesite geslo!"  />
+    			<p:message for="pass2" class="error_message"></p:message> 
+				
+				
+				<h:outputText for="status_admin" value="Ali ste lastnik športnega centra?" />
+        		<p:inputSwitch  id="status_admin" value="#{uporabnik.status_admin}" >
+        		<f:ajax  render="test"></f:ajax>
+        		</p:inputSwitch> 
+        		
+    			<p:message for="status_admin" class="error_message"></p:message>
+    			
+    			
+    			
+    			<p:panel   id="test" rendered="#{uporabnik.status_admin== true}"  >
+    		
+ 				<p:outputLabel for="naziv" value="Naziv:"/>
+				<p:inputText id="naziv" value="#{uporabnik.sportniCenter.naziv_SportniCenter}" required="true" requiredMessage="Vnesite naziv Sportnega Centra!"/>
+ 				<p:message for="naziv" class="error_message"></p:message>
+				
+				<p:outputLabel for="opis" value="Opis:"/>
+				<p:inputTextarea id="opis" value="#{uporabnik.sportniCenter.opis_SportniCenter}" required="true" requiredMessage="Vnesite opis!"/>
+				<p:message for="opis" class="error_message"></p:message> 
+				
+				<p:outputLabel for="lokacija" value="Lokacija:"/>
+				<p:inputText id="lokacija" value="#{uporabnik.sportniCenter.lokacija}" required="true" requiredMessage="Vnesite lokacijo!"/>	
+				<p:message for="lokacija" class="error_message"></p:message> 
+   				
+   				</p:panel>	
+   				
+ 				
+				<f:facet name="footer">
+				<p:commandButton  update="registracija" value="Registracija" actionListener="#{uporabnik.dodajUporabnika}" />
+			
+	          	</f:facet>  	
+				</p:panelGrid>		
+			
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+</body>
+</html>
