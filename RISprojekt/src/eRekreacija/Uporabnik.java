@@ -54,6 +54,8 @@ public class Uporabnik {
 			sportniCenter.setId_SportniCenter(1);;
 			System.out.println("Default center!");
 		}
+		
+		
 	
 		Uporabnik upor= new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, sportniCenter );
 		uporDAO.shraniUporabnika(upor);
