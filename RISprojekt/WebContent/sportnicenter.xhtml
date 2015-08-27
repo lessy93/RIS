@@ -11,12 +11,28 @@
 
 <ui:composition template="commonLayout.xhtml">
 	<ui:define name="content">
-	<f:metadata>
-   		<f:event listener="#{center.getSeznamCentrov}" type="preRenderView"></f:event>
-	</f:metadata>
+	
+						<h:form>
+								<h:dataTable id="table1"
+									value="#{center.isci(id_SportniCenter)}" var="center"
+									border="0">
+									<h:column>
+										<h:outputText value="Naziv: " />
+										<h:outputText value="#{center.naziv_SportniCenter} " />
+									</h:column>
+								</h:dataTable>
+						</h:form>
+	  
+
+	
 		<f:view>
+		
+		<f:metadata>
+			<f:viewParam name="id_SportniCenter" />
+		</f:metadata>
+							
 		<h:form>
-		<h:data  value="#{center.seznamVsehCentrov}" var="seznam">
+		<h:dataTable value="#{center.enCenter}" var="seznam">
 				<h:column>
 						<td><h:outputText value="#{seznam.naziv_SportniCenter}" /></td>
 						<td><h:outputText value="#{seznam.opis_SportniCenter}" /></td>
@@ -24,9 +40,17 @@
 						<td><h:commandButton value="#{seznam.id_SportniCenter}" /></td>						
 					</h:column>
 			</h:dataTable>
-			
+		</h:form>
 		
-		
+		<h:form>
+		<h:dataTable value="#{center.izbraniSportniCenter}" var="dolcenter">
+				<h:column>
+						<td><h:outputText value="#{dolcenter.naziv_SportniCenter}" /></td>
+						<td><h:outputText value="#{dolcenter.opis_SportniCenter}" /></td>
+						<td><h:outputText value="#{dolcenter.lokacija}" /></td>
+						<td><h:commandButton value="#{dolcenter.id_SportniCenter}" /></td>						
+					</h:column>
+			</h:dataTable>
 		</h:form>
 		
 		

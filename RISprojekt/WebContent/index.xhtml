@@ -35,11 +35,13 @@
 		 
 		                    <h:outputText value="Lokacija:" />
 		                    <h:outputText value="#{tempCenter.lokacija}" style="font-weight: bold"/>
+			               	  	
 			               	  	<f:facet name="footer">
-			               	  	<p:commandButton  type="submit" value="Podrobnosti" icon="ui-icon-info" update=":form:centerDetail" oncomplete="PF('centerDialog').show()" title="Podrobnosti"  style="float:center; margin-right:10px">
-		            				<f:setPropertyActionListener value="#{tempCenter}" target="#{center.izbraniSportniCenter}" />
-		            			
-		     				    </p:commandButton>
+			               	  	<h:link outcome="sportnicenter"
+										value="Podrobnosti centra">
+										<f:param name="id_SportniCenter" value="#{tempCenter.id_SportniCenter}" />
+								</h:link>
+
 								</f:facet>
 		                </h:panelGrid>
 		                      		

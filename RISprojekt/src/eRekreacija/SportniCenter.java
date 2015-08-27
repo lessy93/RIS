@@ -35,7 +35,7 @@ public class SportniCenter {
 	private String email;
 	private String geslo;
 	
-	
+	private List<SportniCenter> enCenter;
 	private List<SportniCenter> seznamVsehCentrov= new ArrayList<SportniCenter>();
 	
 	@Resource(lookup="java:jboss/datasources/eRekreacija/")
@@ -101,7 +101,14 @@ public class SportniCenter {
 	
 	public void prikaziIzbraniSportniCenter(int id) throws Exception{
 		SportniCenterDAO scDAO= new SportniCenterDAO(baza);
-		izbraniSportniCenter= scDAO.getCenterById(id);
+		izbraniSportniCenter= scDAO.getCenterByIdEna(id);
+	}
+	
+	public List<SportniCenter> isci(int id_SportniCenter) throws Exception{
+		SportniCenterDAO scDAO= new SportniCenterDAO(baza);
+		System.out.println(id_SportniCenter);
+		enCenter = (List<SportniCenter>) scDAO.getCenterById(id_SportniCenter);
+		return enCenter;
 	}
 	
 	
@@ -322,6 +329,20 @@ public class SportniCenter {
 
 	public void setGeslo(String geslo) {
 		this.geslo = geslo;
+	}
+
+
+
+
+	public List<SportniCenter> getEnCenter() {
+		return enCenter;
+	}
+
+
+
+
+	public void setEnCenter(List<SportniCenter> enCenter) {
+		this.enCenter = enCenter;
 	}
 	
 	

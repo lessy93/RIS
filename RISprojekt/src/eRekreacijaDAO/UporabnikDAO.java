@@ -148,9 +148,9 @@ public class UporabnikDAO {
 			}catch(Exception e){
 				System.out.println("Napaka Connection!");
 			}
-            String sql = "UPDATE uporabnik SET aktiven='0' WHERE idUporabnik = ?";
+            String sql = "UPDATE uporabnik SET aktiven='0' WHERE idUporabnik = 1";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.setInt(1, idUporabnik);
+           // st.setInt(1, idUporabnik);
             st.executeUpdate();
 
         } catch (SQLException e) {
