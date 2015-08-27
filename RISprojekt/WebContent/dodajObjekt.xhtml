@@ -6,20 +6,7 @@
 	xmlns:p="http://primefaces.org/ui" >
 <head>
 <meta charset="UTF-8"/>
-<title>Registracija</title>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-	
-    $("#status_admin").change(function(){
-        $("prikaz").hide();
-    });
-    $("#status_admin").click(function(){
-        $("prikaz").show();
-    });
-});
-</script>
+<title>Dodaj objekt</title>
 
 </head>
 <body>
@@ -27,7 +14,7 @@ $(document).ready(function(){
 	<ui:define name="content">
 		<f:view>
 		
-			<h:form  id="registracija">
+			<h:form  id="dodajObjekt">
 			<p:growl id="messages" showDetail="true" />
 			<p:panelGrid  columns="3" border="0"  styleClass="buttonPanel" columnClasses="left,middle,right" >
 				
@@ -38,13 +25,22 @@ $(document).ready(function(){
 				<p:inputText id="imeObjekta" value="#{objekt.naziv_Objekta}" required="true" requiredMessage="Vnesite ime!"/>
  				<p:message for="imeObjekta" class="error_message"></p:message>
 				
-				<p:outputLabel for="tipObjekta" value="Tip objekta (pokrit):"/>
-
-				<p:radioButton id="tipObjekta" value="#{objekt.tipObjekta}" required="true" requiredMessage="Izberite tip!"/>
+				<p:outputLabel for="tipObjekta" value="Tip objekta:" required="true" requiredMessage="Izberite tip!"/>
+				<h:selectOneRadio id="tipObjekta" value="#{objekt.tipObjekta}" required="true" requiredMessage="Izberite tip!">
+   					<f:selectItem itemValue="Dvorana" itemLabel="Dvorana" />
+   					<f:selectItem itemValue="Na prostem" itemLabel="Na prostem" />	   			
+				</h:selectOneRadio>
 				<p:message for="tipObjekta" class="error_message"></p:message> 
 				
-				<p:outputLabel for="sporti" value="Športi: " />
-				<p:inputText id="sporti" value="#{objekt.tipSporta}" required="true" requiredMessage="Izberi sporte"/>
+				<p:outputLabel for="sporti" value="Ĺ porti: " />
+				<p:selectOneMenu id="sporti" value="#{objekt.tipSporta}"  requiredMessage="Izberite Ĺˇporte!">
+   					<f:selectItem itemValue="1" itemLabel="Nogomet" />
+   					<f:selectItem itemValue="2" itemLabel="Rokomet" />
+   					<f:selectItem itemValue="3" itemLabel="Odbojka" />
+   					<f:selectItem itemValue="4" itemLabel="KoĹˇarka" />
+   					<f:selectItem itemValue="5" itemLabel="Golf" />
+   					<f:selectItem itemValue="6" itemLabel="Tenis" />	   			
+				</p:selectOneMenu>
 				<p:message for="sporti" class="error_message"></p:message> 
 				
 				<p:outputLabel for="opisObjekta" value="Opis objekta:"/>
@@ -58,7 +54,7 @@ $(document).ready(function(){
    				
  				
 				<f:facet name="footer">
-				<p:commandButton  update="registracija" value="Dodaj" actionListener="#{uporabnik.dodajUporabnika}" />
+				<p:commandButton  update="dodajObjekt" value="Dodaj" actionListener="#{objekt.dodajObjekt()}" />
 			
 	          	</f:facet>  	
 				</p:panelGrid>		
