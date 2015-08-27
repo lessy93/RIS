@@ -47,12 +47,14 @@ public class Slike {
 				
 				HttpSession session = Util.getSession();
 				Uporabnik user= (Uporabnik) session.getAttribute("uporabnik");
+				System.out.println("User id:"+user.getId_Uporabnik());
+				System.out.println("User id:"+user.getSportniCenter().getId_SportniCenter());
 	            // Create the statement object
 	            PreparedStatement st = conn.prepareStatement("INSERT INTO slike(naziv_slike, slika,Sportnicenter_idSportnicenter, Uporabnik_idUporabnik)  VALUES (?,?,?,?)");
 	            // Set file data
 	            st.setString(1, "profilna");
 	            st.setBinaryStream(2, file.getInputstream());
-	            st.setInt(3, 1);
+	            st.setInt(3, user.getSportniCenter().getId_SportniCenter() );
 	            st.setInt(4, user.getId_Uporabnik());
 	             
 	            // Insert data to the database
@@ -89,7 +91,7 @@ public class Slike {
 	    
 				
 				
-				String sql ="SELECT * FROM slike WHERE Uporabnil_idUporabnik=?";
+				String sql ="SELECT * FROM slike WHERE Uporabnik_idUporabnik=?";
 				PreparedStatement prst = conn.prepareStatement(sql);
 		        prst.setInt(1, user.getId_Uporabnik());
 		           

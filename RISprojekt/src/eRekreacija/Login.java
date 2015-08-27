@@ -5,6 +5,7 @@
 package eRekreacija;
 
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.Resource;
@@ -28,6 +29,7 @@ public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
+
 	public boolean isLogged=false;
 	
 	@Resource(lookup="java:jboss/datasources/eRekreacija/")
@@ -40,6 +42,12 @@ public class Login implements Serializable {
         System.out.println("ODJAVA USPESNA: ID:"+session.getId());
         FacesMessage message = new FacesMessage("Odjava uspešna! ");
         FacesContext.getCurrentInstance().addMessage(null, message);
+        try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
        
      }
  
@@ -57,7 +65,7 @@ public class Login implements Serializable {
 		if (!uporabnik.equals(null)) {
             // get Http Session and store username
 			username= uporabnik.getEmail();
-			
+		
             HttpSession session = Util.getSession();
             session.setAttribute("username", uporabnik.getEmail());
             session.setAttribute("id_user", uporabnik.getId_Uporabnik());

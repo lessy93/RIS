@@ -21,16 +21,16 @@
     	<p:menuitem value="Domov" url="index.xhtml" icon="ui-icon-home"  />
     	<p:menuitem value="Iskanje" url="search.xhtml" icon="ui-icon-search"  />
     	<p:menuitem value="Rezervacije" url="reservations.xhtml" icon="ui-icon-document"  />
-    	<p:menuitem value="Registracija"  url="register.xhtml"  icon="ui-icon-pencil" />
-    	<p:menuitem value="Registracija centra"  url="registerCenter.xhtml"  icon="ui-icon-pencil" />
-    	<p:menuitem value="Profil" url="profile.xhtml" icon="ui-icon-person" />
-  		<p:menuitem value="Prijava" url="login.xhtml" icon="ui-icon-extlink" />
-  		<p:menuitem value="Moji objekti" url="dodajObjekt.xhtml" icon="ui-icon-person" />
+    	<p:menuitem value="Registracija"  url="register.xhtml" rendered="#{loginBean.username==null}"  icon="ui-icon-pencil" />
+    	<p:menuitem value="Registracija centra"  url="registerCenter.xhtml"  rendered="#{loginBean.username==null}" icon="ui-icon-pencil" />
+    	<p:menuitem value="Profil" url="profile.xhtml" rendered="#{loginBean.username!=null}" icon="ui-icon-person" />
+  		<p:menuitem value="Prijava" url="login.xhtml" rendered="#{loginBean.username==null}" icon="ui-icon-extlink" />
+  		
   
       		
-            <p:menuitem  type="button" value="Odjava" action="#{loginBean.logout}" icon="ui-icon-extlink" />
+            <p:menuitem  type="button" value="Odjava" action="#{loginBean.logout}" rendered="#{loginBean.username!=null}"  icon="ui-icon-extlink" />
      	 <p:menuitem>
-     	      	  <p:outputLabel value="#{username}" ></p:outputLabel>
+     	      	  <p:outputLabel value="#{username}" rendered="#{loginBean.username!=null}" ></p:outputLabel>
      	 </p:menuitem>
 
       
