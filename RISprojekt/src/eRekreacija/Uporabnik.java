@@ -86,6 +86,35 @@ public class Uporabnik {
 		}
 	}
 	
+	public void izbrisiUporabnika() throws Exception{
+		try{
+		UporabnikDAO uporDAO= new UporabnikDAO(baza);
+			
+	
+		
+
+        HttpSession session = Util.getSession();
+        int id= (int) session.getAttribute("id_user");
+		System.out.println("Napaka! izbrisi Uporabnika z id-jem: " + id);	
+        uporDAO.deleteUporabnikById(id);
+    	FacesMessage message = new FacesMessage("Napaka! izbris ni uspel! ");
+		
+		ExternalContext context = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		try {
+			context.redirect("profile.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+        FacesContext.getCurrentInstance().addMessage(null, message);
+		}catch(Exception e){
+			System.out.println("Napaka! izbrisi Uporabnika!"+ e.toString());
+			FacesMessage message = new FacesMessage("izbris ni uspela! Prosimo poskusite ponovno! ");
+	        FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+	}
+	
 	
 
 		

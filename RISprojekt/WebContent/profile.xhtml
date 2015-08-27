@@ -32,8 +32,14 @@
 				<p:outputLabel value="#{uporabnik.email}"></p:outputLabel>
 				
 				
-				<p:outputLabel value="Naslov:"></p:outputLabel>
-				<p:outputLabel value="blabla"></p:outputLabel>
+				<p:outputLabel value="Naslov:" ></p:outputLabel>
+				<p:outputLabel value="#{uporabnik.sportniCenter.naziv_SportniCenter}"></p:outputLabel>
+				
+				<p:outputLabel value="Opis:" ></p:outputLabel>
+				<p:outputLabel value="#{uporabnik.sportniCenter.opis_SportniCenter}"></p:outputLabel>
+				
+				<p:outputLabel value="Lokacija:" ></p:outputLabel>
+				<p:outputLabel value="#{uporabnik.sportniCenter.lokacija}"></p:outputLabel>
 				
 			
 				</h:panelGrid>
@@ -54,7 +60,7 @@
 				<p:column>
 				<h:form id="edit">
     			
-    			<p:commandButton value="Uredi"  actionListener="#" />
+    			<p:commandButton value="Uredi"  url="editprofile.xhtml"  />
 				</h:form>
 				
 				</p:column>
@@ -62,7 +68,7 @@
 					<p:column>
 				<h:form id="delete">
     			
-    			<p:commandButton value="Izbriši"  actionListener="#" />
+    			<p:commandButton value="Izbriši"  actionListener="#{uporabnik.izbrisiUporabnika()}" />
 				</h:form>
 				
 				</p:column>

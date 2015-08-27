@@ -138,8 +138,8 @@ public class UporabnikDAO {
 		return seznamUporabnikov;
 	}
 	
-	public boolean deleteUporabnikById(int idUporabnik) throws Exception {
-        boolean deleted = true;
+	public void deleteUporabnikById(int idUporabnik) throws Exception {
+       
         Connection conn = null;
         try {
         	try {
@@ -148,18 +148,18 @@ public class UporabnikDAO {
 			}catch(Exception e){
 				System.out.println("Napaka Connection!");
 			}
-            String sql = "UPDATE uporabnik SET aktiven='ne' WHERE idUporabnik = ?";
+            String sql = "UPDATE uporabnik SET aktiven='0' WHERE idUporabnik = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, idUporabnik);
             st.executeUpdate();
 
         } catch (SQLException e) {
-            deleted = false;
+        	System.out.println("Napaka!"+ e.toString());
     	} finally {				
 			conn.close();
 		System.out.println("Connection CLOSED!");
 		}     
-        return deleted;
+        
     }
 	
 	public Uporabnik getUporabnikById(int idUporabnika) throws Exception {
