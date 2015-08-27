@@ -52,6 +52,8 @@ public class ObjektDAO {
 		}			
 	}
 
+	
+	
 	public List<Objekt> getSeznamObjektov() throws Exception{
 		List<Objekt> seznamObjektov = new ArrayList<Objekt>();
 		Connection conn=null; 
@@ -62,19 +64,24 @@ public class ObjektDAO {
 			}catch(Exception e){
 				System.out.println("Napaka Connection!");
 			}
-			String sql ="SELECT * FROM objekt o, tipsporta ts WHERE ts.idTipSporta=d.tipsporta_idTipSporta;";
+			String sql ="SELECT * FROM objekt o, tipsporta ts WHERE ts.idTipSporta=o.tipsporta_idTipSporta;";
+			System.out.println("1");
 			PreparedStatement st = conn.prepareStatement(sql);
+			System.out.println("2");
 			ResultSet rs = st.executeQuery();
+			System.out.println("3");
 			while (rs.next()){
 				
 				Objekt tempObjekt = new Objekt();
 				SportniCenter sportniCenter = new SportniCenter();
 				TipSporta tipSporta = new TipSporta();
 				
+				System.out.println("4");
 				sportniCenter.setId_SportniCenter(rs.getInt("sportnicenter_idSportniCenter"));
 				tipSporta.setId_TipSporta(rs.getInt("tipsporta_idTipSporta"));
 				tipSporta.setNaziv_TipSporta(rs.getString("ts.naziv_sporta"));
 				
+				System.out.println("5");
 				tempObjekt.setId_Objekta(rs.getInt("idObjekta"));
 				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
@@ -82,12 +89,60 @@ public class ObjektDAO {
 				tempObjekt.setCena_Objekta(rs.getString("cena_objekta"));
 				tempObjekt.setSportniCenter(sportniCenter);
 				tempObjekt.setTipSporta(tipSporta);
-				
+				System.out.println("6");
 				seznamObjektov.add(tempObjekt);		
 			}
 			
 		}catch (Exception e){
-			System.out.println("Napaka Dvorana list!");
+			System.out.println("Napaka Dvorana list!"+ e.toString());
+		} finally {				
+			conn.close();
+		System.out.println("Connection CLOSED!");
+		} 
+		return seznamObjektov;
+	}
+	
+	public List<Objekt> getObjektiCentra() throws Exception{
+		List<Objekt> seznamObjektov = new ArrayList<Objekt>();
+		Connection conn=null; 
+		try{
+			try {
+				conn= baza.getConnection();
+				System.out.println("Connection OPEN!");
+			}catch(Exception e){
+				System.out.println("Napaka Connection!");
+			}
+			String sql ="SELECT * FROM objekt o WHERE o.Sportnicenter_idSportnicenter= 1";
+			System.out.println("1");
+			PreparedStatement st = conn.prepareStatement(sql);
+			System.out.println("2");
+			ResultSet rs = st.executeQuery();
+			System.out.println("3");
+			while (rs.next()){
+				
+				Objekt tempObjekt = new Objekt();
+				SportniCenter sportniCenter = new SportniCenter();
+				TipSporta tipSporta = new TipSporta();
+				
+				System.out.println("4");
+				sportniCenter.setId_SportniCenter(rs.getInt("sportnicenter_idSportniCenter"));
+				tipSporta.setId_TipSporta(rs.getInt("tipsporta_idTipSporta"));
+				tipSporta.setNaziv_TipSporta(rs.getString("ts.naziv_sporta"));
+				
+				System.out.println("5");
+				tempObjekt.setId_Objekta(rs.getInt("idObjekta"));
+				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
+				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
+				tempObjekt.setOpis_Objekta(rs.getString("opis_objekta"));
+				tempObjekt.setCena_Objekta(rs.getString("cena_objekta"));
+				tempObjekt.setSportniCenter(sportniCenter);
+				tempObjekt.setTipSporta(tipSporta);
+				System.out.println("6");
+				seznamObjektov.add(tempObjekt);		
+			}
+			
+		}catch (Exception e){
+			System.out.println("Napaka Dvorana list!"+ e.toString());
 		} finally {				
 			conn.close();
 		System.out.println("Connection CLOSED!");

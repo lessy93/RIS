@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import eRekreacijaDAO.SportniCenterDAO;
+import eRekreacijaDAO.TipSportaDAO;
 import eRekreacijaDAO.UporabnikDAO;
 
 @ManagedBean(name = "center")
@@ -35,7 +36,7 @@ public class SportniCenter {
 	private String priimek;
 	private String email;
 	private String geslo;
-	
+	private List<TipSporta> tipiSportov;
 	private List<SportniCenter> enCenter;
 	private List<SportniCenter> seznamVsehCentrov= new ArrayList<SportniCenter>();
 	
@@ -82,6 +83,15 @@ public class SportniCenter {
 		return noviCenter;
 	}
 	
+	
+	
+	public List<TipSporta> pridobiSporte() throws Exception{
+		TipSportaDAO tipSportaDAO= new TipSportaDAO(baza);
+		System.out.println(id_SportniCenter);
+		tipiSportov = tipSportaDAO.getSportiZaCenter(id_SportniCenter);
+		return tipiSportov;
+	
+	}
 	
 	
 	
@@ -231,6 +241,16 @@ public class SportniCenter {
 		return seznamVsehCentrov;
 	}
 
+
+
+	public List<TipSporta> getTipiSportov() {
+		return tipiSportov;
+	}
+
+
+	public void setTipiSportov(List<TipSporta> tipiSportov) {
+		this.tipiSportov = tipiSportov;
+	}
 
 
 	public void setSeznamVsehCentrov(List<SportniCenter> seznamVsehCentrov) {

@@ -1,7 +1,10 @@
 package eRekreacija;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -26,8 +29,34 @@ public class Objekt {
 	private SportniCenter sportniCenter= new SportniCenter();
 	private TipSporta tipSporta= new TipSporta();
 	
+	private List<Objekt> seznamVsehObjektov= new ArrayList<Objekt>();
+	
+	private List<Objekt> seznamObjektovCentra= new ArrayList<Objekt>();
+	
 	@Resource(lookup="java:jboss/datasources/eRekreacija/")
 	DataSource baza;
+	
+	@PostConstruct
+	public void init() throws Exception {
+		ObjektDAO oDAO= new ObjektDAO(baza);
+		seznamVsehObjektov= oDAO.getSeznamObjektov();
+	}
+	
+	public void getSeznamObjektov() throws Exception{	
+		ObjektDAO oDAO= new ObjektDAO(baza);
+		seznamVsehObjektov= oDAO.getSeznamObjektov();
+	}
+
+	/*@PostConstruct
+	public void init2() throws Exception {
+		ObjektDAO oDAO= new ObjektDAO(baza);
+		seznamObjektovCentra= oDAO.getObjektiCentra();
+	}
+	public void getObjektiCentra() throws Exception{	
+		ObjektDAO oDAO= new ObjektDAO(baza);
+		seznamObjektovCentra= oDAO.getObjektiCentra();
+	}*/
+	
 	
 
 	public Objekt(int id_Objekta, String naziv_Objekta, String tipObjekta, String opis_Objekta, String cena_Objekta,
@@ -61,16 +90,14 @@ public class Objekt {
 		System.out.println("up!"+ up.toString());
 		
 		
-		System.out.println("tip sporta id!"+ id_TipSporta);
+	/*	System.out.println("tip sporta id!"+ id_TipSporta);
 		System.out.println("naziv! "+ naziv_Objekta);
 		System.out.println("opis! "+ opis_Objekta);
-		System.out.println("tip objekta! "+ tipObjekta);
+		System.out.println("tip objekta! "+ tipObjekta);*/
 		
 		objekt = new Objekt(id_Objekta, naziv_Objekta, tipObjekta, opis_Objekta, cena_Objekta, sportniCenter, tipSporta);
 		
-		System.out.println("Objekt:!"+ objekt.toString());
 		
-		objDAO.shraniObjekt(objekt);
 		System.out.println("Objekt:"+ objekt.toString());
 		System.out.println("Objekt dodan!");
 		FacesMessage message = new FacesMessage("Objekt uspešno dodan! ");
@@ -152,6 +179,22 @@ public class Objekt {
 
 	public void setId_TipSporta(int id_TipSporta) {
 		this.id_TipSporta = id_TipSporta;
+	}
+
+	public List<Objekt> getSeznamVsehObjektov() {
+		return seznamVsehObjektov;
+	}
+
+	public void setSeznamVsehObjektov(List<Objekt> seznamVsehObjektov) {
+		this.seznamVsehObjektov = seznamVsehObjektov;
+	}
+
+	public List<Objekt> getSeznamObjektovCentra() {
+		return seznamObjektovCentra;
+	}
+
+	public void setSeznamObjektovCentra(List<Objekt> seznamObjektovCentra) {
+		this.seznamObjektovCentra = seznamObjektovCentra;
 	}
 	
 }

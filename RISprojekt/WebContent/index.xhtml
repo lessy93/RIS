@@ -35,6 +35,8 @@
 		 
 		                    <h:outputText value="Lokacija:" />
 		                    <h:outputText value="#{tempCenter.lokacija}" style="font-weight: bold"/>
+		                    
+		               
 			               	  	
 			               	  	<f:facet name="footer">
 			               	  	<h:link outcome="sportnicenter"
@@ -49,6 +51,8 @@
 		            	<h:panelGrid border="0" columns="1" cellpadding="10">
 		              		<f:facet name="header"> 
             					Tipi športov 
+            					
+            				
          					</f:facet> 
 	
 
@@ -57,25 +61,6 @@
 	       		</h:panelGrid>
 	       		 <p:separator />
 	   		</p:dataScroller>
-			    <p:dialog width="300px"  header="#{center.naziv_SportniCenter}" widgetVar="centerDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true">
-			        <p:outputPanel  id="centerDetail" style="text-align:center;">
-			            <p:panelGrid   columns="2" rendered="#{not empty center.izbraniSportniCenter}" columnClasses="label,value">
-			                <f:facet name="header">
-			                   <p:graphicImage name="/images/no_image.png" height="150px" />  
-			                </f:facet>
-			                <h:outputText value="Naziv:" />
-			                <h:outputText value="#{center.izbraniSportniCenter.naziv_SportniCenter}" style="font-weight: bold"/>
-			 
-			                <h:outputText value="Opis:" />
-			                <h:outputText value="#{center.izbraniSportniCenter.opis_SportniCenter}" style="font-weight: bold"/>
-			 
-			             	<h:outputText value="Lokacija:" />
-			                <h:outputText value="#{center.izbraniSportniCenter.lokacija}" style="font-weight: bold"/>
-			                <h:outputText value="id" />
-			                <h:outputText value="#{center.izbraniSportniCenter.id_SportniCenter}" />
-			            </p:panelGrid>
-			        </p:outputPanel>
-			    </p:dialog>		
 			</h:form>		
 		</f:view>
 	</ui:define>	

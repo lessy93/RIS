@@ -80,7 +80,7 @@ public class TipSportaDAO {
 	}
 	
 	//za izpis vseh tipov sportov ki jih ponuja sportni objekt
-	public List<TipSporta> getSportiZaCenter(SportniCenter center) throws Exception{
+	public List<TipSporta> getSportiZaCenter(int id_SportniCenter) throws Exception{
 		List<TipSporta> seznamTipovSporta = new ArrayList<TipSporta>();
 		Connection conn= null;
 		try{
@@ -92,7 +92,7 @@ public class TipSportaDAO {
 			}
 			String sql ="SELECT DISTINCT s.naziv_sporta, s.idTipsporta FROM tipsporta s, objekt o, sportnicenter sc WHERE o.tipsporta_idtipsporta= s.idTipSporta AND o.sportniCenter_idSportniCenter=sc.idSportniCenter  AND sc.idSportniCenter= ?;";
 			PreparedStatement st = conn.prepareStatement(sql);
-			st.setInt(1, center.getId_SportniCenter());
+			st.setInt(1, id_SportniCenter);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()){
 				TipSporta tempTipSporta = new TipSporta();

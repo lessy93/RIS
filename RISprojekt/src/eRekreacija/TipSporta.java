@@ -43,6 +43,7 @@ public class TipSporta {
 	
 		
 	}
+	
 
 
 	public List<TipSporta> getVsiTipi() {

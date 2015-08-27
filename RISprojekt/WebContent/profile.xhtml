@@ -60,7 +60,11 @@
 				<p:column>
 				<h:form id="edit">
     			
-    			<p:commandButton value="Uredi"  url="editprofile.xhtml"  />
+    			
+    			<h:link outcome="editprofile"
+										value="Urejanje">
+							<f:param name="id_Uporabnik" value="#{uporabnik.id_Uporabnik}" />
+				</h:link>
 				</h:form>
 				
 				</p:column>
@@ -68,32 +72,14 @@
 					<p:column>
 				<h:form id="delete">
     			
-    			<p:commandButton value="Izbriši"  actionListener="#{uporabnik.izbrisiUporabnika()}" />
+    			<h:link outcome="dodajObjekt" value="Dodaj objekt">
+				</h:link>
 				</h:form>
 				
 				</p:column>
 				
 				</p:row>
-				
-				<p:row>
-				<p:column>
-				
-				<h:link outcome="dodajObjekt" value="Dodaj objekt">
-				</h:link>
-				</p:column>
-				<p:column>
-				
-				<h:link outcome="dodajObjekt" value="Dodaj objekt">
-				</h:link>
-				</p:column>
-				</p:row>
-				<p:row>
-				<p:column>
-				
-				<h:link outcome="dodajObjekt" value="Dodaj objekt">
-				</h:link>
-				</p:column>
-				</p:row>
+
 				</p:panelGrid>
 				
 			

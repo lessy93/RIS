@@ -227,7 +227,7 @@ static DataSource baza;
             ResultSet rs = prst.executeQuery();
             while (rs.next()) {
             	SportniCenter center = new SportniCenter();
-            	List<Objekt> listObjektov = new ArrayList<>();
+
             	center.setId_SportniCenter(rs.getInt("idSportnicenter"));
             	center.setLokacija(rs.getString("lokacija_centra"));
             	center.setNaziv_SportniCenter(rs.getString("naziv_centra"));
@@ -236,19 +236,6 @@ static DataSource baza;
             	center.setMapsLng(rs.getFloat("mapsLng"));
             	center.setAktiven__SportniCenter(rs.getBoolean("aktiven"));
             	
-            	String sql1 ="SELECT * FROM  objekt  WHERE sportnicenter_idSportnicenter = " + center.getId_SportniCenter();
-				PreparedStatement st1 = conn.prepareStatement(sql1);
-				ResultSet rs1 = st1.executeQuery();
-				while (rs1.next()){
-					Objekt tempObjekt = new Objekt();
-					tempObjekt.setId_Objekta(rs1.getInt("idObjekta"));
-					tempObjekt.setNaziv_Objekta(rs1.getString("naziv_objekta"));
-					tempObjekt.setOpis_Objekta(rs1.getString("opis_objekta"));
-					tempObjekt.setTipObjekta(rs1.getString("tipObjekta"));
-					tempObjekt.setCena_Objekta(rs.getString("cena_objekta"));
-					listObjektov.add(tempObjekt);
-				}
-            center.setSeznamObjektov(listObjektov);
 			centerVrni.add(center);	   
             
     	}
