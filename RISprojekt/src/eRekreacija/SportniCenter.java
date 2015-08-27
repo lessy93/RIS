@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import eRekreacijaDAO.SportniCenterDAO;
@@ -65,6 +66,12 @@ public class SportniCenter {
 		System.out.println("Uporabnik:"+ noviUporabnik);
 		System.out.println("Uporabnik dodan!");
 	
+		HttpSession session = Util.getSession();
+        session.setAttribute("username", noviUporabnik.getEmail());
+        session.setAttribute("id_user", noviUporabnik.getId_Uporabnik());
+        session.setAttribute("uporabnik", noviUporabnik);
+        System.out.println("sesion id: "+session.getId());
+       
 	
 		FacesMessage message = new FacesMessage("Registracija uspešna! ");
         FacesContext.getCurrentInstance().addMessage(null, message);
