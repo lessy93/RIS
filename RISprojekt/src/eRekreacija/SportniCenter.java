@@ -66,24 +66,14 @@ public class SportniCenter {
 		System.out.println("Uporabnik:"+ noviUporabnik);
 		System.out.println("Uporabnik dodan!");
 	
-		HttpSession session = Util.getSession();
-        session.setAttribute("username", noviUporabnik.getEmail());
-        session.setAttribute("id_user", noviUporabnik.getId_Uporabnik());
-        session.setAttribute("uporabnik", noviUporabnik);
-        System.out.println("sesion id: "+session.getId());
-       
+		Login login= new Login();
+		login.autoLogin(email, geslo);
+	
 	
 		FacesMessage message = new FacesMessage("Registracija uspešna! ");
         FacesContext.getCurrentInstance().addMessage(null, message);
         
-		ExternalContext context = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		try {
-			context.redirect("profile.xhtml");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-     
+	
 		}catch(Exception e){
 			System.out.println("Napaka! dodaj Center!"+ e.toString());
 			FacesMessage message = new FacesMessage("Registracija ni uspela! Prosimo poskusite ponovno! ");

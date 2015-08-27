@@ -71,7 +71,7 @@ public class UporabnikDAO {
 			}catch(Exception e){
 				System.out.println("Napaka Connection!");
 			}
-           
+			System.out.println("DAO "+ email+ " " + geslo);
             String sql = "SELECT * FROM uporabnik u, sportnicenter s WHERE u.email=? AND u.geslo=? AND u.SportniCenter_idSportniCenter=s.idSportnicenter AND u.aktiven='1'";
             PreparedStatement prst = conn.prepareStatement(sql);
             prst.setString(1, email);
@@ -80,13 +80,24 @@ public class UporabnikDAO {
             ResultSet rs = prst.executeQuery();
             if (rs.next()) // found
             {	
-            	SportniCenter tempCenter= new SportniCenter(rs.getInt("sportniCenter_idSportnicenter"));
+            	SportniCenter tempCenter= new SportniCenter();
             	upor.setIme(rs.getString("ime"));
             	upor.setPriimek(rs.getString("priimek"));
             	upor.setEmail(rs.getString("email"));
             	upor.setGeslo(rs.getString("geslo"));
             	upor.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
             	upor.setId_Uporabnik(rs.getInt("idUporabnik"));
+            	tempCenter.setId_SportniCenter(rs.getInt("sportniCenter_idSportnicenter"));
+            	tempCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
+            	tempCenter.setOpis_SportniCenter(rs.getString("opis_centra"));
+            	tempCenter.setLokacija(rs.getString("lokacija_centra"));
+            	tempCenter.setMapsLat(rs.getFloat("mapsLat"));
+            	tempCenter.setMapsLng(rs.getFloat("mapsLng"));
+            	tempCenter.setAktiven__SportniCenter(rs.getBoolean("aktiven"));
+           
+            	
+            	
+            //	tempCenter.setSeznamObjektov(rs.getString("lokacija_centra"));
             	upor.setSportniCenter(tempCenter);
            
             	
@@ -98,7 +109,7 @@ public class UporabnikDAO {
              return null;
             }
         } catch (Exception ex) {
-            System.out.println("Error in login() -->" + ex.getMessage());
+            System.out.println("Error in login() -->" + ex.toString());
             return null;
             
         } finally {				

@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-
+import eRekreacijaDAO.SportniCenterDAO;
 import eRekreacijaDAO.UporabnikDAO;
  
 @ManagedBean(name = "loginBean")
@@ -57,10 +57,10 @@ public class Login implements Serializable {
 		try{
 		UporabnikDAO uporDAO= new UporabnikDAO(baza);
 		Uporabnik uporabnik= null;
-		
+	
 		uporabnik= uporDAO.prijaviUporabnika(username, password);
 	
-		System.out.println("LB- Uporabnik:"+ uporabnik.getIme());
+		System.out.println("LB- Uporabnik:"+ uporabnik.toString());
 	
 		if (!uporabnik.equals(null)) {
             // get Http Session and store username
@@ -89,13 +89,46 @@ public class Login implements Serializable {
 		}catch(Exception e){
 			System.out.println("Napaka! Prijava Uporabnika!");
 			
-		}
+		}		
+	}
+	
+	public void autoLogin(String user, String geslo) throws Exception{
+		try{
+		UporabnikDAO uporDAO= new UporabnikDAO(baza);
+		Uporabnik uporabnik= null;
+	
+		uporabnik= uporDAO.prijaviUporabnika(user,geslo);
+	
+		System.out.println("AUTOLOGIN- Uporabnik:"+ uporabnik.toString());
+	
+		if (!uporabnik.equals(null)) {
+            // get Http Session and store username
+			username= uporabnik.getEmail();
 		
-		
-		
-		
-		
-		
+            HttpSession session = Util.getSession();
+            session.setAttribute("username", uporabnik.getEmail());
+            session.setAttribute("id_user", uporabnik.getId_Uporabnik());
+            session.setAttribute("uporabnik", uporabnik);
+            System.out.println("sesion id: "+session.getId());
+            FacesMessage message = new FacesMessage("Prijava uspešna! ");
+            
+            
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml"); 
+           
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "Neveljavna prijava!",
+                    "Poizkusite ponovno!"));
+ 
+            
+        }
+		}catch(Exception e){
+			System.out.println("Napaka! Prijava Uporabnika!");
+			
+		}		
 	}
 	
 	  public void addMessage(String summary) {

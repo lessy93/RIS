@@ -32,14 +32,10 @@
 				</h:selectOneRadio>
 				<p:message for="tipObjekta" class="error_message"></p:message> 
 				
-				<p:outputLabel for="sporti" value="Ĺ porti: " />
-				<p:selectOneMenu id="sporti" value="#{objekt.tipSporta}"  requiredMessage="Izberite Ĺˇporte!">
-   					<f:selectItem itemValue="1" itemLabel="Nogomet" />
-   					<f:selectItem itemValue="2" itemLabel="Rokomet" />
-   					<f:selectItem itemValue="3" itemLabel="Odbojka" />
-   					<f:selectItem itemValue="4" itemLabel="KoĹˇarka" />
-   					<f:selectItem itemValue="5" itemLabel="Golf" />
-   					<f:selectItem itemValue="6" itemLabel="Tenis" />	   			
+				<p:outputLabel for="sporti" value="Športi: " />
+				<p:selectOneMenu id="sporti" value="#{objekt.tipSporta.id_TipSporta}"  requiredMessage="Izberite Športe!">
+   					
+   					<f:selectItems value="#{sport.vsiTipi}" var="s" itemValue="#{s.id_TipSporta}" itemLabel="#{s.naziv_TipSporta}" />		
 				</p:selectOneMenu>
 				<p:message for="sporti" class="error_message"></p:message> 
 				
