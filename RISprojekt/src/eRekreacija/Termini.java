@@ -1,22 +1,37 @@
 package eRekreacija;
 
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import javax.annotation.Resource;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.sql.DataSource;
+
+import org.primefaces.model.DefaultScheduleEvent;
+
+import eRekreacijaDAO.TerminiDAO;
+
+@ManagedBean(name = "termini")
+@ViewScoped
 public class Termini {
 
 	private int id_Termini;
 	private Calendar datum;
-	Date zacetniCas;
+	private Date zacetniCas;
 	private Date koncniCas;
 	private Boolean zasedenost;
 	private Objekt objekt;
-	
-	
-	
-	
-	public Termini(int id_Termini, Calendar datum, Date zacetniCas, Date koncniCas, Boolean zasedenost,
-			Objekt objekt) {
+
+	private List<Termini> seznamTerminovObjekt;
+
+	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
+	DataSource baza;
+
+	public Termini(int id_Termini, Calendar datum, Date zacetniCas, Date koncniCas, Boolean zasedenost, Objekt objekt) {
 		super();
 		this.id_Termini = id_Termini;
 		this.datum = datum;
@@ -25,11 +40,30 @@ public class Termini {
 		this.zasedenost = zasedenost;
 		this.objekt = objekt;
 	}
+
 	public Termini() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+/*	public void pridobiSeznamTerminovZaObjekt(int id_objekta) {
+		seznamTerminovObjekt= new ArrayList<Termini>();
+		TerminiDAO terminDAO= new TerminiDAO(baza);		
+		try {
+			seznamTerminovObjekt= terminDAO.getTerminiBYidObjekt(id_objekta);
+			System.out.println("Velikost seznama- TERMINI:"+ seznamTerminovObjekt.size());
+
+		} catch (Exception e) {
+			System.out.println("Napaka! Termini!");
+		}
+	*/
+
+	public List<Termini> getSeznamTerminovObjekt() {
+		return seznamTerminovObjekt;
+	}
+
+	public void setSeznamTerminovObjekt(ArrayList<Termini> seznamTerminovObjekt) {
+		this.seznamTerminovObjekt = seznamTerminovObjekt;
+	}
 
 	public Termini(Date zacetniCas2, Date koncniCas2, Boolean zasedenost, Objekt objekt) {
 		super();
@@ -38,78 +72,101 @@ public class Termini {
 		this.zasedenost = zasedenost;
 		this.objekt = objekt;
 	}
+
 	/**
 	 * @return the id_Termini
 	 */
 	public int getId_Termini() {
 		return id_Termini;
 	}
+
 	/**
-	 * @param id_Termini the id_Termini to set
+	 * @param id_Termini
+	 *            the id_Termini to set
 	 */
 	public void setId_Termini(int id_Termini) {
 		this.id_Termini = id_Termini;
 	}
+
 	/**
 	 * @return the datum
 	 */
 	public Calendar getDatum() {
 		return datum;
 	}
+
 	/**
-	 * @param datum the datum to set
+	 * @param datum
+	 *            the datum to set
 	 */
 	public void setDatum(Calendar datum) {
 		this.datum = datum;
 	}
+
 	/**
 	 * @return the zacetniCas
 	 */
 	public Date getZacetniCas() {
 		return zacetniCas;
 	}
+
 	/**
-	 * @param zacetniCas the zacetniCas to set
+	 * @param zacetniCas
+	 *            the zacetniCas to set
 	 */
 	public void setZacetniCas(Date zacetniCas) {
 		this.zacetniCas = zacetniCas;
 	}
+
 	/**
 	 * @return the koncniCas
 	 */
 	public Date getKoncniCas() {
 		return koncniCas;
 	}
+
 	/**
-	 * @param koncniCas the koncniCas to set
+	 * @param koncniCas
+	 *            the koncniCas to set
 	 */
 	public void setKoncniCas(Date koncniCas) {
 		this.koncniCas = koncniCas;
 	}
+
 	/**
 	 * @return the zasedenost
 	 */
 	public Boolean getZasedenost() {
 		return zasedenost;
 	}
+
 	/**
-	 * @param zasedenost the zasedenost to set
+	 * @param zasedenost
+	 *            the zasedenost to set
 	 */
 	public void setZasedenost(Boolean zasedenost) {
 		this.zasedenost = zasedenost;
 	}
+
 	/**
 	 * @return the objekt
 	 */
 	public Objekt getObjekt() {
 		return objekt;
 	}
+
 	/**
-	 * @param objekt the objekt to set
+	 * @param objekt
+	 *            the objekt to set
 	 */
 	public void setObjekt(Objekt objekt) {
 		this.objekt = objekt;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Termini [id_Termini=" + id_Termini + ", datum=" + datum + ", zacetniCas=" + zacetniCas + ", koncniCas="
+				+ koncniCas + ", zasedenost=" + zasedenost + ", objekt=" + objekt + "]";
+	}
+
 }

@@ -19,6 +19,7 @@
 									border="0">
 								</h:dataTable>
 						</h:form>
+						
 		<f:view>
 		
 		<f:metadata>
@@ -71,7 +72,7 @@
 			<h:form>
     <p:growl id="messages" showDetail="true" />
  
-    <h:panelGrid columnClasses="value">
+    <h:panelGrid columnClasses="value" rendered="#{loginBean.username!=null}">
         <h3 style="margin-top: 0">Rezerviraj termin</h3>
         <p:schedule id="schedule" value="#{urnikBean.eventModel}" locale="slo" widgetVar="myschedule" timeZone="GMT+2">
  
@@ -95,8 +96,8 @@
  
           
  
-            <p:commandButton type="reset" value="Reset" />
-            <p:commandButton id="addButton" value="Save" actionListener="#{urnikBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+            <p:commandButton type="reset" value="Resetiraj" />
+            <p:commandButton id="addButton" value="Rezerviraj" actionListener="#{urnikBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
         </h:panelGrid>
     </p:dialog>    
 </h:form>

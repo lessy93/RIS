@@ -12,6 +12,13 @@
 
 <ui:composition template="commonLayout.xhtml">
 	<ui:define name="content">
+	
+						<h:form>
+								<h:dataTable id="table1"
+									value="#{center.getSeznamCentrov() }" var="center"
+									border="0">
+								</h:dataTable>
+						</h:form>
 		<f:view>
 			<h:form id="form">
 				<p:dataScroller   value="#{center.seznamVsehCentrov}" var="tempCenter"   chunkSize="10">	  
@@ -50,8 +57,10 @@
 		            </p:outputPanel>      
 		            	<h:panelGrid border="0" columns="1" cellpadding="10">
 		              		<f:facet name="header"> 
+		              		
+		              			
             					Tipi športov 
-            					
+            				
             				
          					</f:facet> 
 	

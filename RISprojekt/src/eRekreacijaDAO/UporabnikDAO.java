@@ -14,31 +14,29 @@ import javax.sql.DataSource;
 import eRekreacija.SportniCenter;
 import eRekreacija.Uporabnik;
 
-
 public class UporabnikDAO {
 	static DataSource baza;
-	
-	
-	public UporabnikDAO(DataSource pb) throws Exception{
+
+	public UporabnikDAO(DataSource pb) throws Exception {
 		baza = pb;
-	
+
 	}
-	
+
 	public UporabnikDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
-		//kodiranje gesla v SHA1
-		public static String sha1(String geslo) throws NoSuchAlgorithmException {
-			MessageDigest mDigest = MessageDigest.getInstance("SHA1");
-			byte[] result = mDigest.digest(geslo.getBytes());
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < result.length; i++) {
-				sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-			}	         
-		    return sb.toString();  
+	// kodiranje gesla v SHA1
+	public static String sha1(String geslo) throws NoSuchAlgorithmException {
+		MessageDigest mDigest = MessageDigest.getInstance("SHA1");
+		byte[] result = mDigest.digest(geslo.getBytes());
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < result.length; i++) {
+			sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
 		}
-	
+		return sb.toString();
+	}
+
 	public void shraniUporabnika(Uporabnik upor) throws Exception {
 		Connection conn= null; 
 		try{
@@ -121,135 +119,133 @@ public class UporabnikDAO {
 		System.out.println("Connection CLOSED!");
 		}
     }
-	//Pridobi vse aktivne uporabnike
+	// Pridobi vse aktivne uporabnike
 	public List<Uporabnik> getUporabniks() throws Exception {
 		List<Uporabnik> seznamUporabnikov = new ArrayList<Uporabnik>();
-		Connection conn= null;
-		try{
+		Connection conn = null;
+		try {
 			try {
-				conn= baza.getConnection();
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql ="SELECT * FROM uporabnik WHERE aktiven='da';";
+			String sql = "SELECT * FROM uporabnik WHERE aktiven='da';";
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
-			while (rs.next()){
-				Uporabnik tempUporabnik = new Uporabnik();		
+			while (rs.next()) {
+				Uporabnik tempUporabnik = new Uporabnik();
 				tempUporabnik.setId_Uporabnik(rs.getInt("idUporabnik"));
 				tempUporabnik.setIme(rs.getString("ime"));
 				tempUporabnik.setPriimek(rs.getString("priimek"));
 				tempUporabnik.setEmail(rs.getString("email"));
 				tempUporabnik.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
-				seznamUporabnikov.add(tempUporabnik);			
-			}			
-		}catch (Exception e){
+				seznamUporabnikov.add(tempUporabnik);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {				
+		} finally {
 			conn.close();
-		System.out.println("Connection CLOSED!");
-		}	
+			System.out.println("Connection CLOSED!");
+		}
 		return seznamUporabnikov;
 	}
-	
+
 	public void deleteUporabnikById(int idUporabnik) throws Exception {
-       
-        Connection conn = null;
-        try {
-        	try {
-				conn= baza.getConnection();
+
+		Connection conn = null;
+		try {
+			try {
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-            String sql = "UPDATE uporabnik SET aktiven='0' WHERE idUporabnik = 1";
-            PreparedStatement st = conn.prepareStatement(sql);
-           // st.setInt(1, idUporabnik);
-            st.executeUpdate();
+			String sql = "UPDATE uporabnik SET aktiven='0' WHERE idUporabnik = 1";
+			PreparedStatement st = conn.prepareStatement(sql);
+			// st.setInt(1, idUporabnik);
+			st.executeUpdate();
 
-        } catch (SQLException e) {
-        	System.out.println("Napaka!"+ e.toString());
-    	} finally {				
+		} catch (SQLException e) {
+			System.out.println("Napaka!" + e.toString());
+		} finally {
 			conn.close();
-		System.out.println("Connection CLOSED!");
-		}     
-        
-    }
-	
+			System.out.println("Connection CLOSED!");
+		}
+
+	}
+
 	public Uporabnik getUporabnikById(int idUporabnika) throws Exception {
 		Uporabnik up = new Uporabnik();
 		Connection conn = null;
-        try {
-        	try {
-				conn= baza.getConnection();
+		try {
+			try {
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-           
-            String sql = "SELECT * FROM uporabnik WHERE idUporabnik = ? ";
-            PreparedStatement prst = conn.prepareStatement(sql);
-            prst.setInt(1, idUporabnika);
 
-            ResultSet rs = prst.executeQuery();
-            while (rs.next()) {
-            	SportniCenter objekt = new SportniCenter();
-            	objekt.setId_SportniCenter(rs.getInt("sportniobjekt_idSportniObjekt"));
-            	
-            	up.setId_Uporabnik(rs.getInt("idUporabnik"));
-                up.setIme(rs.getString("ime"));
-                up.setPriimek(rs.getString("priimek"));
-                up.setEmail(rs.getString("email"));
-                up.setGeslo(rs.getString("geslo"));
-                up.setSportniCenter(objekt);
-                up.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
-  
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {				
+			String sql = "SELECT * FROM uporabnik WHERE idUporabnik = ? ";
+			PreparedStatement prst = conn.prepareStatement(sql);
+			prst.setInt(1, idUporabnika);
+
+			ResultSet rs = prst.executeQuery();
+			while (rs.next()) {
+				SportniCenter objekt = new SportniCenter();
+				objekt.setId_SportniCenter(rs.getInt("sportniobjekt_idSportniObjekt"));
+
+				up.setId_Uporabnik(rs.getInt("idUporabnik"));
+				up.setIme(rs.getString("ime"));
+				up.setPriimek(rs.getString("priimek"));
+				up.setEmail(rs.getString("email"));
+				up.setGeslo(rs.getString("geslo"));
+				up.setSportniCenter(objekt);
+				up.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			conn.close();
-		System.out.println("Connection CLOSED!");
-		}  
+			System.out.println("Connection CLOSED!");
+		}
 
-    	System.out.print(up.toString());
-        return up;
-    }	
-	
-	public boolean updateUporabnik (Uporabnik up) throws Exception{
+		System.out.print(up.toString());
+		return up;
+	}
+
+	public boolean updateUporabnik(Uporabnik up) throws Exception {
 		boolean updated = true;
 		Connection conn = null;
-		try{
+		try {
 			try {
-				conn= baza.getConnection();
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
 			String sql = "UPDATE uporabnik SET ime =?, priimek =?, email =?, geslo =?, sportnicenter_idSportnicenter =?, aktiven =? WHERE idUporabnik = ?";
 			PreparedStatement st = conn.prepareStatement(sql);
-			
+
 			st.setString(1, up.getIme());
 			st.setString(2, up.getPriimek());
 			st.setString(3, up.getEmail());
-			st.setString(4,	sha1(up.getGeslo()));
+			st.setString(4, sha1(up.getGeslo()));
 			st.setInt(5, up.getSportniCenter().getId_SportniCenter());
 			st.setBoolean(6, up.getAktiven_Uporabnik());
 			st.setInt(7, up.getId_Uporabnik());
-			
+
 			st.executeUpdate();
-			
-		}catch (SQLException e){
+
+		} catch (SQLException e) {
 			updated = false;
-		}finally{
+		} finally {
 			conn.close();
 			System.out.println("Connection CLOSED!");
-			System.out.println("SHRANJENO!" +up);
-		}		
+			System.out.println("SHRANJENO!" + up);
+		}
 		return updated;
 	}
-	
-	
 
 }
