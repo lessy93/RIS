@@ -9,10 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import eRekreacija.SportniCenter;
 import eRekreacija.Uporabnik;
+import eRekreacija.Util;
 
 public class UporabnikDAO {
 	static DataSource baza;
@@ -38,87 +40,84 @@ public class UporabnikDAO {
 	}
 
 	public void shraniUporabnika(Uporabnik upor) throws Exception {
-		Connection conn= null; 
-		try{
+		Connection conn = null;
+		try {
 			try {
-				conn= baza.getConnection();
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
 
-			PreparedStatement st=conn.prepareStatement("INSERT INTO uporabnik(ime, priimek, email, geslo, aktiven, Sportnicenter_idSportnicenter) VALUES (?,?,?,?,?,?)");	
+			PreparedStatement st = conn.prepareStatement(
+					"INSERT INTO uporabnik(ime, priimek, email, geslo, aktiven, Sportnicenter_idSportnicenter) VALUES (?,?,?,?,?,?)");
 			st.setString(1, upor.getIme());
 			st.setString(2, upor.getPriimek());
 			st.setString(3, upor.getEmail());
-			st.setString(4, sha1(upor.getGeslo()));  // kodiranje gesla v SHA1
+			st.setString(4, sha1(upor.getGeslo())); // kodiranje gesla v SHA1
 			st.setBoolean(5, upor.getAktiven_Uporabnik());
 			st.setInt(6, upor.getSportniCenter().getId_SportniCenter());
 			st.executeUpdate();
-			
-		} finally{				
+
+		} finally {
 			conn.close();
-		System.out.println("Connection CLOSED!");
+			System.out.println("Connection CLOSED!");
 		}
 	}
-	
-	
+
 	public Uporabnik prijaviUporabnika(String email, String geslo) throws Exception {
 		Uporabnik upor = new Uporabnik();
 		Connection conn = null;
-		try{
+		try {
 			try {
-				conn= baza.getConnection();
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			System.out.println("DAO "+ email+ " " + geslo);
-            String sql = "SELECT * FROM uporabnik u, sportnicenter s WHERE u.email=? AND u.geslo=? AND u.SportniCenter_idSportniCenter=s.idSportnicenter AND u.aktiven='1'";
-            PreparedStatement prst = conn.prepareStatement(sql);
-            prst.setString(1, email);
-            prst.setString(2, sha1(geslo)); // kodiranje gesla v SHA1
+			System.out.println("DAO " + email + " " + geslo);
+			String sql = "SELECT * FROM uporabnik u, sportnicenter s WHERE u.email=? AND u.geslo=? AND u.SportniCenter_idSportniCenter=s.idSportnicenter AND u.aktiven='1'";
+			PreparedStatement prst = conn.prepareStatement(sql);
+			prst.setString(1, email);
+			prst.setString(2, sha1(geslo)); // kodiranje gesla v SHA1
 
-            ResultSet rs = prst.executeQuery();
-            if (rs.next()) // found
-            {	
-            	SportniCenter tempCenter= new SportniCenter();
-            	upor.setIme(rs.getString("ime"));
-            	upor.setPriimek(rs.getString("priimek"));
-            	upor.setEmail(rs.getString("email"));
-            	upor.setGeslo(rs.getString("geslo"));
-            	upor.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
-            	upor.setId_Uporabnik(rs.getInt("idUporabnik"));
-            	tempCenter.setId_SportniCenter(rs.getInt("sportniCenter_idSportnicenter"));
-            	tempCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
-            	tempCenter.setOpis_SportniCenter(rs.getString("opis_centra"));
-            	tempCenter.setLokacija(rs.getString("lokacija_centra"));
-            	tempCenter.setMapsLat(rs.getFloat("mapsLat"));
-            	tempCenter.setMapsLng(rs.getFloat("mapsLng"));
-            	tempCenter.setAktiven__SportniCenter(rs.getBoolean("aktiven"));
-           
-            	
-            	
-            //	tempCenter.setSeznamObjektov(rs.getString("lokacija_centra"));
-            	upor.setSportniCenter(tempCenter);
-           
-            	
-            	System.out.println("DAO "+rs.getString("ime"));
-                System.out.println("DAO "+ rs.getString("email"));
-                return upor;
-            }
-            else {
-             return null;
-            }
-        } catch (Exception ex) {
-            System.out.println("Error in login() -->" + ex.toString());
-            return null;
-            
-        } finally {				
+			ResultSet rs = prst.executeQuery();
+			if (rs.next()) // found
+			{
+				SportniCenter tempCenter = new SportniCenter();
+				upor.setIme(rs.getString("ime"));
+				upor.setPriimek(rs.getString("priimek"));
+				upor.setEmail(rs.getString("email"));
+				upor.setGeslo(rs.getString("geslo"));
+				upor.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
+				upor.setId_Uporabnik(rs.getInt("idUporabnik"));
+				tempCenter.setId_SportniCenter(rs.getInt("sportniCenter_idSportnicenter"));
+				tempCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
+				tempCenter.setOpis_SportniCenter(rs.getString("opis_centra"));
+				tempCenter.setLokacija(rs.getString("lokacija_centra"));
+				tempCenter.setMapsLat(rs.getFloat("mapsLat"));
+				tempCenter.setMapsLng(rs.getFloat("mapsLng"));
+				tempCenter.setAktiven__SportniCenter(rs.getBoolean("aktiven"));
+
+				// tempCenter.setSeznamObjektov(rs.getString("lokacija_centra"));
+				upor.setSportniCenter(tempCenter);
+
+				System.out.println("DAO " + rs.getString("ime"));
+				System.out.println("DAO " + rs.getString("email"));
+				return upor;
+			} else {
+				return null;
+			}
+		} catch (Exception ex) {
+			System.out.println("Error in login() -->" + ex.toString());
+			return null;
+
+		} finally {
 			conn.close();
-		System.out.println("Connection CLOSED!");
+			System.out.println("Connection CLOSED!");
 		}
-    }
+	}
+
 	// Pridobi vse aktivne uporabnike
 	public List<Uporabnik> getUporabniks() throws Exception {
 		List<Uporabnik> seznamUporabnikov = new ArrayList<Uporabnik>();
@@ -248,4 +247,69 @@ public class UporabnikDAO {
 		return updated;
 	}
 
+	public List<SportniCenter> vrniMojCenter() throws SQLException {
+		List<SportniCenter> centerVrni = new ArrayList<SportniCenter>();
+		System.out.println("Sem v funkciji!!!");
+
+		Connection conn = null;
+		try {
+			try {
+				conn = baza.getConnection();
+				System.out.println("Connection OPEN!");
+			} catch (Exception e) {
+				System.out.println("Napaka Connection-!!!!");
+			}
+
+			Uporabnik up = new Uporabnik();
+			HttpSession session = Util.getSession();
+			up = (Uporabnik) session.getAttribute("uporabnik");
+			int id = up.getId_Uporabnik();
+			System.out.println("Id- je moj?" + id);
+
+			String sql = "SELECT * FROM sportnicenter sc, uporabnik u WHERE u.idUporabnik=? AND  u.Sportnicenter_idSportniCenter=sc.idSportnicenter;";
+			PreparedStatement prst = conn.prepareStatement(sql);
+			prst.setInt(1, id);
+
+			System.out.println("Pred izvedbo Querya");
+			ResultSet rs = prst.executeQuery();
+			System.out.println("Po izvedbi Querya");
+
+			while (rs.next()) {
+				// Objekt center = new Objekt();
+				SportniCenter sportniCenter = new SportniCenter();
+				// TipSporta tipSporta = new TipSporta();
+
+				/*
+				 * up.setId_Uporabnik(rs.getInt("idUporabnik"));
+				 * up.setIme(rs.getString("ime"));
+				 * up.setPriimek(rs.getString("priimek"));
+				 * up.setEmail(rs.getString("email"));
+				 * up.setGeslo(rs.getString("geslo"));
+				 * up.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
+				 * up.setSportniCenter(sportniCenter);
+				 */
+
+				sportniCenter.setId_SportniCenter(rs.getInt("idSportnicenter"));
+				System.out.println("id center" + sportniCenter.getId_SportniCenter());
+				sportniCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
+				sportniCenter.setOpis_SportniCenter(rs.getString("opis_cenra"));
+				sportniCenter.setLokacija(rs.getString("lokacija_centra"));
+				sportniCenter.setAktiven__SportniCenter(rs.getBoolean("aktiven"));
+				sportniCenter.setMapsLat(rs.getInt("mapsLat"));
+				sportniCenter.setMapsLng(rs.getInt("mapsLng"));
+
+				centerVrni.add(sportniCenter);
+
+			}
+			if (!rs.first()) {
+				System.out.println("NI ZADETKOV!");
+			}
+		} catch (Exception e) {
+			System.out.println("Napaka! vrniMojCenter" + e.toString());
+		} finally {
+			conn.close();
+			System.out.println("Connection CLOSED!");
+		}
+		return centerVrni;
+	}
 }

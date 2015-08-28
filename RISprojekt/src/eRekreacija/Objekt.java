@@ -116,13 +116,28 @@ public class Objekt {
 		}
 	}
 
+	public void shraniSpremembe() throws Exception {
+		// uporabnik je UporabnikDAO();
+		ObjektDAO oDAO = new ObjektDAO(baza);
+		Objekt o = new Objekt(id_Objekta, naziv_Objekta, tipObjekta, opis_Objekta, cena_Objekta, sportniCenter,
+				tipSporta);
+		// Uporabnik up= new Uporabnik(id_Uporabnik, ime, priimek, email, geslo,
+		// aktiven_Uporabnik);
+		System.out.println("Spremeni" + o.toString());
+		oDAO.updateObjekt(o);
+		System.out.println("Napaka! uredi Objekt!");
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.redirect("profile.xhtml");
+		System.out.println("sem na koncu funkcije");
+	}
+
 	// za podrobnosti objekta
 	public List<Objekt> isci(int id_Objekta) throws Exception {
 		ObjektDAO oDAO = new ObjektDAO(baza);
 		System.out.println(id_Objekta);
 		seznamObjektovCentra = (List<Objekt>) oDAO.getObjektById2(id_Objekta);
 		HttpSession session = Util.getSession();
-        session.setAttribute("izbraniObjekt", id_Objekta);
+		session.setAttribute("izbraniObjekt", id_Objekta);
 		return seznamObjektovCentra;
 	}
 
@@ -132,6 +147,32 @@ public class Objekt {
 		System.out.println("ID centra, ki ga dobim: " + id_SportniCenter);
 		seznamObjektovCenter = (List<Objekt>) oDAO.getObjektById3(id_SportniCenter);
 		return seznamObjektovCenter;
+	}
+
+	// za objekte, profili-refresh
+	public List<Objekt> isciObjekteMojegaCentra() throws Exception {
+		ObjektDAO oDAO = new ObjektDAO(baza);
+		HttpSession session = Util.getSession();
+		Uporabnik up = new Uporabnik();
+		up = (Uporabnik) session.getAttribute("uporabnik");
+		int id2 = up.getSportniCenter().getId_SportniCenter();
+		System.out.println("ID centra, ki ga dobim: " + id2);
+		seznamObjektovCenter = (List<Objekt>) oDAO.getObjektById3(id2);
+		return seznamObjektovCenter;
+	}
+
+	public void izbrisObjekta(int id_Objekta) throws Exception {
+		ObjektDAO oDAO = new ObjektDAO(baza);
+		oDAO.deleteDvoranaById(id_Objekta);
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.redirect("profile.xhtml");
+		System.out.println("sem na koncu funkcije");
+	}
+
+	public void redirect() throws IOException {
+		ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+		context.redirect("profile.xhtml");
+		System.out.println("sem na koncu funkcije");
 	}
 
 	public int getId_Objekta() {

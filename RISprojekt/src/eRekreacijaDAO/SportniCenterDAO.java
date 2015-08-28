@@ -109,18 +109,18 @@ public class SportniCenterDAO {
 
 						tempTipSporta.setId_TipSporta(rs3.getInt("idTipSporta"));
 						tempTipSporta.setNaziv_TipSporta(rs3.getString("naziv_sporta"));
-						System.out.println("tip:"+ tempTipSporta.getNaziv_TipSporta());
+						System.out.println("tip:" + tempTipSporta.getNaziv_TipSporta());
 						seznamTipovSporta.add(tempTipSporta);
 					}
-					System.out.println("st tipov:"+ seznamTipovSporta.size());
+					System.out.println("st tipov:" + seznamTipovSporta.size());
 					tempSportniCenter.setTipiSportov(seznamTipovSporta);
-					
+
 					listObjektov.add(tempSportniObjekt);
 				}
-				System.out.println("st obj:"+ listObjektov.size());
+				System.out.println("st obj:" + listObjektov.size());
 				tempSportniCenter.setSeznamObjektov(listObjektov);
 				seznamSportniCenter.add(tempSportniCenter);
-				System.out.println("Center:"+ tempSportniCenter.toString());
+				System.out.println("Center:" + tempSportniCenter.toString());
 			}
 
 		} catch (Exception e) {

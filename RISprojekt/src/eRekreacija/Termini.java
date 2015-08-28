@@ -1,6 +1,5 @@
 package eRekreacija;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,17 +44,15 @@ public class Termini {
 		// TODO Auto-generated constructor stub
 	}
 
-/*	public void pridobiSeznamTerminovZaObjekt(int id_objekta) {
-		seznamTerminovObjekt= new ArrayList<Termini>();
-		TerminiDAO terminDAO= new TerminiDAO(baza);		
-		try {
-			seznamTerminovObjekt= terminDAO.getTerminiBYidObjekt(id_objekta);
-			System.out.println("Velikost seznama- TERMINI:"+ seznamTerminovObjekt.size());
-
-		} catch (Exception e) {
-			System.out.println("Napaka! Termini!");
-		}
-	*/
+	/*
+	 * public void pridobiSeznamTerminovZaObjekt(int id_objekta) {
+	 * seznamTerminovObjekt= new ArrayList<Termini>(); TerminiDAO terminDAO= new
+	 * TerminiDAO(baza); try { seznamTerminovObjekt=
+	 * terminDAO.getTerminiBYidObjekt(id_objekta); System.out.println(
+	 * "Velikost seznama- TERMINI:"+ seznamTerminovObjekt.size());
+	 * 
+	 * } catch (Exception e) { System.out.println("Napaka! Termini!"); }
+	 */
 
 	public List<Termini> getSeznamTerminovObjekt() {
 		return seznamTerminovObjekt;

@@ -50,8 +50,7 @@ public class SportniCenter {
 			SportniCenterDAO centerDAO = new SportniCenterDAO(baza);
 
 			System.out.println("Center:" + naziv_SportniCenter);
-			noviCenter = new SportniCenter(id_sc, naziv_SportniCenter, opis_SportniCenter, lokacija, 1, 1,
-					true);
+			noviCenter = new SportniCenter(id_sc, naziv_SportniCenter, opis_SportniCenter, lokacija, 1, 1, true);
 			System.out.println("Center:" + noviCenter.getNaziv_SportniCenter() + " " + noviCenter.lokacija);
 			centerDAO.shraniSportniCenter(noviCenter);
 
@@ -86,16 +85,14 @@ public class SportniCenter {
 	public void pridobiSporte() throws Exception {
 		TipSportaDAO tipSportaDAO = new TipSportaDAO(baza);
 		HttpSession session = Util.getSession();
-	
-        int id_sc= (int) session.getAttribute("izbraniCenter");
-    	System.out.println("id"+ id_sc);
-		
-		System.out.println("Pridobivam tipe sportov za: "+ id_sc);
+
+		int id_sc = (int) session.getAttribute("izbraniCenter");
+		System.out.println("id" + id_sc);
+
+		System.out.println("Pridobivam tipe sportov za: " + id_sc);
 		tipiSportov = tipSportaDAO.getSportiZaCenter(id_sc);
-		
 
 	}
-
 
 	public void init() throws Exception {
 		System.out.println("Pridobivam centre!");
@@ -107,15 +104,14 @@ public class SportniCenter {
 		System.out.println("Pridobivam centre!");
 		SportniCenterDAO scDAO = new SportniCenterDAO(baza);
 		seznamVsehCentrov = scDAO.getSeznamSportnihCentrov();
-		
-	
+
 	}
 
 	public void prikaziIzbraniSportniCenter(int id) throws Exception {
 		SportniCenterDAO scDAO = new SportniCenterDAO(baza);
 		izbraniSportniCenter = scDAO.getCenterByIdEna(id);
 		HttpSession session = Util.getSession();
-        session.setAttribute("izbraniCenter", id);
+		session.setAttribute("izbraniCenter", id);
 	}
 
 	public List<SportniCenter> isci(int id_SportniCenter) throws Exception {
@@ -292,11 +288,10 @@ public class SportniCenter {
 
 	@Override
 	public String toString() {
-		
-	
+
 		return "SportniObjekt [idSportniObjekt=" + id_sc + ", naziv=" + naziv_SportniCenter + ", opis="
 				+ opis_SportniCenter + ", lokacija=" + lokacija + ", lat=" + mapsLat + ", lng=" + mapsLng + ", aktiven="
-				+ aktiven__SportniCenter + "]"  ;
+				+ aktiven__SportniCenter + "]";
 	}
 
 	public int getId_Uporabnik() {

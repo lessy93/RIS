@@ -42,9 +42,7 @@ public class TerminiDAO {
 			System.out.println("TERMINDAO zac cas:" + new java.sql.Date(termin.getZacetniCas().getTime()));
 			st.setDate(1, new java.sql.Date(termin.getZacetniCas().getTime()));
 
-
 			System.out.println("TerminDAO KON CAS" + termin.getKoncniCas().toString());
-		
 
 			st.setDate(2, new java.sql.Date(termin.getZacetniCas().getTime()));
 			st.setDate(3, new java.sql.Date(termin.getKoncniCas().getTime()));

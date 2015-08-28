@@ -320,7 +320,7 @@ public class ObjektDAO {
 				center.setTipObjekta(rs.getString("tipObjekta"));
 				center.setOpis_Objekta(rs.getString("opis_objekta"));
 				center.setCena_Objekta(rs.getString("cena_objekta"));
-				
+
 				center.setTipSporta(tipSporta);
 				center.setSportniCenter(sportniCenter);
 

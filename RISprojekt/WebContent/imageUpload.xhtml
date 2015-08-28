@@ -1,32 +1,33 @@
 <!DOCTYPE html>
-<html
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta charset="UTF-8"/>
-<title>Insert title here</title>
+	<meta charset="UTF-8" />
+	<title>Insert title here</title>
 </h:head>
 <h:body>
 
-<ui:composition template="commonLayout.xhtml">
-	<ui:define name="content">
-		
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
 
-		<f:view>
-		<h:form enctype="multipart/form-data">
-    <p:growl id="messages" showDetail="true" />
- 
-    <p:fileUpload value="#{slike.slikaF }" mode="simple" skinSimple="true"/>
- 
-    <p:commandButton value="Submit" ajax="false" actionListener="#{slike.upload}" disabled="false" />
-</h:form>
-		</f:view>
-	</ui:define>	
-</ui:composition>
+
+			<f:view>
+				<h:form enctype="multipart/form-data">
+					<p:growl id="messages" showDetail="true" />
+
+					<p:fileUpload value="#{slike.slikaF }" mode="simple"
+						skinSimple="true" />
+
+					<p:commandButton value="Submit" ajax="false"
+						actionListener="#{slike.upload}" disabled="false" />
+				</h:form>
+			</f:view>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
 
 
-			
+

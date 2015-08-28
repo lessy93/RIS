@@ -13,73 +13,72 @@
 		<ui:define name="content">
 
 			<h:form>
-				<h:dataTable id="table1" value="#{center.getSeznamCentrov() }"
+				<h:dataTable id="table3" value="#{objekt.isci(id_Objekta)}"
 					var="center" border="0">
 				</h:dataTable>
 			</h:form>
 			<f:view>
-				<h:form id="form">
-					<p:dataScroller value="#{center.seznamVsehCentrov}"
-						var="tempCenter" chunkSize="10">
+
+				<f:metadata>
+					<f:viewParam name="id_Objekta" />
+				</f:metadata>
+
+				<h:form id="form2">
+					<p:dataScroller value="#{objekt.seznamObjektovCentra}" var="objekt"
+						chunkSize="10">
 						<f:facet name="header">
-            			Seznam športnih Centrov
+            			Seznam objektov športnega centra
        				</f:facet>
 
 						<h:panelGrid columns="3" style="width:90%; padding-left:100px;"
 							border="0" columnClasses="logo,detail">
 
-							<f:facet name="header">
-								<h:outputText value="#{tempCenter.naziv_SportniCenter}"
-									style="font-weight: bold" />
-							</f:facet>
 
-							<p:graphicImage name="/images/no_image.png" height="190px" />
 
 							<p:outputPanel>
 								<h:panelGrid border="0" columns="2" cellpadding="15"
 									width="500px">
 
+									<h:outputText value="Naziv:" />
+									<h:outputText value="#{objekt.naziv_Objekta}"
+										style="font-weight: bold" />
+
 									<h:outputText value="Opis:" />
-									<h:outputText value="#{tempCenter.opis_SportniCenter}"
+									<h:outputText value="#{objekt.opis_Objekta}"
 										style="font-weight: bold" />
 
-									<h:outputText value="Lokacija:" />
-									<h:outputText value="#{tempCenter.lokacija}"
+									<h:outputText value="Tip:" />
+									<h:outputText value="#{objekt.tipObjekta}"
 										style="font-weight: bold" />
 
-
+									<h:outputText value="Cena:" />
+									<h:outputText value="#{objekt.cena_Objekta}"
+										style="font-weight: bold" />
 
 									<f:facet name="footer">
-										<h:link outcome="sportnicenter" value="Podrobnosti centra">
-											<f:param name="id_SportniCenter"
-												value="#{tempCenter.id_SportniCenter}" />
+										<h:link outcome=" " value="Rezerviraj">
+											<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
 										</h:link>
-
 									</f:facet>
 								</h:panelGrid>
-
 							</p:outputPanel>
 							<h:panelGrid border="0" columns="1" cellpadding="10">
 								<f:facet name="header"> 
-		              		
-		              			
             					Tipi športov 
-            				
-            				
          					</f:facet>
-
-
 							</h:panelGrid>
-
 						</h:panelGrid>
 						<p:separator />
 					</p:dataScroller>
 				</h:form>
+			
+			Ali ste prepričani, da želite izbrisati ta objekt?
+			<p:commandButton value="DA"
+					actionListener="#{objekt.izbrisObjekta(id_Objekta)}" />
+				<p:commandButton value="NE" actionListener="#{objekt.redirect()}" />
+
 			</f:view>
 		</ui:define>
 	</ui:composition>
 </h:body>
 </html>
-
-
-

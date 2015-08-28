@@ -15,19 +15,18 @@ import eRekreacija.TipSporta;
 
 public class TipSportaDAO {
 	static DataSource baza;
-	
-	public TipSportaDAO(DataSource pb){
+
+	public TipSportaDAO(DataSource pb) {
 		baza = pb;
 	}
-	
-	
+
 	public void shraniTipSporta(TipSporta tip) throws Exception {
-		Connection conn= null;		
-		try{
+		Connection conn = null;
+		try {
 			try {
-				conn= baza.getConnection();
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
 			String sql = ("INSERT INTO tipsporta (naziv_sporta) VALUES(?)");
@@ -39,80 +38,78 @@ public class TipSportaDAO {
 			if (rs != null && rs.next()) {
 				System.out.println("Id vnosa: " + rs.getLong(1));
 			}
-			st.executeUpdate();			
-		}catch(SQLException e){
+			st.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {				
+		} finally {
 			conn.close();
 			System.out.println("Connection CLOSED!");
-		}	
+		}
 	}
-	
-	public List<TipSporta> getTipSports()throws Exception{
+
+	public List<TipSporta> getTipSports() throws Exception {
 		List<TipSporta> seznamTipSporta = new ArrayList<TipSporta>();
-		Connection conn= null;
-		try{
+		Connection conn = null;
+		try {
 			try {
-				conn= baza.getConnection();
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql ="SELECT * FROM tipsporta;";
+			String sql = "SELECT * FROM tipsporta;";
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
-			while (rs.next()){
+			while (rs.next()) {
 				TipSporta tempTipSporta = new TipSporta();
-				
+
 				tempTipSporta.setId_TipSporta(rs.getInt("idTipsporta"));
-				tempTipSporta.setNaziv_TipSporta(rs.getString("naziv_sporta"));			
+				tempTipSporta.setNaziv_TipSporta(rs.getString("naziv_sporta"));
 				seznamTipSporta.add(tempTipSporta);
 			}
-			
-		}catch (Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {				
+		} finally {
 			conn.close();
 			System.out.println("Connection CLOSED!");
-		}	
-	
+		}
+
 		return seznamTipSporta;
 	}
-	
-	//za izpis vseh tipov sportov ki jih ponuja sportni objekt
-	public List<TipSporta> getSportiZaCenter(int id_SportniCenter) throws Exception{
+
+	// za izpis vseh tipov sportov ki jih ponuja sportni objekt
+	public List<TipSporta> getSportiZaCenter(int id_SportniCenter) throws Exception {
 		List<TipSporta> seznamTipovSporta = new ArrayList<TipSporta>();
-		Connection conn= null;
-		try{
+		Connection conn = null;
+		try {
 			try {
-				conn= baza.getConnection();
+				conn = baza.getConnection();
 				System.out.println("Connection OPEN!");
-			}catch(Exception e){
+			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql ="SELECT DISTINCT s.naziv_sporta, s.idTipsporta FROM tipsporta s, objekt o, sportnicenter sc WHERE o.tipsporta_idtipsporta= s.idTipSporta AND o.sportniCenter_idSportniCenter=sc.idSportniCenter  AND sc.idSportniCenter= ?;";
+			String sql = "SELECT DISTINCT s.naziv_sporta, s.idTipsporta FROM tipsporta s, objekt o, sportnicenter sc WHERE o.tipsporta_idtipsporta= s.idTipSporta AND o.sportniCenter_idSportniCenter=sc.idSportniCenter  AND sc.idSportniCenter= ?;";
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, id_SportniCenter);
 			ResultSet rs = st.executeQuery();
-			while (rs.next()){
+			while (rs.next()) {
 				TipSporta tempTipSporta = new TipSporta();
-				
+
 				tempTipSporta.setId_TipSporta(rs.getInt("idTipSporta"));
 				tempTipSporta.setNaziv_TipSporta(rs.getString("naziv_sporta"));
-				
+
 				seznamTipovSporta.add(tempTipSporta);
 			}
-			
-		}catch (Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally{				
+		} finally {
 			conn.close();
-		System.out.println("Connection CLOSED!");
+			System.out.println("Connection CLOSED!");
 		}
-	
+
 		return seznamTipovSporta;
 	}
-	
-	
 
 }

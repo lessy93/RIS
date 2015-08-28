@@ -1,125 +1,135 @@
 <!DOCTYPE html>
-<html
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta charset="UTF-8"/>
-<title>Izbrani center</title>
+	<meta charset="UTF-8" />
+	<title>Izbrani center</title>
 </h:head>
 <h:body>
 
-<ui:composition template="commonLayout.xhtml">
-	<ui:define name="content">
-	
-						<h:form>
-								<h:dataTable id="table1"
-									value="#{center.isci(id_SportniCenter)}" var="center"
-									border="0">
-								</h:dataTable>
-						</h:form>
-						<h:form>
-								<h:dataTable id="table2"
-									value="#{objekt.isciObjekteCentra(id_SportniCenter)}" var="objekt"
-									border="0">
-								</h:dataTable>
-						</h:form>
-					
-		<f:view>
-		
-		<f:metadata>
-			<f:viewParam name="id_SportniCenter" />
-		</f:metadata>
-		
-		<h:form>
-		<p:dataScroller   value="#{center.enCenter}" var="seznam"   chunkSize="10">	  
-       				<f:facet name="header">
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+				<h:dataTable id="table1" value="#{center.isci(id_SportniCenter)}"
+					var="center" border="0">
+				</h:dataTable>
+			</h:form>
+			<h:form>
+				<h:dataTable id="table2"
+					value="#{objekt.isciObjekteCentra(id_SportniCenter)}" var="objekt"
+					border="0">
+				</h:dataTable>
+			</h:form>
+
+			<f:view>
+
+				<f:metadata>
+					<f:viewParam name="id_SportniCenter" />
+				</f:metadata>
+
+				<h:form>
+					<p:dataScroller value="#{center.enCenter}" var="seznam"
+						chunkSize="10">
+						<f:facet name="header">
             			Željeni športni center
        				</f:facet>
- 
-	        	<h:panelGrid columns="3" style="width:90%; padding-left:100px;" border="0" columnClasses="logo,detail">
-		  			
-	            	<p:graphicImage  name="/images/no_image.png" height="190px" />  
-		            <p:outputPanel >
-		                <h:panelGrid border="0" columns="2" cellpadding="15" width="500px">
-		                
-		               		<h:outputText value="Naziv:" /> 
-		                	<h:outputText value="#{seznam.naziv_SportniCenter}" style="font-weight: bold"/>
-		               
-		                    <h:outputText value="Opis:" />
-		                    <h:outputText value="#{seznam.opis_SportniCenter}" style="font-weight: bold"/>
-		 
-		                    <h:outputText value="Lokacija:" />
-		                    <h:outputText value="#{seznam.lokacija}" style="font-weight: bold"/>  	
-		                </h:panelGrid>        		
-		            </p:outputPanel> 
-		            	<h:panelGrid border="0" columns="1" cellpadding="10">
-		              		<f:facet name="header"> 
+
+						<h:panelGrid columns="3" style="width:90%; padding-left:100px;"
+							border="0" columnClasses="logo,detail">
+
+							<p:graphicImage name="/images/no_image.png" height="190px" />
+							<p:outputPanel>
+								<h:panelGrid border="0" columns="2" cellpadding="15"
+									width="500px">
+
+									<h:outputText value="Naziv:" />
+									<h:outputText value="#{seznam.naziv_SportniCenter}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Opis:" />
+									<h:outputText value="#{seznam.opis_SportniCenter}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Lokacija:" />
+									<h:outputText value="#{seznam.lokacija}"
+										style="font-weight: bold" />
+								</h:panelGrid>
+							</p:outputPanel>
+							<h:panelGrid border="0" columns="1" cellpadding="10">
+								<f:facet name="header"> 
             			
             					
             					Tipi športov 
             					<p:dataList value="#{seznam.tipiSportov}" var="sport">
-            					<h:outputText value="#{sport.naziv_TipSporta}" style="font-weight: bold"/>
-            					</p:dataList>
-            					
-            					
-         					</f:facet> 
-		                </h:panelGrid>      
-	       		</h:panelGrid>
-	       		 <p:separator />
-	   		</p:dataScroller>
-	   	</h:form>
-	   	
-	   	<h:form id="form2">
-				<p:dataScroller   value="#{objekt.seznamObjektovCenter}" var="objekt"   chunkSize="10">	  
-       				<f:facet name="header">
+										<h:outputText value="#{sport.naziv_TipSporta}"
+											style="font-weight: bold" />
+									</p:dataList>
+
+
+								</f:facet>
+							</h:panelGrid>
+						</h:panelGrid>
+						<p:separator />
+					</p:dataScroller>
+				</h:form>
+
+				<h:form id="form2">
+					<p:dataScroller value="#{objekt.seznamObjektovCenter}" var="objekt"
+						chunkSize="10">
+						<f:facet name="header">
             			Seznam objektov športnega centra
        				</f:facet>
- 
-	        	<h:panelGrid columns="3" style="width:90%; padding-left:100px;" border="0" columnClasses="logo,detail">
-		  			
-	            	 
-			    
-		            <p:outputPanel >
-		                <h:panelGrid border="0" columns="2" cellpadding="15" width="500px">
-		                
-		                	<h:outputText value="Naziv:" />
-		                    <h:outputText value="#{objekt.naziv_Objekta}" style="font-weight: bold"/> 
-		               
-		                    <h:outputText value="Opis:" />
-		                    <h:outputText value="#{objekt.opis_Objekta}" style="font-weight: bold"/>
-		 
-		                    <h:outputText value="Tip:" />
-		                    <h:outputText value="#{objekt.tipObjekta}" style="font-weight: bold"/>
-		                    
-		                    <h:outputText value="Cena:" />
-		                    <h:outputText value="#{objekt.cena_Objekta}" style="font-weight: bold"/>
-			               	  	
-			               	<f:facet name="footer">
-			               	<h:outputLink value="ObjektPodrobno.xhtml" title="ble">
-			               	 
-			               	</h:outputLink>
-			               	  <h:link outcome="ObjektPodrobno"
-										value="Podrobnosti objekta">
-							  	<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
-							  </h:link>
-							</f:facet>
-		                </h:panelGrid>        		
-		            </p:outputPanel>      
-		            	<h:panelGrid border="0" columns="1" cellpadding="10">
-		              		<f:facet name="header"> 
-            					<h:outputText value="Tip sporta " />
-            					<h:outputText value="#{objekt.tipSporta}" style="font-weight: bold"/>
-         					</f:facet> 
-		                </h:panelGrid>           
-	       		</h:panelGrid>
-	       		 <p:separator />
-	   		</p:dataScroller>
-			</h:form>			
-		
-		</f:view>
-	</ui:define>	
-</ui:composition>
+
+						<h:panelGrid columns="3" style="width:90%; padding-left:100px;"
+							border="0" columnClasses="logo,detail">
+
+
+
+							<p:outputPanel>
+								<h:panelGrid border="0" columns="2" cellpadding="15"
+									width="500px">
+
+									<h:outputText value="Naziv:" />
+									<h:outputText value="#{objekt.naziv_Objekta}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Opis:" />
+									<h:outputText value="#{objekt.opis_Objekta}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Tip:" />
+									<h:outputText value="#{objekt.tipObjekta}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Cena:" />
+									<h:outputText value="#{objekt.cena_Objekta}"
+										style="font-weight: bold" />
+
+									<f:facet name="footer">
+
+										<h:link outcome="ObjektPodrobno" value="Podrobnosti objekta">
+											<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
+										</h:link>
+									</f:facet>
+								</h:panelGrid>
+							</p:outputPanel>
+							<h:panelGrid border="0" columns="1" cellpadding="10">
+								<f:facet name="header">
+									<h:outputText value="Tip sporta " />
+									<h:outputText value="#{objekt.tipSporta}"
+										style="font-weight: bold" />
+								</f:facet>
+							</h:panelGrid>
+						</h:panelGrid>
+						<p:separator />
+					</p:dataScroller>
+				</h:form>
+
+			</f:view>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

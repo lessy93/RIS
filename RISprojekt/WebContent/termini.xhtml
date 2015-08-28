@@ -1,78 +1,92 @@
 <!DOCTYPE html>
-<html
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta charset="UTF-8"/>
-<title>Insert title here</title>
+	<meta charset="UTF-8" />
+	<title>Insert title here</title>
 </h:head>
 <h:body>
 
-<ui:composition template="commonLayout.xhtml">
-	<ui:define name="content">
-		
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
 
-		<f:view>
-		<h:form>
-    <p:growl id="messages" showDetail="true" />
- 
-    <h:panelGrid columnClasses="value">
-        <h3 style="margin-top: 0">Termini</h3>
-        <p:schedule  id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
- 
-            <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
-            <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />
- 
-        </p:schedule>
- 
-    
-    </h:panelGrid>
- 
-    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
-        <h:panelGrid id="eventDetails" columns="2">
-            <h:outputLabel for="title" value="Title:" />
-            <p:inputText id="title" value="#{scheduleView.event.title}" required="true" />
- 
-            <h:outputLabel for="from" value="From:" />
-            <p:inputMask id="from" value="#{scheduleView.event.startDate}" mask="99/99/9999">
-                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2"/>
-            </p:inputMask>
- 
-            <h:outputLabel for="to" value="To:" />
-            <p:inputMask id="to" value="#{scheduleView.event.endDate}" mask="99/99/9999">
-                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2"/>
-            </p:inputMask>
-            
-                <h:outputLabel for="odUre" value="Od ure:" />
-            <p:inputMask id="odUre" value="#{scheduleView.event.endDate}" mask="99:99">
-                <f:convertDateTime pattern="dd/MM/yyyy hh:mm" timeZone="GMT+2"/>
-            </p:inputMask>
-            
- 
-            <h:outputLabel for="allDay" value="All Day:" />
-            <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
- 
-            <p:commandButton type="reset" value="Reset" />
-            <p:commandButton id="addButton" value="Save" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-        </h:panelGrid>
-    </p:dialog>    
-</h:form>
- 
 
-<style type="text/css">
-    .value {
-        width: 400px;
-    }
-</style>	
-		</f:view>
-	</ui:define>	
-</ui:composition>
+			<f:view>
+				<h:form>
+					<p:growl id="messages" showDetail="true" />
+
+					<h:panelGrid columnClasses="value">
+						<h3 style="margin-top: 0">Termini</h3>
+						<p:schedule id="schedule" value="#{scheduleView.eventModel}"
+							widgetVar="myschedule" timeZone="GMT+2">
+
+							<p:ajax event="dateSelect"
+								listener="#{scheduleView.onDateSelect}" update="eventDetails"
+								oncomplete="PF('eventDialog').show();" />
+							<p:ajax event="eventSelect"
+								listener="#{scheduleView.onEventSelect}" update="eventDetails"
+								oncomplete="PF('eventDialog').show();" />
+							<p:ajax event="eventMove" listener="#{scheduleView.onEventMove}"
+								update="messages" />
+							<p:ajax event="eventResize"
+								listener="#{scheduleView.onEventResize}" update="messages" />
+
+						</p:schedule>
+
+
+					</h:panelGrid>
+
+					<p:dialog widgetVar="eventDialog" header="Event Details"
+						showEffect="clip" hideEffect="clip">
+						<h:panelGrid id="eventDetails" columns="2">
+							<h:outputLabel for="title" value="Title:" />
+							<p:inputText id="title" value="#{scheduleView.event.title}"
+								required="true" />
+
+							<h:outputLabel for="from" value="From:" />
+							<p:inputMask id="from" value="#{scheduleView.event.startDate}"
+								mask="99/99/9999">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2" />
+							</p:inputMask>
+
+							<h:outputLabel for="to" value="To:" />
+							<p:inputMask id="to" value="#{scheduleView.event.endDate}"
+								mask="99/99/9999">
+								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+2" />
+							</p:inputMask>
+
+							<h:outputLabel for="odUre" value="Od ure:" />
+							<p:inputMask id="odUre" value="#{scheduleView.event.endDate}"
+								mask="99:99">
+								<f:convertDateTime pattern="dd/MM/yyyy hh:mm" timeZone="GMT+2" />
+							</p:inputMask>
+
+
+							<h:outputLabel for="allDay" value="All Day:" />
+							<h:selectBooleanCheckbox id="allDay"
+								value="#{scheduleView.event.allDay}" />
+
+							<p:commandButton type="reset" value="Reset" />
+							<p:commandButton id="addButton" value="Save"
+								actionListener="#{scheduleView.addEvent}"
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
+
+
+				<style type="text/css">
+.value {
+	width: 400px;
+}
+</style>
+			</f:view>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
 
 
-			
+

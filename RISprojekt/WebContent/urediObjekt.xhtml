@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<meta charset="UTF-8" />
+<title>Uredi objekt</title>
+
+
+
+</head>
+<body>
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
+			<h:form>
+				<h:dataTable id="table3" value="#{objekt.isci(id_Objekta)}"
+					var="center" border="0">
+				</h:dataTable>
+			</h:form>
+			<f:view>
+				<f:metadata>
+					<f:viewParam name="id_Objekta" />
+				</f:metadata>
+				<h:form id="uredi">
+					<p:growl id="messages" showDetail="true" />
+					<p:dataTable id="table3" value="#{objekt.seznamObjektovCentra}"
+						var="obj" border="1">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Naziv" />
+							</f:facet>
+							<b><h:inputText value="#{obj.naziv_Objekta}" /></b>
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Opis" />
+							</f:facet>
+							<h:inputText value="#{obj.opis_Objekta}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Cena" />
+							</f:facet>
+							<h:inputText value="#{obj.cena_Objekta}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Tip objekta" />
+							</f:facet>
+							<h:selectOneRadio id="tipObjekta" value="#{obj.tipObjekta}"
+								required="true" requiredMessage="Izberite tip!">
+								<f:selectItem itemValue="Dvorana" itemLabel="Dvorana" />
+								<f:selectItem itemValue="Na prostem" itemLabel="Na prostem" />
+							</h:selectOneRadio>
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Tip športa" />
+							</f:facet>
+							<p:selectOneMenu id="sporti"
+								value="#{objekt.tipSporta.id_TipSporta}"
+								requiredMessage="Izberite Športe!">
+
+								<f:selectItems value="#{sport.vsiTipi}" var="s"
+									itemValue="#{s.id_TipSporta}" itemLabel="#{s.naziv_TipSporta}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+
+							<p:commandButton update="uredi" value="Shrani"
+								actionListener="#{objekt.shraniSpremembe}" />
+
+						</p:column>
+					</p:dataTable>
+
+				</h:form>
+			</f:view>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

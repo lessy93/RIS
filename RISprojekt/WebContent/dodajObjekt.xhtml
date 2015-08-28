@@ -1,63 +1,72 @@
 <!DOCTYPE html>
-<html
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Dodaj objekt</title>
 
 </head>
 <body>
-<ui:composition template="commonLayout.xhtml">
-	<ui:define name="content">
-		<f:view>
-		
-			<h:form  id="dodajObjekt">
-			<p:growl id="messages" showDetail="true" />
-			<p:panelGrid  columns="3" border="0"  styleClass="buttonPanel" columnClasses="left,middle,right" >
-				
-				<f:facet name="header">
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
+			<f:view>
+
+				<h:form id="dodajObjekt">
+					<p:growl id="messages" showDetail="true" />
+					<p:panelGrid columns="3" border="0" styleClass="buttonPanel"
+						columnClasses="left,middle,right">
+
+						<f:facet name="header">
 					Dodajanje objekta
 				</f:facet>
-				<p:outputLabel for="imeObjekta" value="Ime objekta:"/>
-				<p:inputText id="imeObjekta" value="#{objekt.naziv_Objekta}" required="true" requiredMessage="Vnesite ime!"/>
- 				<p:message for="imeObjekta" class="error_message"></p:message>
-				
-				<p:outputLabel for="tipObjekta" value="Tip objekta:" required="true" requiredMessage="Izberite tip!"/>
-				<h:selectOneRadio id="tipObjekta" value="#{objekt.tipObjekta}" required="true" requiredMessage="Izberite tip!">
-   					<f:selectItem itemValue="Dvorana" itemLabel="Dvorana" />
-   					<f:selectItem itemValue="Na prostem" itemLabel="Na prostem" />	   			
-				</h:selectOneRadio>
-				<p:message for="tipObjekta" class="error_message"></p:message> 
-				
-				<p:outputLabel for="sporti" value="Športi: " />
-				<p:selectOneMenu id="sporti" value="#{objekt.tipSporta.id_TipSporta}"  requiredMessage="Izberite Športe!">
-   					
-   					<f:selectItems value="#{sport.vsiTipi}" var="s" itemValue="#{s.id_TipSporta}" itemLabel="#{s.naziv_TipSporta}" />		
-				</p:selectOneMenu>
-				<p:message for="sporti" class="error_message"></p:message> 
-				
-				<p:outputLabel for="opisObjekta" value="Opis objekta:"/>
-				<p:inputTextarea id="opisObjekta" value="#{objekt.opis_Objekta}" required="true" requiredMessage="Vnesite opis!"></p:inputTextarea>
-				<p:message for="opisObjekta" class="error_message"></p:message> 
-				
-				<p:outputLabel for="cenaN" value="Cena najema (1h): " />
-				<p:inputText id="cenaN" value="#{objekt.cena_Objekta}" required="true" requiredMessage="Vnesite ceno za najem!"/>
-				<p:message for="cenaN" class="error_message"></p:message> 			
-				
-   				
- 				
-				<f:facet name="footer">
-				<p:commandButton  update="dodajObjekt" value="Dodaj" actionListener="#{objekt.dodajObjekt()}" />
-			
-	          	</f:facet>  	
-				</p:panelGrid>		
-			
-			</h:form>
-		</f:view>
-	</ui:define>
-</ui:composition>
+						<p:outputLabel for="imeObjekta" value="Ime objekta:" />
+						<p:inputText id="imeObjekta" value="#{objekt.naziv_Objekta}"
+							required="true" requiredMessage="Vnesite ime!" />
+						<p:message for="imeObjekta" class="error_message"></p:message>
+
+						<p:outputLabel for="tipObjekta" value="Tip objekta:"
+							required="true" requiredMessage="Izberite tip!" />
+						<h:selectOneRadio id="tipObjekta" value="#{objekt.tipObjekta}"
+							required="true" requiredMessage="Izberite tip!">
+							<f:selectItem itemValue="Dvorana" itemLabel="Dvorana" />
+							<f:selectItem itemValue="Na prostem" itemLabel="Na prostem" />
+						</h:selectOneRadio>
+						<p:message for="tipObjekta" class="error_message"></p:message>
+
+						<p:outputLabel for="sporti" value="Športi: " />
+						<p:selectOneMenu id="sporti"
+							value="#{objekt.tipSporta.id_TipSporta}"
+							requiredMessage="Izberite Športe!">
+
+							<f:selectItems value="#{sport.vsiTipi}" var="s"
+								itemValue="#{s.id_TipSporta}" itemLabel="#{s.naziv_TipSporta}" />
+						</p:selectOneMenu>
+						<p:message for="sporti" class="error_message"></p:message>
+
+						<p:outputLabel for="opisObjekta" value="Opis objekta:" />
+						<p:inputTextarea id="opisObjekta" value="#{objekt.opis_Objekta}"
+							required="true" requiredMessage="Vnesite opis!"></p:inputTextarea>
+						<p:message for="opisObjekta" class="error_message"></p:message>
+
+						<p:outputLabel for="cenaN" value="Cena najema (1h): " />
+						<p:inputText id="cenaN" value="#{objekt.cena_Objekta}"
+							required="true" requiredMessage="Vnesite ceno za najem!" />
+						<p:message for="cenaN" class="error_message"></p:message>
+
+
+
+						<f:facet name="footer">
+							<p:commandButton update="dodajObjekt" value="Dodaj"
+								actionListener="#{objekt.dodajObjekt()}" />
+
+						</f:facet>
+					</p:panelGrid>
+
+				</h:form>
+			</f:view>
+		</ui:define>
+	</ui:composition>
 </body>
 </html>

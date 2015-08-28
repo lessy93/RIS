@@ -1,139 +1,158 @@
 <!DOCTYPE html>
-<html
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" >
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta charset="UTF-8"/>
-<title>Insert title here</title>
+	<meta charset="UTF-8" />
+	<title>Insert title here</title>
 </h:head>
 <h:body>
 
-<ui:composition template="commonLayout.xhtml">
-	<ui:define name="content">
-	
-						<h:form>
-								<h:dataTable id="table3"
-									value="#{objekt.isci(id_Objekta)}" var="center"
-									border="0">
-								</h:dataTable>
-						</h:form>
-						
-		<f:view>
-		
-		<f:metadata>
-			<f:viewParam name="id_Objekta" />
-		</f:metadata>
-		
-		<h:form id="form2">
-				<p:dataScroller   value="#{objekt.seznamObjektovCentra}" var="objekt"   chunkSize="10">	  
-       				<f:facet name="header">
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+				<h:dataTable id="table3" value="#{objekt.isci(id_Objekta)}"
+					var="center" border="0">
+				</h:dataTable>
+			</h:form>
+
+			<f:view>
+
+				<f:metadata>
+					<f:viewParam name="id_Objekta" />
+				</f:metadata>
+
+				<h:form id="form2">
+					<p:dataScroller value="#{objekt.seznamObjektovCentra}" var="objekt"
+						chunkSize="10">
+						<f:facet name="header">
             			Seznam objektov športnega centra
        				</f:facet>
- 
-	        	<h:panelGrid columns="3" style="width:90%; padding-left:100px;" border="0" columnClasses="logo,detail">
-		  			
-	            	 
-			    
-		            <p:outputPanel >
-		                <h:panelGrid border="0" columns="2" cellpadding="15" width="500px">
-		                
-		                	<h:outputText value="Naziv:" />
-		                    <h:outputText value="#{objekt.naziv_Objekta}" style="font-weight: bold"/> 
-		               
-		                    <h:outputText value="Opis:" />
-		                    <h:outputText value="#{objekt.opis_Objekta}" style="font-weight: bold"/>
-		 
-		                    <h:outputText value="Tip:" />
-		                    <h:outputText value="#{objekt.tipObjekta}" style="font-weight: bold"/>
-		                    
-		                    <h:outputText value="Cena:" />
-		                    <h:outputText value="#{objekt.cena_Objekta}" style="font-weight: bold"/>
-			               	  	
-			               	<f:facet name="footer">
-			               	  <h:link outcome=" "
-										value="Rezerviraj">
-							  	<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
-							  </h:link>
-							</f:facet>
-		                </h:panelGrid>        		
-		            </p:outputPanel>      
-		            	<h:panelGrid border="0" columns="1" cellpadding="10">
-		              		<f:facet name="header"> 
-            					Tipi športov 
-         					</f:facet> 
-		                </h:panelGrid>           
-	       		</h:panelGrid>
-	       		 <p:separator />
-	   		</p:dataScroller>
-			</h:form>
-			
-			<h:form>
-    <p:growl id="messages" showDetail="true" />
- 
-    <h:panelGrid columnClasses="value" rendered="#{loginBean.username!=null}">
-        <h3 style="margin-top: 0">Rezerviraj termin</h3>
-        <p:schedule id="schedule" value="#{urnikBean.eventModel}" locale="slo" widgetVar="myschedule" timeZone="GMT+2">
- 
-            <p:ajax event="dateSelect" listener="#{urnikBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-            <p:ajax event="eventSelect" listener="#{urnikBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-            <p:ajax event="eventMove" listener="#{urnikBean.onEventMove}" update="messages" />
-            <p:ajax event="eventResize" listener="#{urnikBean.onEventResize}" update="messages" />
- 
-        </p:schedule>      
-    </h:panelGrid>
- 
-    <p:dialog widgetVar="eventDialog" header="Rezervacija termina" showEffect="clip" hideEffect="clip">
-        <h:panelGrid id="eventDetails" columns="2">
-      
- 
-            <p:outputLabel for="from" value="Od:" />
-            <p:calendar id="from" value="#{urnikBean.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
- 
-            <p:outputLabel for="to" value="Do:" />
-            <p:calendar id="to" value="#{urnikBean.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
- 
-          
- 
-            <p:commandButton type="reset" value="Resetiraj" />
-            <p:commandButton id="addButton" value="Rezerviraj" actionListener="#{urnikBean.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-        </h:panelGrid>
-    </p:dialog>    
-</h:form>
 
-<script type="text/javascript">
-    PrimeFaces.locales['slo'] = {
-        closeText: 'Zapri',
-        prevText: 'Nazaj',
-        nextText: 'Naprej',
-        currentText: 'Danes',
-        monthNames: ['Januar','Februar','Marec','April','Maj','Junij',
-            'Julij','Avgust','September','Oktober','November','December'],
-        monthNamesShort: ['Jan','Feb','Mar','Apr','Maj','Jun',
-            'Jul','Avg','Sep','Okt','Nov','Dec'],
-        dayNames: ['Nedelja','Ponedeljek','Torek','Sreda','Četrtek','Petek','Sobota'],
-        dayNamesShort: ['Ned','Pon','Tor','Sre','Čet','Pet','Sob'],
-        dayNamesMin: ['Ned','Pon','Tor','Sre','Čet','Pet','Sob'],
-        weekHeader: 'Hf',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: '',
-        month: 'Mesec',
-        week: 'Teden',
-        day: 'Dan',
-        allDayText : 'Ves dan'
-    };
-</script>
- 
-<style type="text/css">
-    .value {
-        width: 1000px;
-    }
+						<h:panelGrid columns="3" style="width:90%; padding-left:100px;"
+							border="0" columnClasses="logo,detail">
+
+
+
+							<p:outputPanel>
+								<h:panelGrid border="0" columns="2" cellpadding="15"
+									width="500px">
+
+									<h:outputText value="Naziv:" />
+									<h:outputText value="#{objekt.naziv_Objekta}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Opis:" />
+									<h:outputText value="#{objekt.opis_Objekta}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Tip:" />
+									<h:outputText value="#{objekt.tipObjekta}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Cena:" />
+									<h:outputText value="#{objekt.cena_Objekta}"
+										style="font-weight: bold" />
+
+									<f:facet name="footer">
+										<h:link outcome=" " value="Rezerviraj">
+											<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
+										</h:link>
+									</f:facet>
+								</h:panelGrid>
+							</p:outputPanel>
+							<h:panelGrid border="0" columns="1" cellpadding="10">
+								<f:facet name="header"> 
+            					Tipi športov 
+         					</f:facet>
+							</h:panelGrid>
+						</h:panelGrid>
+						<p:separator />
+					</p:dataScroller>
+				</h:form>
+
+				<h:form>
+					<p:growl id="messages" showDetail="true" />
+
+					<h:panelGrid columnClasses="value"
+						rendered="#{loginBean.username!=null}">
+						<h3 style="margin-top: 0">Rezerviraj termin</h3>
+						<p:schedule id="schedule" value="#{urnikBean.eventModel}"
+							locale="slo" widgetVar="myschedule" timeZone="GMT+2">
+
+							<p:ajax event="dateSelect" listener="#{urnikBean.onDateSelect}"
+								update="eventDetails" oncomplete="PF('eventDialog').show();" />
+							<p:ajax event="eventSelect" listener="#{urnikBean.onEventSelect}"
+								update="eventDetails" oncomplete="PF('eventDialog').show();" />
+							<p:ajax event="eventMove" listener="#{urnikBean.onEventMove}"
+								update="messages" />
+							<p:ajax event="eventResize" listener="#{urnikBean.onEventResize}"
+								update="messages" />
+
+						</p:schedule>
+					</h:panelGrid>
+
+					<p:dialog widgetVar="eventDialog" header="Rezervacija termina"
+						showEffect="clip" hideEffect="clip">
+						<h:panelGrid id="eventDetails" columns="2">
+
+
+							<p:outputLabel for="from" value="Od:" />
+							<p:calendar id="from" value="#{urnikBean.event.startDate}"
+								timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
+
+							<p:outputLabel for="to" value="Do:" />
+							<p:calendar id="to" value="#{urnikBean.event.endDate}"
+								timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
+
+
+
+							<p:commandButton type="reset" value="Resetiraj" />
+							<p:commandButton id="addButton" value="Rezerviraj"
+								actionListener="#{urnikBean.addEvent}"
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
+
+				<script type="text/javascript">
+					PrimeFaces.locales['slo'] = {
+						closeText : 'Zapri',
+						prevText : 'Nazaj',
+						nextText : 'Naprej',
+						currentText : 'Danes',
+						monthNames : [ 'Januar', 'Februar', 'Marec', 'April',
+								'Maj', 'Junij', 'Julij', 'Avgust', 'September',
+								'Oktober', 'November', 'December' ],
+						monthNamesShort : [ 'Jan', 'Feb', 'Mar', 'Apr', 'Maj',
+								'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec' ],
+						dayNames : [ 'Nedelja', 'Ponedeljek', 'Torek', 'Sreda',
+								'Četrtek', 'Petek', 'Sobota' ],
+						dayNamesShort : [ 'Ned', 'Pon', 'Tor', 'Sre', 'Čet',
+								'Pet', 'Sob' ],
+						dayNamesMin : [ 'Ned', 'Pon', 'Tor', 'Sre', 'Čet',
+								'Pet', 'Sob' ],
+						weekHeader : 'Hf',
+						firstDay : 1,
+						isRTL : false,
+						showMonthAfterYear : false,
+						yearSuffix : '',
+						month : 'Mesec',
+						week : 'Teden',
+						day : 'Dan',
+						allDayText : 'Ves dan'
+					};
+				</script>
+
+				<style type="text/css">
+.value {
+	width: 1000px;
+}
 </style>
 			</f:view>
-	</ui:define>	
-</ui:composition>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

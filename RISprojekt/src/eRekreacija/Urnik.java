@@ -1,6 +1,5 @@
 package eRekreacija;
 
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,7 +40,7 @@ public class Urnik implements Serializable {
 	private ScheduleEvent event = new DefaultScheduleEvent();
 
 	private List<Termini> seznamTerminovZaObjekt;
-	
+
 	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
 	DataSource baza;
 
@@ -51,17 +50,16 @@ public class Urnik implements Serializable {
 		Termini termin = new Termini();
 		TerminiDAO terminDAO = new TerminiDAO(baza);
 		System.out.println("Tuki:");
-		//seznamTerminovZaObjekt = termin.getSeznamTerminovObjekt();
-		seznamTerminovZaObjekt= new ArrayList<Termini>();
+		// seznamTerminovZaObjekt = termin.getSeznamTerminovObjekt();
+		seznamTerminovZaObjekt = new ArrayList<Termini>();
 		try {
 			HttpSession session = Util.getSession();
-	        int id= (int) session.getAttribute("izbraniObjekt");
-			
-			
+			int id = (int) session.getAttribute("izbraniObjekt");
+
 			seznamTerminovZaObjekt = terminDAO.getTerminiBYidObjekt(id);
-			//seznamTerminovZaObjekt= termin.getSeznamTerminovObjekt();
+			// seznamTerminovZaObjekt= termin.getSeznamTerminovObjekt();
 			for (Termini termini : seznamTerminovZaObjekt) {
-				
+
 				eventModel.addEvent(
 						new DefaultScheduleEvent("Zasedeno", termini.getZacetniCas(), termini.getKoncniCas()));
 			}
@@ -70,7 +68,6 @@ public class Urnik implements Serializable {
 			System.out.println("Napaka! Neuspešno pridobivanje rezerviranih terminov!" + e.toString());
 		}
 
-		
 	}
 
 	public Date getRandomDate(Date base) {
@@ -189,7 +186,7 @@ public class Urnik implements Serializable {
 			Date zacetniCas = event.getStartDate();
 			Date koncniCas = event.getEndDate();
 			HttpSession session = Util.getSession();
-	        int id= (int) session.getAttribute("izbraniObjekt");
+			int id = (int) session.getAttribute("izbraniObjekt");
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			System.out.println("DodajRezervacijo" + dateFormat.format(zacetniCas));

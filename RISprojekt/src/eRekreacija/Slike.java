@@ -1,6 +1,5 @@
 package eRekreacija;
 
-
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +16,6 @@ import javax.sql.DataSource;
 
 import org.primefaces.model.UploadedFile;
 
-
 @ManagedBean(name = "slike")
 @SessionScoped
 public class Slike {
@@ -28,90 +26,86 @@ public class Slike {
 	private SportniCenter sportniCenter;
 	private Uporabnik uporabnik;
 	private UploadedFile file;
-	
-	
-	
-	@Resource(lookup="java:jboss/datasources/eRekreacija/")
-	DataSource baza;
-	
-	public void upload() throws SQLException {
-		Connection conn= null; 
-		if(file != null) {	
-			try{
-				try {
-					conn= baza.getConnection();
-					System.out.println("Connection OPEN!");
-				}catch(Exception e){
-					System.out.println("Napaka Connection!");
-				}
-				
-				HttpSession session = Util.getSession();
-				Uporabnik user= (Uporabnik) session.getAttribute("uporabnik");
-				System.out.println("User id:"+user.getId_Uporabnik());
-				System.out.println("User id:"+user.getSportniCenter().getId_SportniCenter());
-	            // Create the statement object
-	            PreparedStatement st = conn.prepareStatement("INSERT INTO slike(naziv_slike, slika,Sportnicenter_idSportnicenter, Uporabnik_idUporabnik)  VALUES (?,?,?,?)");
-	            // Set file data
-	            st.setString(1, "profilna");
-	            st.setBinaryStream(2, file.getInputstream());
-	            st.setInt(3, user.getSportniCenter().getId_SportniCenter() );
-	            st.setInt(4, user.getId_Uporabnik());
-	             
-	            // Insert data to the database
-	            st.executeUpdate();
-	        	
-	            FacesMessage message = new FacesMessage("Nalaganje datoteke uspešno! Datoteka ", file.getFileName() + "je naložena!");
-	            FacesContext.getCurrentInstance().addMessage(null, message);
-	    	} catch (Exception e) {
-	    		e.printStackTrace();	    	             
-	    	    // Add error message
-	    	    FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Napaka pri nalaganju datoteke!", e.getMessage());  
-	    	    FacesContext.getCurrentInstance().addMessage(null, errorMsg);	    	        
-	        } finally{				
-				conn.close();
-			System.out.println("Connection CLOSED!");
-			}
-		}	
-	}
-	
-	
-	public void getSlike() throws SQLException {
-		Connection conn= null; 
-		if(file != null) {	
-			try{
-				try {
-					conn= baza.getConnection();
-					System.out.println("Connection OPEN!");
-				}catch(Exception e){
-					System.out.println("Napaka Connection!");
-				}
-				
-				HttpSession session = Util.getSession();
-				Uporabnik user= (Uporabnik) session.getAttribute("uporabnik");
-	    
-				
-				
-				String sql ="SELECT * FROM slike WHERE Uporabnik_idUporabnik=?";
-				PreparedStatement prst = conn.prepareStatement(sql);
-		        prst.setInt(1, user.getId_Uporabnik());
-		           
 
-		            
+	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
+	DataSource baza;
+
+	public void upload() throws SQLException {
+		Connection conn = null;
+		if (file != null) {
+			try {
+				try {
+					conn = baza.getConnection();
+					System.out.println("Connection OPEN!");
+				} catch (Exception e) {
+					System.out.println("Napaka Connection!");
+				}
+
+				HttpSession session = Util.getSession();
+				Uporabnik user = (Uporabnik) session.getAttribute("uporabnik");
+				System.out.println("User id:" + user.getId_Uporabnik());
+				System.out.println("User id:" + user.getSportniCenter().getId_SportniCenter());
+				// Create the statement object
+				PreparedStatement st = conn.prepareStatement(
+						"INSERT INTO slike(naziv_slike, slika,Sportnicenter_idSportnicenter, Uporabnik_idUporabnik)  VALUES (?,?,?,?)");
+				// Set file data
+				st.setString(1, "profilna");
+				st.setBinaryStream(2, file.getInputstream());
+				st.setInt(3, user.getSportniCenter().getId_SportniCenter());
+				st.setInt(4, user.getId_Uporabnik());
+
+				// Insert data to the database
+				st.executeUpdate();
+
+				FacesMessage message = new FacesMessage("Nalaganje datoteke uspešno! Datoteka ",
+						file.getFileName() + "je naložena!");
+				FacesContext.getCurrentInstance().addMessage(null, message);
+			} catch (Exception e) {
+				e.printStackTrace();
+				// Add error message
+				FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Napaka pri nalaganju datoteke!",
+						e.getMessage());
+				FacesContext.getCurrentInstance().addMessage(null, errorMsg);
+			} finally {
+				conn.close();
+				System.out.println("Connection CLOSED!");
+			}
+		}
+	}
+
+	public void getSlike() throws SQLException {
+		Connection conn = null;
+		if (file != null) {
+			try {
+				try {
+					conn = baza.getConnection();
+					System.out.println("Connection OPEN!");
+				} catch (Exception e) {
+					System.out.println("Napaka Connection!");
+				}
+
+				HttpSession session = Util.getSession();
+				Uporabnik user = (Uporabnik) session.getAttribute("uporabnik");
+
+				String sql = "SELECT * FROM slike WHERE Uporabnik_idUporabnik=?";
+				PreparedStatement prst = conn.prepareStatement(sql);
+				prst.setInt(1, user.getId_Uporabnik());
+
 				ResultSet rs = prst.executeQuery();
-				while (rs.next()){
-					Slike tempSlika = new Slike();		
+				while (rs.next()) {
+					Slike tempSlika = new Slike();
 					tempSlika.setIdSlike(rs.getInt("idSlike"));
 					tempSlika.setNaziv_slike(rs.getString("naziv_slike"));
 					tempSlika.setSlika(rs.getBlob("slika"));
-					
-				}			
-			}catch (Exception e){
+
+				}
+			} catch (Exception e) {
 				e.printStackTrace();
-			} finally {				
+			} finally {
 				conn.close();
-			System.out.println("Connection CLOSED!");
-			}	
-		}	
+				System.out.println("Connection CLOSED!");
+			}
+		}
 	}
 
 	/**
@@ -122,7 +116,8 @@ public class Slike {
 	}
 
 	/**
-	 * @param idSlike the idSlike to set
+	 * @param idSlike
+	 *            the idSlike to set
 	 */
 	public void setIdSlike(int idSlike) {
 		this.idSlike = idSlike;
@@ -136,7 +131,8 @@ public class Slike {
 	}
 
 	/**
-	 * @param naziv_slike the naziv_slike to set
+	 * @param naziv_slike
+	 *            the naziv_slike to set
 	 */
 	public void setNaziv_slike(String naziv_slike) {
 		this.naziv_slike = naziv_slike;
@@ -150,7 +146,8 @@ public class Slike {
 	}
 
 	/**
-	 * @param slika the slika to set
+	 * @param slika
+	 *            the slika to set
 	 */
 	public void setSlika(Blob slika) {
 		this.slika = slika;
@@ -164,7 +161,8 @@ public class Slike {
 	}
 
 	/**
-	 * @param sportniCenter the sportniCenter to set
+	 * @param sportniCenter
+	 *            the sportniCenter to set
 	 */
 	public void setSportniCenter(SportniCenter sportniCenter) {
 		this.sportniCenter = sportniCenter;
@@ -178,7 +176,8 @@ public class Slike {
 	}
 
 	/**
-	 * @param uporabnik the uporabnik to set
+	 * @param uporabnik
+	 *            the uporabnik to set
 	 */
 	public void setUporabnik(Uporabnik uporabnik) {
 		this.uporabnik = uporabnik;
@@ -192,7 +191,8 @@ public class Slike {
 	}
 
 	/**
-	 * @param file the file to set
+	 * @param file
+	 *            the file to set
 	 */
 	public void setFile(UploadedFile file) {
 		this.file = file;
@@ -206,9 +206,10 @@ public class Slike {
 	}
 
 	/**
-	 * @param baza the baza to set
+	 * @param baza
+	 *            the baza to set
 	 */
 	public void setBaza(DataSource baza) {
 		this.baza = baza;
-	}	
+	}
 }

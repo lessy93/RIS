@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Insert title here</title>
 </head>
 <body>
-<f:view>
-	<h:outputLink rendered="#{bean1.name==null}" value="login.xhtml">Login </h:outputLink>
-	<h:outputLink rendered="#{bean1.name==null}" value="register.xhtml">Register </h:outputLink>
-	<h:outputLink value="forum.xhtml">Forum </h:outputLink>
-	<h:outputLink rendered="#{bean1.name!=null}" value="logout.xhtml">Logout </h:outputLink>
-	
-	<br/>
-	<h3>Logout</h3>
-</f:view>
+	<f:view>
+		<h:outputLink rendered="#{bean1.name==null}" value="login.xhtml">Login </h:outputLink>
+		<h:outputLink rendered="#{bean1.name==null}" value="register.xhtml">Register </h:outputLink>
+		<h:outputLink value="forum.xhtml">Forum </h:outputLink>
+		<h:outputLink rendered="#{bean1.name!=null}" value="logout.xhtml">Logout </h:outputLink>
+
+		<br />
+		<h3>Logout</h3>
+	</f:view>
 </body>
 </html>
