@@ -16,7 +16,7 @@
 	<ui:define name="content">
 		<f:view>
 		
-			<h:form  id="registracija">
+			<h:form  id="uredi">
 			<p:growl id="messages" showDetail="true" />
 			<p:panelGrid  columns="3" border="0"  styleClass="buttonPanel" columnClasses="left,middle,right" >
 				
@@ -43,11 +43,10 @@
         		<p:outputLabel for="pass2" value="Ponovi Geslo:" />
        		 	<p:password id="pass2" value="#{uporabnik.geslo}" label="Geslo 2" required="true"  requiredMessage="Ponovno vnesite geslo!"  />
     			<p:message for="pass2" class="error_message"></p:message> 
-				
- 				
+    			
+    	
 				<f:facet name="footer">
-				<p:commandButton  update="registracija" value="Registracija" actionListener="#{uporabnik.dodajUporabnika}" />
-			
+				<p:commandButton  update="uredi" value="Shrani" actionListener="#{uporabnik.shraniSpremembe}" />			
 	          	</f:facet>  	
 				</p:panelGrid>		
 			

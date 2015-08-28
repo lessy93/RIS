@@ -1,14 +1,43 @@
 package eRekreacija;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class Termini {
 
 	private int id_Termini;
 	private Calendar datum;
-	private Calendar zacetniCas, koncniCas;
+	Date zacetniCas;
+	private Date koncniCas;
 	private Boolean zasedenost;
 	private Objekt objekt;
+	
+	
+	
+	
+	public Termini(int id_Termini, Calendar datum, Date zacetniCas, Date koncniCas, Boolean zasedenost,
+			Objekt objekt) {
+		super();
+		this.id_Termini = id_Termini;
+		this.datum = datum;
+		this.zacetniCas = zacetniCas;
+		this.koncniCas = koncniCas;
+		this.zasedenost = zasedenost;
+		this.objekt = objekt;
+	}
+	public Termini() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public Termini(Date zacetniCas2, Date koncniCas2, Boolean zasedenost, Objekt objekt) {
+		super();
+		this.zacetniCas = zacetniCas2;
+		this.koncniCas = koncniCas2;
+		this.zasedenost = zasedenost;
+		this.objekt = objekt;
+	}
 	/**
 	 * @return the id_Termini
 	 */
@@ -36,25 +65,25 @@ public class Termini {
 	/**
 	 * @return the zacetniCas
 	 */
-	public Calendar getZacetniCas() {
+	public Date getZacetniCas() {
 		return zacetniCas;
 	}
 	/**
 	 * @param zacetniCas the zacetniCas to set
 	 */
-	public void setZacetniCas(Calendar zacetniCas) {
+	public void setZacetniCas(Date zacetniCas) {
 		this.zacetniCas = zacetniCas;
 	}
 	/**
 	 * @return the koncniCas
 	 */
-	public Calendar getKoncniCas() {
+	public Date getKoncniCas() {
 		return koncniCas;
 	}
 	/**
 	 * @param koncniCas the koncniCas to set
 	 */
-	public void setKoncniCas(Calendar koncniCas) {
+	public void setKoncniCas(Date koncniCas) {
 		this.koncniCas = koncniCas;
 	}
 	/**

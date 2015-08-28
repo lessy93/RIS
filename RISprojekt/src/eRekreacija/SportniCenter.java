@@ -67,8 +67,14 @@ public class SportniCenter {
 		System.out.println("Uporabnik:"+ noviUporabnik);
 		System.out.println("Uporabnik dodan!");
 	
-		Login login= new Login();
-		login.autoLogin(email, geslo);
+		
+		ExternalContext context = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		try {
+			context.redirect("login.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	
 	
 		FacesMessage message = new FacesMessage("Registracija uspešna! ");

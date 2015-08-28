@@ -63,17 +63,11 @@ public class Uporabnik {
 		FacesMessage message = new FacesMessage("Registracija uspešna! ");
 		
 
-        HttpSession session = Util.getSession();
-        session.setAttribute("username", upor.getEmail());
-        session.setAttribute("id_user", upor.getId_Uporabnik());
-        session.setAttribute("uporabnik", upor);
-        System.out.println("sesion id: "+session.getId());
-       
 		
 		ExternalContext context = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		try {
-			context.redirect("profile.xhtml");
+			context.redirect("login.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -84,6 +78,19 @@ public class Uporabnik {
 			FacesMessage message = new FacesMessage("Registracija ni uspela! Prosimo poskusite ponovno! ");
 	        FacesContext.getCurrentInstance().addMessage(null, message);
 		}
+	}
+	
+	public void shraniSpremembe() throws Exception{
+		UporabnikDAO upDAO= new UporabnikDAO();
+		Uporabnik up= new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, aktiven_Uporabnik);
+		
+		System.out.println("Spremeni"+ up.toString());
+		upDAO.updateUporabnik(up);
+		System.out.println("Napaka! uredi Uporabnika!");
+		 
+		
+		
+		
 	}
 	
 	public void izbrisiUporabnika() throws Exception{

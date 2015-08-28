@@ -19,6 +19,12 @@
 									border="0">
 								</h:dataTable>
 						</h:form>
+						<h:form>
+								<h:dataTable id="table2"
+									value="#{objekt.isciObjekteCentra(id_SportniCenter)}" var="objekt"
+									border="0">
+								</h:dataTable>
+						</h:form>
 		<f:view>
 		
 		<f:metadata>
@@ -58,14 +64,14 @@
 	   	</h:form>
 	   	
 	   	<h:form id="form2">
-				<p:dataScroller   value="#{objekt.seznamVsehObjektov}" var="objekt"   chunkSize="10">	  
+				<p:dataScroller   value="#{objekt.seznamObjektovCenter}" var="objekt"   chunkSize="10">	  
        				<f:facet name="header">
             			Seznam objektov športnega centra
        				</f:facet>
  
 	        	<h:panelGrid columns="3" style="width:90%; padding-left:100px;" border="0" columnClasses="logo,detail">
 		  			
-	            	<p:graphicImage  name="/images/no_image.png" height="190px" />  
+	            	 
 			    
 		            <p:outputPanel >
 		                <h:panelGrid border="0" columns="2" cellpadding="15" width="500px">

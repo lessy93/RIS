@@ -249,5 +249,95 @@ public class ObjektDAO {
 		}    		
 		return updated;
 	}
+ 
+ public List<Objekt> getObjektById2(int id_Objekta) throws Exception {
+		List<Objekt> centerVrni = new ArrayList<Objekt>();
+		
+		Connection conn =null;
+  try {
+  	try {
+				conn= baza.getConnection();
+				System.out.println("Connection OPEN!");
+			}catch(Exception e){
+				System.out.println("Napaka Connection!");
+			}      
+      String sql = "SELECT * FROM objekt WHERE idObjekta =?";
+      PreparedStatement prst = conn.prepareStatement(sql);
+      prst.setInt(1, id_Objekta);
+
+      ResultSet rs = prst.executeQuery();
+      while (rs.next()) {
+      	Objekt center = new Objekt();
+      	SportniCenter sportniCenter = new SportniCenter();
+			TipSporta tipSporta = new TipSporta();
+      	
+      	center.setId_Objekta(rs.getInt("idObjekta"));
+      	center.setNaziv_Objekta(rs.getString("naziv_objekta"));
+      	center.setTipObjekta(rs.getString("tipObjekta"));
+      	center.setOpis_Objekta(rs.getString("opis_objekta"));
+      	center.setCena_Objekta(rs.getString("cena_objekta"));
+      	center.setTipSporta(tipSporta);
+      	center.setSportniCenter(sportniCenter);
+      	
+      	
+			centerVrni.add(center);	   
+      
+	}
+      if(!rs.first()){
+      	System.out.println("NI ZADETKOV!");
+      }
+     }catch(Exception e){
+			System.out.println("Napaka! getCenterByID2!" + e.toString());
+	} finally{				
+			conn.close();
+		System.out.println("Connection CLOSED!");
+		}  
+		return centerVrni;
+	}
+
+public List<Objekt> getObjektById3(int id_SportniCenter) throws Exception {
+		List<Objekt> centerVrni = new ArrayList<Objekt>();
+		
+		Connection conn =null;
+try {
+	try {
+				conn= baza.getConnection();
+				System.out.println("Connection OPEN!");
+			}catch(Exception e){
+				System.out.println("Napaka Connection!");
+			}      
+	  //Izpiši vse, kjer je id_SportniCenter=Sportnicenter_idSportnicenter
+   String sql = "SELECT * FROM objekt o WHERE Sportnicenter_idSportniCenter = ?";
+   PreparedStatement prst = conn.prepareStatement(sql);
+   prst.setInt(1, id_SportniCenter);
+
+   ResultSet rs = prst.executeQuery();
+   while (rs.next()) {
+   	Objekt center = new Objekt();
+   	SportniCenter sportniCenter = new SportniCenter();
+			TipSporta tipSporta = new TipSporta();
+   	
+   	center.setId_Objekta(rs.getInt("idObjekta"));
+   	center.setNaziv_Objekta(rs.getString("naziv_objekta"));
+   	center.setTipObjekta(rs.getString("tipObjekta"));
+   	center.setOpis_Objekta(rs.getString("opis_objekta"));
+   	center.setCena_Objekta(rs.getString("cena_objekta"));
+   	center.setTipSporta(tipSporta);
+   	center.setSportniCenter(sportniCenter);
+   	
+		centerVrni.add(center);	   
+   
+	}
+   if(!rs.first()){
+   	System.out.println("NI ZADETKOV!");
+   }
+  }catch(Exception e){
+			System.out.println("Napaka! getCenterByID3!" + e.toString());
+	} finally{				
+			conn.close();
+		System.out.println("Connection CLOSED!");
+		}  
+		return centerVrni;
+	}
 	
 }

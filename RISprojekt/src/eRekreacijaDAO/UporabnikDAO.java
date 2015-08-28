@@ -24,7 +24,11 @@ public class UporabnikDAO {
 	
 	}
 	
-	//kodiranje gesla v SHA1
+	public UporabnikDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
+		//kodiranje gesla v SHA1
 		public static String sha1(String geslo) throws NoSuchAlgorithmException {
 			MessageDigest mDigest = MessageDigest.getInstance("SHA1");
 			byte[] result = mDigest.digest(geslo.getBytes());

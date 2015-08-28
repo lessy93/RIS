@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +21,10 @@ public class TerminiDAO {
 		baza=pb;	
 	}
 	
+	public TerminiDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Termini shraniTermin(Termini termin) throws Exception {
 	
 		int id =0;
@@ -31,12 +36,21 @@ public class TerminiDAO {
 			}catch(Exception e){
 				System.out.println("Napaka Connection!");
 			}
-			String sql = ("INSERT INTO termini (datum, zacetniCas, koncniCas, zasedenost, dvorana_idDvorana) VALUES(?,?,?,?,?)");
+			String sql = ("INSERT INTO termini (datum, zacetniCas, koncniCas, zasedenost, Dvorana_idDvorana) VALUES(?,?,?,?,?)");
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-			st.setDate(1, new java.sql.Date(termin.getDatum().getTimeInMillis()));
-			st.setTime(2, new java.sql.Time(termin.getZacetniCas().getTimeInMillis()));
-			st.setTime(3, new java.sql.Time(termin.getKoncniCas().getTimeInMillis()));
+			System.out.println("ble"+ new java.sql.Date(termin.getZacetniCas().getTime()) );
+			st.setDate(1, new java.sql.Date(termin.getZacetniCas().getTime()));
+			
+			
+			System.out.println("ble2"+ termin.getZacetniCas() );
+			System.out.println("ble3"+ termin.getZacetniCas().toString() );
+			System.out.println("ble2"+ termin.getZacetniCas() );
+			
+			
+		
+			
+			st.setDate(2, new java.sql.Date(termin.getZacetniCas().getTime()));
+			st.setDate(3, new java.sql.Date(termin.getKoncniCas().getTime()));
 			st.setBoolean(4, termin.getZasedenost());
 			st.setInt(5, termin.getObjekt().getId_Objekta());
 			
@@ -58,7 +72,7 @@ public class TerminiDAO {
 		return termin;
 	}
 	
-	public Termini getTerminByIDDvorInCas(int idObjekt,Calendar date, Calendar cas) throws Exception {
+/*	public Termini getTerminByIDDvorInCas(int idObjekt,Calendar date, Calendar cas) throws Exception {
 		Connection conn = null;
 		Termini temp = new Termini();
 		
@@ -278,5 +292,5 @@ public class TerminiDAO {
         return ter;
     }
 	
-	
+	*/
 }

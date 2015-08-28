@@ -54,7 +54,8 @@ public class RezervacijaTerminaDAO {
 		}
 				
 	}
-
+}
+/*
 	public List<RezervacijaTermina> getRezervacijeByIdUpo(int idUporabnika) throws Exception{
 		List<RezervacijaTermina> seznamRezervacij = new ArrayList<RezervacijaTermina>();
 		Connection conn= null; 
@@ -279,3 +280,4 @@ public class RezervacijaTerminaDAO {
 		return rezervacija;
 	}	
 }
+*/

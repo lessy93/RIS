@@ -9,66 +9,8 @@
 <title>Insert title here</title>
 </h:head>
 <h:body>
-
-<ui:composition template="commonLayout.xhtml">
-	<ui:define name="content">
-	
-						<h:form>
-								<h:dataTable id="table3"
-									value="#{objekt.isci(id_Objekta)}" var="center"
-									border="0">
-								</h:dataTable>
-						</h:form>
-		<f:view>
-		
-		<f:metadata>
-			<f:viewParam name="id_Objekta" />
-		</f:metadata>
-		
-		<h:form id="form2">
-				<p:dataScroller   value="#{objekt.seznamObjektovCentra}" var="objekt"   chunkSize="10">	  
-       				<f:facet name="header">
-            			Seznam objektov športnega centra
-       				</f:facet>
- 
-	        	<h:panelGrid columns="3" style="width:90%; padding-left:100px;" border="0" columnClasses="logo,detail">
-		  			
-	            	 
-			    
-		            <p:outputPanel >
-		                <h:panelGrid border="0" columns="2" cellpadding="15" width="500px">
-		                
-		                	<h:outputText value="Naziv:" />
-		                    <h:outputText value="#{objekt.naziv_Objekta}" style="font-weight: bold"/> 
-		               
-		                    <h:outputText value="Opis:" />
-		                    <h:outputText value="#{objekt.opis_Objekta}" style="font-weight: bold"/>
-		 
-		                    <h:outputText value="Tip:" />
-		                    <h:outputText value="#{objekt.tipObjekta}" style="font-weight: bold"/>
-		                    
-		                    <h:outputText value="Cena:" />
-		                    <h:outputText value="#{objekt.cena_Objekta}" style="font-weight: bold"/>
-			               	  	
-			               	<f:facet name="footer">
-			               	  <h:link outcome=" "
-										value="Rezerviraj">
-							  	<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
-							  </h:link>
-							</f:facet>
-		                </h:panelGrid>        		
-		            </p:outputPanel>      
-		            	<h:panelGrid border="0" columns="1" cellpadding="10">
-		              		<f:facet name="header"> 
-            					Tipi športov 
-         					</f:facet> 
-		                </h:panelGrid>           
-	       		</h:panelGrid>
-	       		 <p:separator />
-	   		</p:dataScroller>
-			</h:form>
-			
-			<h:form>
+<f:view>
+	<h:form>
     <p:growl id="messages" showDetail="true" />
  
     <h:panelGrid columnClasses="value">
@@ -131,8 +73,7 @@
         width: 1000px;
     }
 </style>
-			</f:view>
-	</ui:define>	
-</ui:composition>
+</f:view>
+
 </h:body>
 </html>

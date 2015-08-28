@@ -31,7 +31,12 @@ public class Objekt {
 	
 	private List<Objekt> seznamVsehObjektov= new ArrayList<Objekt>();
 	
-	private List<Objekt> seznamObjektovCentra= new ArrayList<Objekt>();
+
+	//pa podrobnosti objekta
+		private List<Objekt> seznamObjektovCentra= new ArrayList<Objekt>();
+		
+		//za shranjevanje vseh objektov enega centra
+		private List<Objekt> seznamObjektovCenter= new ArrayList<Objekt>();
 	
 	@Resource(lookup="java:jboss/datasources/eRekreacija/")
 	DataSource baza;
@@ -96,7 +101,7 @@ public class Objekt {
 		System.out.println("tip objekta! "+ tipObjekta);*/
 		
 		objekt = new Objekt(id_Objekta, naziv_Objekta, tipObjekta, opis_Objekta, cena_Objekta, sportniCenter, tipSporta);
-		
+		objDAO.shraniObjekt(objekt);
 		
 		System.out.println("Objekt:"+ objekt.toString());
 		System.out.println("Objekt dodan!");
@@ -117,6 +122,22 @@ public class Objekt {
 	        FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
+	
+	//za podrobnosti objekta
+	public List<Objekt> isci(int id_Objekta) throws Exception{
+		ObjektDAO oDAO= new ObjektDAO(baza);
+		System.out.println(id_Objekta);
+		seznamObjektovCentra = (List<Objekt>) oDAO.getObjektById2(id_Objekta);
+		return seznamObjektovCentra;
+	}
+	
+	//za objekte enega centra
+		public List<Objekt> isciObjekteCentra(int id_SportniCenter) throws Exception{
+			ObjektDAO oDAO= new ObjektDAO(baza);
+			System.out.println("ID centra, ki ga dobim: "+id_SportniCenter);
+			seznamObjektovCenter = (List<Objekt>) oDAO.getObjektById3(id_SportniCenter);
+			return seznamObjektovCenter;
+		}
 	
 	
 	
@@ -195,6 +216,14 @@ public class Objekt {
 
 	public void setSeznamObjektovCentra(List<Objekt> seznamObjektovCentra) {
 		this.seznamObjektovCentra = seznamObjektovCentra;
+	}
+
+	public List<Objekt> getSeznamObjektovCenter() {
+		return seznamObjektovCenter;
+	}
+
+	public void setSeznamObjektovCenter(List<Objekt> seznamObjektovCenter) {
+		this.seznamObjektovCenter = seznamObjektovCenter;
 	}
 	
 }
