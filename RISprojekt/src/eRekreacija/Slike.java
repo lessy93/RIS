@@ -1,5 +1,9 @@
 package eRekreacija;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +15,18 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
+import javax.imageio.stream.FileImageInputStream;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+
+import javafx.scene.image.Image;
+
+
 
 @ManagedBean(name = "slike")
 @SessionScoped
@@ -29,6 +41,8 @@ public class Slike {
 
 	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
 	DataSource baza;
+	
+	
 
 	public void upload() throws SQLException {
 		Connection conn = null;
@@ -43,13 +57,13 @@ public class Slike {
 
 				HttpSession session = Util.getSession();
 				Uporabnik user = (Uporabnik) session.getAttribute("uporabnik");
-				System.out.println("User id:" + user.getId_Uporabnik());
-				System.out.println("User id:" + user.getSportniCenter().getId_SportniCenter());
+				System.out.println("Uporabnik id:" + user.getId_Uporabnik());
+				System.out.println("Sportni center id:" + user.getSportniCenter().getId_SportniCenter());
 				// Create the statement object
 				PreparedStatement st = conn.prepareStatement(
 						"INSERT INTO slike(naziv_slike, slika,Sportnicenter_idSportnicenter, Uporabnik_idUporabnik)  VALUES (?,?,?,?)");
 				// Set file data
-				st.setString(1, "profilna");
+				st.setString(1, file.getFileName());
 				st.setBinaryStream(2, file.getInputstream());
 				st.setInt(3, user.getSportniCenter().getId_SportniCenter());
 				st.setInt(4, user.getId_Uporabnik());
@@ -93,6 +107,9 @@ public class Slike {
 
 				ResultSet rs = prst.executeQuery();
 				while (rs.next()) {
+					
+					
+					
 					Slike tempSlika = new Slike();
 					tempSlika.setIdSlike(rs.getInt("idSlike"));
 					tempSlika.setNaziv_slike(rs.getString("naziv_slike"));

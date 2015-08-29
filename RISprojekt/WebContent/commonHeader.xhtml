@@ -19,7 +19,7 @@
 			<p:menubar>
 				<p:menuitem value="Domov" url="index.xhtml" icon="ui-icon-home" />
 				<p:menuitem value="Iskanje" url="search.xhtml" icon="ui-icon-search" />
-				<p:menuitem value="Rezervacije" url="reservations.xhtml"
+				<p:menuitem value="Rezervacije" url="reservations.xhtml" rendered="#{loginBean.username!=null}"
 					icon="ui-icon-document" />
 				<p:menuitem value="Registracija" url="register.xhtml"
 					rendered="#{loginBean.username==null}" icon="ui-icon-pencil" />

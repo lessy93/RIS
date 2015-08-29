@@ -6,7 +6,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+
+import eRekreacijaDAO.RezervacijaTerminaDAO;
+import eRekreacijaDAO.TerminiDAO;
 
 @ManagedBean(name = "termini")
 @ViewScoped
@@ -16,10 +20,13 @@ public class Termini {
 	private Date datum;
 	private Date zacetniCas;
 	private Date koncniCas;
+	private double cenaTermina;
 	private Boolean zasedenost;
 	private Objekt objekt;
 
 	private List<Termini> seznamTerminovObjekt;
+	private List<Termini> seznamTerminovCenter;
+	private List<Termini> seznamTerminovUporabnik;
 
 	public Termini(Date datum, Date zacetniCas, Date koncniCas, Boolean zasedenost, Objekt objekt) {
 		super();
@@ -33,6 +40,23 @@ public class Termini {
 
 	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
 	DataSource baza;
+	
+	public void pridobiSez(){
+		TerminiDAO terminiDAO= new TerminiDAO(baza);
+		seznamTerminovUporabnik= new ArrayList<Termini>();
+		Uporabnik upor= new Uporabnik();
+		HttpSession session = Util.getSession();	
+		upor = (Uporabnik) session.getAttribute("uporabnik");// uporabnika pridobimo iz seje
+		System.out.println("Uporabnik"+ upor.toString());
+		
+		try {
+			seznamTerminovUporabnik=terminiDAO.getTermineByIdUpo(upor.getId_Uporabnik());
+		} catch (Exception e) {
+			System.out.println("Napaka! pridobi rezervacije");
+			e.printStackTrace();
+		}
+	}
+
 
 	public Termini(int id_Termini, Date datum, Date zacetniCas, Date koncniCas, Boolean zasedenost, Objekt objekt) {
 		super();
@@ -42,6 +66,11 @@ public class Termini {
 		this.koncniCas = koncniCas;
 		this.zasedenost = zasedenost;
 		this.objekt = objekt;
+	}
+	
+	public void pridobiSeznamTerminovUporabnika(){
+		
+		
 	}
 
 	public Termini() {
@@ -164,6 +193,22 @@ public class Termini {
 		this.objekt = objekt;
 	}
 
+	public List<Termini> getSeznamTerminovCenter() {
+		return seznamTerminovCenter;
+	}
+
+	public void setSeznamTerminovCenter(List<Termini> seznamTerminovCenter) {
+		this.seznamTerminovCenter = seznamTerminovCenter;
+	}
+
+	public List<Termini> getSeznamTerminovUporabnik() {
+		return seznamTerminovUporabnik;
+	}
+
+	public void setSeznamTerminovUporabnik(List<Termini> seznamTerminovUporabnik) {
+		this.seznamTerminovUporabnik = seznamTerminovUporabnik;
+	}
+
 	@Override
 	public String toString() {
 		return "Termini [id_Termini=" + id_Termini + ", datum=" + datum + ", zacetniCas=" + zacetniCas + ", koncniCas="
@@ -172,6 +217,16 @@ public class Termini {
 
 	public void setSeznamTerminovObjekt(List<Termini> seznamTerminovObjekt) {
 		this.seznamTerminovObjekt = seznamTerminovObjekt;
+	}
+
+
+	public double getCenaTermina() {
+		return cenaTermina;
+	}
+
+
+	public void setCenaTermina(double cenaTermina) {
+		this.cenaTermina = cenaTermina;
 	}
 
 }

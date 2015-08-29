@@ -26,7 +26,7 @@ public class Objekt {
 	private String tipObjekta; // igrisca
 	private String opis_Objekta;
 	private Double cena_Objekta;
-	private SportniCenter sportniCenter = new SportniCenter();
+	private SportniCenter sportniCenter;
 	private TipSporta tipSporta = new TipSporta();
 
 	private List<Objekt> seznamVsehObjektov = new ArrayList<Objekt>();

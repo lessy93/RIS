@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<meta charset="UTF-8" />
+<title>Uredi objekt</title>
+
+
+
+</head>
+<body>
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
+			<h:form>
+				<h:dataTable id="table3" value="#{rezervacija.pridobiSez()}"
+					border="0">
+				</h:dataTable>
+			</h:form>
+			<f:view>
+				<f:metadata>
+					<f:viewParam name="id_Objekta" />
+				</f:metadata>
+			
+					<p:growl id="messages" showDetail="true" />
+				<p:dataTable id="table3"
+					value="#{rezervacija.seznamRezervacijZaUporabnika}" var="tempRez"
+					border="1">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Naziv centra" />
+						</f:facet>
+						<h:link outcome="sportnicenter">
+							<f:param name="id_SportniCenter"
+								value="#{tempRez.termini.objekt.sportniCenter.id_SportniCenter}" />
+							<h:outputLabel
+								value="#{tempRez.termini.objekt.sportniCenter.naziv_SportniCenter}" />
+						</h:link>
+
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Objekt" />
+						</f:facet>
+
+						<h:link outcome="ObjektPodrobno">
+							<f:param name="id_Objekta"
+								value="#{tempRez.termini.objekt.id_Objekta}" />
+							<h:outputLabel value="#{tempRez.termini.objekt.naziv_Objekta}" />
+						</h:link>
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Datum" />
+						</f:facet>
+
+
+						<h:outputLabel value="#{tempRez.termini.datum}">
+							<f:convertDateTime pattern="dd.MM.yyyy" />
+						</h:outputLabel>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Od" />
+						</f:facet>
+						<h:outputLabel value="#{tempRez.termini.zacetniCas}">
+							<f:convertDateTime pattern="HH:mm" />
+						</h:outputLabel>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Do" />
+						</f:facet>
+						<h:outputLabel value="#{tempRez.termini.koncniCas}">
+							<f:convertDateTime pattern="HH:mm" />
+						</h:outputLabel>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Cena" />
+
+
+						</f:facet>
+						<h:outputLabel value="#{tempRez.termini.cenaTermina}">
+							<f:convertNumber type="currency" />
+						</h:outputLabel>
+					</p:column>
+
+
+				</p:dataTable>
+
+
+			</f:view>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

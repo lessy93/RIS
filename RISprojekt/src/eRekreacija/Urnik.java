@@ -136,6 +136,7 @@ public class Urnik implements Serializable {
 			TerminiDAO terminDAO = new TerminiDAO(baza);
 			terminDAO.shraniTermin(noviTermin);
 			rezterDAO.shraniRezervacijoTermina(noviTermin, upor);
+			
 		
 		} else {
 			eventModel.updateEvent(event);

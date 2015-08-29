@@ -17,6 +17,8 @@
 					var="center" border="0">
 				</h:dataTable>
 			</h:form>
+
+
 			<f:view>
 				<h:form id="form">
 					<p:dataScroller value="#{center.seznamVsehCentrov}"
@@ -59,17 +61,14 @@
 								</h:panelGrid>
 
 							</p:outputPanel>
-							<h:panelGrid border="0" columns="1" cellpadding="10">
-								<f:facet name="header"> 
-		              		
-		              			
-            					Tipi športov 
-            				
-            				
-         					</f:facet>
 
-
-							</h:panelGrid>
+							<p:dataList value="#{tempCenter.tipiSportov}" var="sport">
+								<f:facet name="header"> 	
+								Tipi športov 
+            					</f:facet>
+								<h:outputText value="#{sport.naziv_TipSporta}"
+									style="font-weight: bold" />
+							</p:dataList>
 
 						</h:panelGrid>
 						<p:separator />

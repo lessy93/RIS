@@ -254,7 +254,7 @@ public class ObjektDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql = "SELECT * FROM objekt WHERE idObjekta =?";
+			String sql = "SELECT * FROM objekt, tipSporta WHERE Tipsporta_idTipsporta=idTipsporta AND idObjekta =?";
 			PreparedStatement prst = conn.prepareStatement(sql);
 			prst.setInt(1, id_Objekta);
 
@@ -269,6 +269,8 @@ public class ObjektDAO {
 				center.setTipObjekta(rs.getString("tipObjekta"));
 				center.setOpis_Objekta(rs.getString("opis_objekta"));
 				center.setCena_Objekta(rs.getDouble("cena_objekta"));
+				tipSporta.setId_TipSporta(rs.getInt("idTipSporta"));
+				tipSporta.setNaziv_TipSporta(rs.getString("naziv_sporta"));				
 				center.setTipSporta(tipSporta);
 				center.setSportniCenter(sportniCenter);
 

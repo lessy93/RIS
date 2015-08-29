@@ -105,7 +105,7 @@
 				</h:form>
 
 				<h:form id="form2">
-					<p:dataScroller value="#{objekt.seznamObjektovCenter}" var="objekt"
+					<p:dataScroller  value="#{objekt.seznamObjektovCenter}" var="objekt"
 						chunkSize="10">
 						<f:facet name="header">
             			Seznam objektov športnega centra
@@ -117,47 +117,49 @@
 
 
 							<p:outputPanel>
-								<h:panelGrid border="0" columns="2" cellpadding="15"
-									width="500px">
+								<h:panelGrid columns="4" style="width:70%; padding-left:450px; "
+									border="0">
 
-									<h:outputText value="Naziv:" />
-									<h:outputText value="#{objekt.naziv_Objekta}"
-										style="font-weight: bold" />
 
-									<h:outputText value="Opis:" />
-									<h:outputText value="#{objekt.opis_Objekta}"
-										style="font-weight: bold" />
+									<h:outputText value="Naziv:" style="font-weight: bold" />
+									<h:outputText value="#{objekt.naziv_Objekta}" />
 
-									<h:outputText value="Tip:" />
-									<h:outputText value="#{objekt.tipObjekta}"
-										style="font-weight: bold" />
+									<h:outputText value="Opis:" style="font-weight: bold" />
+									<h:outputText value="#{objekt.opis_Objekta}" />
 
-									<h:outputText value="Cena:" />
-									<h:outputText value="#{objekt.cena_Objekta}"
-										style="font-weight: bold" />
+									<h:outputText value="Tip:" style="font-weight: bold" />
+									<h:outputText value="#{objekt.tipObjekta}" />
+
+									<h:outputText value="Cena:" style="font-weight: bold" />
+									<h:outputText value="#{objekt.cena_Objekta}">
+										<f:convertNumber type="currency" />
+									</h:outputText>
+
+									<h:outputText value="Tip športa: " style="font-weight: bold" />
+									<h:outputText value="#{objekt.tipSporta.naziv_TipSporta}" />
+
 
 									<f:facet name="footer">
-										<h:link outcome="ObjektPodrobno" value="Podrobnosti objekta">
-											<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
-										</h:link>
-									</f:facet>
-									<f:facet name="footer">
-										<h:link outcome="urediObjekt" value="Uredi">
-											<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
-										</h:link>
-									</f:facet>
-									<f:facet name="footer">
-										<h:link outcome="izbrisiObjekt" value="Izbriši">
-											<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
-										</h:link>
+										<h:panelGrid columns="3" style=" padding-left:150px; ">
+											<h:link outcome="ObjektPodrobno" style="font-weight: bold"
+												value=" Podrobnosti objekta ">
+												<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
+											</h:link>
+
+											<h:link outcome="urediObjekt" style="font-weight: bold"
+												value=" Uredi ">
+												<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
+											</h:link>
+
+											<h:link outcome="izbrisiObjekt" style="font-weight: bold"
+												value=" Izbriši ">
+												<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
+											</h:link>
+										</h:panelGrid>
 									</f:facet>
 								</h:panelGrid>
 							</p:outputPanel>
-							<h:panelGrid border="0" columns="1" cellpadding="10">
-								<f:facet name="header"> 
-            					Tipi športov 
-         					</f:facet>
-							</h:panelGrid>
+
 						</h:panelGrid>
 						<p:separator />
 					</p:dataScroller>

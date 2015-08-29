@@ -6,10 +6,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import eRekreacija.Email;
 import eRekreacija.Objekt;
+import eRekreacija.RezervacijaTermina;
+import eRekreacija.SportniCenter;
 import eRekreacija.Termini;
 import eRekreacija.Uporabnik;
 import eRekreacija.Util;
@@ -35,7 +39,7 @@ public class TerminiDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql = ("INSERT INTO termini (datum, zacetniCas, koncniCas, zasedenost, Dvorana_idDvorana) VALUES(?,?,?,?,?)");
+			String sql = ("INSERT INTO termini (datum, zacetniCas, koncniCas, zasedenost, Objekt_idObjekt, cenaTermina) VALUES(?,?,?,?,?,?)");
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			System.out.println("TERMINDAO zac cas:" + new java.sql.Date(termin.getZacetniCas().getTime()));
 
@@ -54,6 +58,16 @@ public class TerminiDAO {
 			upor = (Uporabnik) session.getAttribute("uporabnik");// uporabnika
 																	// pridobimo
 																	// iz seje
+			
+			st.setDate(1, new java.sql.Date(termin.getZacetniCas().getTime()));
+			st.setString(2, formatedZacetniCas);
+			st.setString(3, formateKoncniCas);
+			st.setBoolean(4, termin.getZasedenost());
+			st.setInt(5, termin.getObjekt().getId_Objekta());
+			st.setDouble(6, cena);
+
+			st.executeUpdate();
+			
 			try {
 				posljiEmail.posljiEmailRezervacija(upor, termin, ob, cena);// pošiljanje
 																			// email-a
@@ -61,13 +75,6 @@ public class TerminiDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka! shraniTermin- POŠILJANJE MAILA");
 			}
-			st.setDate(1, new java.sql.Date(termin.getZacetniCas().getTime()));
-			st.setString(2, formatedZacetniCas);
-			st.setString(3, formateKoncniCas);
-			st.setBoolean(4, termin.getZasedenost());
-			st.setInt(5, termin.getObjekt().getId_Objekta());
-
-			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
 			if (rs != null && rs.next()) {
 				id = rs.getInt(1);
@@ -102,6 +109,75 @@ public class TerminiDAO {
 
 		return cenaRezervacije;
 	}
+	
+	public List<Termini> getTermineByIdUpo(int idUporabnika) throws Exception {
+		List<Termini> seznamRezervacij = new ArrayList<Termini>();
+		Connection conn = null;
+		try {
+			try {
+				conn = baza.getConnection();
+				System.out.println("Connection OPEN!");
+			} catch (Exception e) {
+				System.out.println("Napaka Connection!");
+			}
+
+			String sql = "SELECT * FROM rezervacijatermina r, uporabnik u, termini t, objekt o, sportnicenter sc WHERE r.uporabnik_idUporabnik=u.idUporabnik AND r.termini_idTermini=t.idTermini AND o.idObjekta=t.Objekt_idObjekt AND o.sportnicenter_idSportnicenter=sc.idSportniCenter AND r.uporabnik_idUporabnik=? ORDER BY t.zacetniCas";
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, idUporabnika);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+
+				RezervacijaTermina rezervacija = new RezervacijaTermina();
+				SportniCenter sportniCenter = new SportniCenter();
+				Termini termini = new Termini();
+				Uporabnik uporabnik = new Uporabnik();
+				Objekt tempObjekt = new Objekt();
+
+				uporabnik.setId_Uporabnik(rs.getInt("idUporabnik"));
+				uporabnik.setIme(rs.getString("ime"));
+				uporabnik.setPriimek(rs.getString("priimek"));
+				uporabnik.setEmail(rs.getString("email"));
+				uporabnik.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
+
+				sportniCenter.setId_SportniCenter(rs.getInt("idSportnicenter"));
+				sportniCenter.setLokacija(rs.getString("lokacija_centra"));
+				sportniCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
+
+				tempObjekt.setId_Objekta(rs.getInt("objekt_idObjekt"));
+				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
+				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
+				tempObjekt.setSportniCenter(sportniCenter);
+				
+				Date zacetniCas = rs.getTimestamp("zacetniCas");
+				termini.setZacetniCas(zacetniCas);
+				java.sql.Date datum = rs.getDate("datum");
+				Date koncniCas = rs.getTimestamp("koncniCas");
+
+		
+			
+				termini.setKoncniCas(koncniCas);
+				termini.setId_Termini(rs.getInt("idTermini"));
+				termini.setDatum(datum);
+				termini.setCenaTermina(rs.getDouble("cenaTermina"));
+				termini.setZasedenost(rs.getBoolean("zasedenost"));
+				termini.setObjekt(tempObjekt);
+
+				rezervacija.setId_RezervacijaTermina(rs.getInt("idRezervacijaTermina"));
+				rezervacija.setTermini(termini);
+				rezervacija.setUporabnik(uporabnik);
+
+				seznamRezervacij.add(termini);
+			}
+		} catch (Exception e) {
+			System.out.println("Napaka! rezervacija termina!!");
+			e.printStackTrace();
+		} finally {
+			conn.close();
+			System.out.println("Connection CLOSED!");
+		}
+		return seznamRezervacij;
+	}
+
 
 	public ArrayList<Termini> getTerminiBYidObjekt(int idObjekta) throws Exception {
 		ArrayList<Termini> seznamTerminov = new ArrayList<Termini>();
@@ -113,7 +189,7 @@ public class TerminiDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql = "SELECT * FROM termini WHERE dvorana_idDvorana = ? ";
+			String sql = "SELECT * FROM termini WHERE objekt_idObjekt = ? ";
 			PreparedStatement prst = conn.prepareStatement(sql);
 			prst.setInt(1, idObjekta);
 			ResultSet rs = prst.executeQuery();
@@ -121,7 +197,7 @@ public class TerminiDAO {
 				Termini tempTermin = new Termini();
 				Objekt tempObjekt = new Objekt();
 
-				tempObjekt.setId_Objekta(rs.getInt("dvorana_idDvorana"));
+				tempObjekt.setId_Objekta(rs.getInt("Objekt_idObjekt"));
 				Date zacetniCas = rs.getTimestamp("zacetniCas");
 				tempTermin.setZacetniCas(zacetniCas);
 				java.sql.Date datum = rs.getDate("datum");
