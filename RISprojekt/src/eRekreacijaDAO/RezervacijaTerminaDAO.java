@@ -4,17 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import javax.sql.DataSource;
-
-import eRekreacija.Objekt;
-import eRekreacija.RezervacijaTermina;
-import eRekreacija.SportniCenter;
 import eRekreacija.Termini;
-import eRekreacija.TipSporta;
 import eRekreacija.Uporabnik;
 
 public class RezervacijaTerminaDAO {
@@ -25,7 +16,7 @@ public class RezervacijaTerminaDAO {
 		baza = pb;
 	}
 
-	public void shraniRezervacijoTermina(RezervacijaTermina termin, Uporabnik uporabnik) throws Exception {
+	public void shraniRezervacijoTermina(Termini termin, Uporabnik uporabnik) throws Exception {
 		Connection conn = null;
 		try {
 			try {
@@ -34,19 +25,21 @@ public class RezervacijaTerminaDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql = ("INSERT INTO rezervacijatermina (uporabnik_idUporabnik, termini_idTermini) VALUES(?,?)");
-			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			st.setInt(1, termin.getTermini().getId_Termini());
-			st.setInt(2, uporabnik.getId_Uporabnik());
+			String sql = ("INSERT INTO rezervacijatermina (Uporabnik_idUporabnik, termini_idTermini) VALUES(?,?)");
+			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setInt(1, uporabnik.getId_Uporabnik());
+			st.setInt(2, termin.getId_Termini());
 
 			ResultSet rs = st.getGeneratedKeys();
 			if (rs != null && rs.next()) {
 				System.out.println("Id vnosa: " + rs.getLong(1));
 			}
 			st.executeUpdate();
+			System.out.println("Rezervacija termina dodana! ");
 
 		} catch (Exception e) {
+			System.out.println("Napaka! Rezervacija termina DAO! ");
 			e.printStackTrace();
 		} finally {
 			conn.close();

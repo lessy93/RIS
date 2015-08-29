@@ -3,8 +3,6 @@ package eRekreacija;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -13,7 +11,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-
 import eRekreacijaDAO.SportniCenterDAO;
 import eRekreacijaDAO.TipSportaDAO;
 import eRekreacijaDAO.UporabnikDAO;
@@ -49,20 +46,19 @@ public class SportniCenter {
 		try {
 			SportniCenterDAO centerDAO = new SportniCenterDAO(baza);
 
-			System.out.println("Center:" + naziv_SportniCenter);
 			noviCenter = new SportniCenter(id_sc, naziv_SportniCenter, opis_SportniCenter, lokacija, 1, 1, true);
-			System.out.println("Center:" + noviCenter.getNaziv_SportniCenter() + " " + noviCenter.lokacija);
 			centerDAO.shraniSportniCenter(noviCenter);
 
-			System.out.println("Center dodan!");
+			System.out.println("REGISTRACIJA:Center dodan!");
 			System.out.println(noviCenter.toString());
 
 			UporabnikDAO uporDAO = new UporabnikDAO(baza);
 			Uporabnik noviUporabnik = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviCenter);
-			System.out.println("Uporabnik:" + noviUporabnik.toString());
 			uporDAO.shraniUporabnika(noviUporabnik);
+			Email posljiEmail = new Email();
+			posljiEmail.posljiEmailRegister(email);
 
-			System.out.println("Uporabnik dodan!");
+			System.out.println("REGISTRACIJA:Uporabnik dodan!");
 
 			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 			try {
@@ -75,7 +71,7 @@ public class SportniCenter {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 
 		} catch (Exception e) {
-			System.out.println("Napaka! dodaj Center!" + e.toString());
+			System.out.println("Napaka! Registracija Centera!" + e.toString());
 			FacesMessage message = new FacesMessage("Registracija ni uspela! Prosimo poskusite ponovno! ");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
@@ -130,7 +126,6 @@ public class SportniCenter {
 		this.lokacija = lokacija;
 		this.mapsLat = mapsLat;
 		this.mapsLng = mapsLng;
-		this.seznamObjektov = seznamObjektov;
 		this.aktiven__SportniCenter = aktiven__SportniCenter;
 	}
 
@@ -289,7 +284,7 @@ public class SportniCenter {
 	@Override
 	public String toString() {
 
-		return "SportniObjekt [idSportniObjekt=" + id_sc + ", naziv=" + naziv_SportniCenter + ", opis="
+		return "SportniCenter [idSportniCenter=" + id_sc + ", naziv=" + naziv_SportniCenter + ", opis="
 				+ opis_SportniCenter + ", lokacija=" + lokacija + ", lat=" + mapsLat + ", lng=" + mapsLng + ", aktiven="
 				+ aktiven__SportniCenter + "]";
 	}

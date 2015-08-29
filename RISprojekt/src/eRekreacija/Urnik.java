@@ -1,8 +1,6 @@
 package eRekreacija;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,15 +21,21 @@ import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import eRekreacija.Termini;
+import eRekreacijaDAO.ObjektDAO;
+import eRekreacijaDAO.RezervacijaTerminaDAO;
 import eRekreacijaDAO.TerminiDAO;
 
 @ManagedBean(name = "urnikBean")
 @ViewScoped
 public class Urnik implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private ScheduleModel eventModel;
 
@@ -47,9 +51,9 @@ public class Urnik implements Serializable {
 	@PostConstruct
 	public void init() {
 		eventModel = new DefaultScheduleModel();
-		Termini termin = new Termini();
+
 		TerminiDAO terminDAO = new TerminiDAO(baza);
-		System.out.println("Tuki:");
+		System.out.println("Pridobivanje vseh rezervacij za objekt:");
 		// seznamTerminovZaObjekt = termin.getSeznamTerminovObjekt();
 		seznamTerminovZaObjekt = new ArrayList<Termini>();
 		try {
@@ -102,76 +106,6 @@ public class Urnik implements Serializable {
 		return calendar;
 	}
 
-	private Date previousDay8Pm() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.PM);
-		t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-		t.set(Calendar.HOUR, 8);
-
-		return t.getTime();
-	}
-
-	private Date previousDay11Pm() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.PM);
-		t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-		t.set(Calendar.HOUR, 11);
-
-		return t.getTime();
-	}
-
-	private Date today1Pm() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.PM);
-		t.set(Calendar.HOUR, 1);
-
-		return t.getTime();
-	}
-
-	private Date theDayAfter3Pm() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);
-		t.set(Calendar.AM_PM, Calendar.PM);
-		t.set(Calendar.HOUR, 3);
-
-		return t.getTime();
-	}
-
-	private Date today6Pm() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.PM);
-		t.set(Calendar.HOUR, 6);
-
-		return t.getTime();
-	}
-
-	private Date nextDay9Am() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.AM);
-		t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-		t.set(Calendar.HOUR, 9);
-
-		return t.getTime();
-	}
-
-	private Date nextDay11Am() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.AM);
-		t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-		t.set(Calendar.HOUR, 11);
-
-		return t.getTime();
-	}
-
-	private Date fourDaysLater3pm() {
-		Calendar t = (Calendar) today().clone();
-		t.set(Calendar.AM_PM, Calendar.PM);
-		t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);
-		t.set(Calendar.HOUR, 3);
-
-		return t.getTime();
-	}
-
 	public ScheduleEvent getEvent() {
 		return event;
 	}
@@ -185,23 +119,24 @@ public class Urnik implements Serializable {
 			eventModel.addEvent(event);
 			Date zacetniCas = event.getStartDate();
 			Date koncniCas = event.getEndDate();
+			Date datum = event.getStartDate();
+			RezervacijaTerminaDAO rezterDAO = new RezervacijaTerminaDAO(baza);
+
 			HttpSession session = Util.getSession();
+			Uporabnik upor = new Uporabnik();
+			upor = (Uporabnik) session.getAttribute("uporabnik");
 			int id = (int) session.getAttribute("izbraniObjekt");
 
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			System.out.println("DodajRezervacijo" + dateFormat.format(zacetniCas));
-			dateFormat.format(koncniCas);
-
-			System.out.println("Zac cas " + zacetniCas);
-			System.out.println("Kon cas" + koncniCas);
-			Objekt objekt = new Objekt();
-			objekt.setId_Objekta(id);
+			ObjektDAO objektDAO = new ObjektDAO(baza);
+			Objekt noviObjekt = new Objekt();
+			noviObjekt = objektDAO.getObjektIfo(id);
 			Boolean zasedenost = true;
 
-			Termini noviTermin = new Termini(zacetniCas, koncniCas, zasedenost, objekt);
+			Termini noviTermin = new Termini(datum, zacetniCas, koncniCas, zasedenost, noviObjekt);
 			TerminiDAO terminDAO = new TerminiDAO(baza);
 			terminDAO.shraniTermin(noviTermin);
-			System.out.println("Event:" + event.toString());
+			rezterDAO.shraniRezervacijoTermina(noviTermin, upor);
+		
 		} else {
 			eventModel.updateEvent(event);
 		}
@@ -224,6 +159,7 @@ public class Urnik implements Serializable {
 	}
 
 	public void onEventResize(ScheduleEntryResizeEvent event) {
+
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized",
 				"Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
 

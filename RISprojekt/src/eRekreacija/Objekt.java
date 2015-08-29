@@ -25,7 +25,7 @@ public class Objekt {
 	private String naziv_Objekta;
 	private String tipObjekta; // igrisca
 	private String opis_Objekta;
-	private String cena_Objekta;
+	private Double cena_Objekta;
 	private SportniCenter sportniCenter = new SportniCenter();
 	private TipSporta tipSporta = new TipSporta();
 
@@ -58,7 +58,7 @@ public class Objekt {
 	 * ObjektDAO(baza); seznamObjektovCentra= oDAO.getObjektiCentra(); }
 	 */
 
-	public Objekt(int id_Objekta, String naziv_Objekta, String tipObjekta, String opis_Objekta, String cena_Objekta,
+	public Objekt(int id_Objekta, String naziv_Objekta, String tipObjekta, String opis_Objekta, Double cena_Objekta,
 			SportniCenter sportniCenter, TipSporta tipSporta) {
 		super();
 		this.id_Objekta = id_Objekta;
@@ -207,11 +207,11 @@ public class Objekt {
 		this.opis_Objekta = opis_Objekta;
 	}
 
-	public String getCena_Objekta() {
+	public Double getCena_Objekta() {
 		return cena_Objekta;
 	}
 
-	public void setCena_Objekta(String cena_Objekta) {
+	public void setCena_Objekta(Double cena_Objekta) {
 		this.cena_Objekta = cena_Objekta;
 	}
 

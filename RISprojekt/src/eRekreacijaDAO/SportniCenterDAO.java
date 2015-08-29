@@ -96,7 +96,7 @@ public class SportniCenterDAO {
 					tempSportniObjekt.setId_Objekta(rs2.getInt("idObjekta"));
 					tempSportniObjekt.setNaziv_Objekta(rs2.getString("naziv_objekta"));
 					tempSportniObjekt.setOpis_Objekta(rs2.getString("opis_objekta"));
-					tempSportniObjekt.setCena_Objekta(rs2.getString("cena_objekta"));
+					tempSportniObjekt.setCena_Objekta(rs2.getDouble("cena_objekta"));
 					tempSportniObjekt.setTipObjekta(rs2.getString("tipObjekta"));
 
 					List<TipSporta> seznamTipovSporta = new ArrayList<TipSporta>();
@@ -106,21 +106,18 @@ public class SportniCenterDAO {
 					ResultSet rs3 = st3.executeQuery();
 					while (rs3.next()) {
 						TipSporta tempTipSporta = new TipSporta();
-
 						tempTipSporta.setId_TipSporta(rs3.getInt("idTipSporta"));
 						tempTipSporta.setNaziv_TipSporta(rs3.getString("naziv_sporta"));
 						System.out.println("tip:" + tempTipSporta.getNaziv_TipSporta());
 						seznamTipovSporta.add(tempTipSporta);
 					}
-					System.out.println("st tipov:" + seznamTipovSporta.size());
 					tempSportniCenter.setTipiSportov(seznamTipovSporta);
-
 					listObjektov.add(tempSportniObjekt);
 				}
-				System.out.println("st obj:" + listObjektov.size());
+
 				tempSportniCenter.setSeznamObjektov(listObjektov);
 				seznamSportniCenter.add(tempSportniCenter);
-				System.out.println("Center:" + tempSportniCenter.toString());
+
 			}
 
 		} catch (Exception e) {
@@ -208,10 +205,9 @@ public class SportniCenterDAO {
 					tempObjekt.setNaziv_Objekta(rs1.getString("naziv_objekta"));
 					tempObjekt.setOpis_Objekta(rs1.getString("opis_objekta"));
 					tempObjekt.setTipObjekta(rs1.getString("tipObjekta"));
-					tempObjekt.setCena_Objekta(rs.getString("cena_objekta"));
+					tempObjekt.setCena_Objekta(rs.getDouble("cena_objekta"));
 					listObjektov.add(tempObjekt);
 				}
-
 				tempSportniCenter.setSeznamObjektov(listObjektov);
 				seznamSportniObjekt.add(tempSportniCenter);
 			}
@@ -350,7 +346,6 @@ public class SportniCenterDAO {
 			st.setFloat(5, center.getMapsLng());
 			st.setBoolean(6, center.getAktiven__SportniCenter());
 			st.setInt(7, center.getId_SportniCenter());
-
 			st.executeUpdate();
 
 		} catch (SQLException e) {

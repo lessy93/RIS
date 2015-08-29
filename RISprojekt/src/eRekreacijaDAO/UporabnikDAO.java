@@ -25,7 +25,6 @@ public class UporabnikDAO {
 	}
 
 	public UporabnikDAO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	// kodiranje gesla v SHA1
@@ -75,7 +74,6 @@ public class UporabnikDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			System.out.println("DAO " + email + " " + geslo);
 			String sql = "SELECT * FROM uporabnik u, sportnicenter s WHERE u.email=? AND u.geslo=? AND u.SportniCenter_idSportniCenter=s.idSportnicenter AND u.aktiven='1'";
 			PreparedStatement prst = conn.prepareStatement(sql);
 			prst.setString(1, email);
@@ -99,17 +97,14 @@ public class UporabnikDAO {
 				tempCenter.setMapsLng(rs.getFloat("mapsLng"));
 				tempCenter.setAktiven__SportniCenter(rs.getBoolean("aktiven"));
 
-				// tempCenter.setSeznamObjektov(rs.getString("lokacija_centra"));
 				upor.setSportniCenter(tempCenter);
 
-				System.out.println("DAO " + rs.getString("ime"));
-				System.out.println("DAO " + rs.getString("email"));
 				return upor;
 			} else {
 				return null;
 			}
 		} catch (Exception ex) {
-			System.out.println("Error in login() -->" + ex.toString());
+			System.out.println("NAPAKA! Prijavi uporabnika DAO" + ex.toString());
 			return null;
 
 		} finally {
@@ -224,33 +219,32 @@ public class UporabnikDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka Connection!");
 			}
-			String sql = "UPDATE uporabnik SET ime =?, priimek =?, email =?, geslo =?, sportnicenter_idSportnicenter =?, aktiven =? WHERE idUporabnik = ?";
+			String sql = "UPDATE uporabnik SET ime =?, priimek =?, email =?, geslo =?, aktiven =? WHERE idUporabnik = ?";
 			PreparedStatement st = conn.prepareStatement(sql);
 
 			st.setString(1, up.getIme());
 			st.setString(2, up.getPriimek());
 			st.setString(3, up.getEmail());
 			st.setString(4, sha1(up.getGeslo()));
-			st.setInt(5, up.getSportniCenter().getId_SportniCenter());
-			st.setBoolean(6, up.getAktiven_Uporabnik());
-			st.setInt(7, up.getId_Uporabnik());
+			st.setBoolean(5, up.getAktiven_Uporabnik());
+			st.setInt(6, up.getId_Uporabnik());
 
 			st.executeUpdate();
+			System.out.println("Urejanje profila uspešno!");
 
 		} catch (SQLException e) {
+			System.out.println("Napaka! Uredi uporabnika DAO" + e.toString());
 			updated = false;
 		} finally {
 			conn.close();
 			System.out.println("Connection CLOSED!");
-			System.out.println("SHRANJENO!" + up);
+
 		}
 		return updated;
 	}
 
 	public List<SportniCenter> vrniMojCenter() throws SQLException {
 		List<SportniCenter> centerVrni = new ArrayList<SportniCenter>();
-		System.out.println("Sem v funkciji!!!");
-
 		Connection conn = null;
 		try {
 			try {
@@ -269,10 +263,7 @@ public class UporabnikDAO {
 			String sql = "SELECT * FROM sportnicenter sc, uporabnik u WHERE u.idUporabnik=? AND  u.Sportnicenter_idSportniCenter=sc.idSportnicenter;";
 			PreparedStatement prst = conn.prepareStatement(sql);
 			prst.setInt(1, id);
-
-			System.out.println("Pred izvedbo Querya");
 			ResultSet rs = prst.executeQuery();
-			System.out.println("Po izvedbi Querya");
 
 			while (rs.next()) {
 				// Objekt center = new Objekt();

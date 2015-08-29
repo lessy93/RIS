@@ -51,8 +51,8 @@
 						<p:message for="opisObjekta" class="error_message"></p:message>
 
 						<p:outputLabel for="cenaN" value="Cena najema (1h): " />
-						<p:inputText id="cenaN" value="#{objekt.cena_Objekta}"
-							required="true" requiredMessage="Vnesite ceno za najem!" />
+						<p:inputText id="cenaN" value="#{objekt.cena_Objekta}" 
+							required="true" requiredMessage="Vnesite ceno za najem!" converterId="javax.faces.Double"  />
 						<p:message for="cenaN" class="error_message"></p:message>
 
 

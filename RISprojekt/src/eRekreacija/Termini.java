@@ -1,25 +1,19 @@
 package eRekreacija;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.sql.DataSource;
-
-import org.primefaces.model.DefaultScheduleEvent;
-
-import eRekreacijaDAO.TerminiDAO;
 
 @ManagedBean(name = "termini")
 @ViewScoped
 public class Termini {
 
 	private int id_Termini;
-	private Calendar datum;
+	private Date datum;
 	private Date zacetniCas;
 	private Date koncniCas;
 	private Boolean zasedenost;
@@ -27,10 +21,20 @@ public class Termini {
 
 	private List<Termini> seznamTerminovObjekt;
 
+	public Termini(Date datum, Date zacetniCas, Date koncniCas, Boolean zasedenost, Objekt objekt) {
+		super();
+		this.datum = datum;
+		this.zacetniCas = zacetniCas;
+		this.koncniCas = koncniCas;
+		this.zasedenost = zasedenost;
+		this.objekt = objekt;
+
+	}
+
 	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
 	DataSource baza;
 
-	public Termini(int id_Termini, Calendar datum, Date zacetniCas, Date koncniCas, Boolean zasedenost, Objekt objekt) {
+	public Termini(int id_Termini, Date datum, Date zacetniCas, Date koncniCas, Boolean zasedenost, Objekt objekt) {
 		super();
 		this.id_Termini = id_Termini;
 		this.datum = datum;
@@ -88,7 +92,7 @@ public class Termini {
 	/**
 	 * @return the datum
 	 */
-	public Calendar getDatum() {
+	public Date getDatum() {
 		return datum;
 	}
 
@@ -96,7 +100,7 @@ public class Termini {
 	 * @param datum
 	 *            the datum to set
 	 */
-	public void setDatum(Calendar datum) {
+	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
 
@@ -164,6 +168,10 @@ public class Termini {
 	public String toString() {
 		return "Termini [id_Termini=" + id_Termini + ", datum=" + datum + ", zacetniCas=" + zacetniCas + ", koncniCas="
 				+ koncniCas + ", zasedenost=" + zasedenost + ", objekt=" + objekt + "]";
+	}
+
+	public void setSeznamTerminovObjekt(List<Termini> seznamTerminovObjekt) {
+		this.seznamTerminovObjekt = seznamTerminovObjekt;
 	}
 
 }

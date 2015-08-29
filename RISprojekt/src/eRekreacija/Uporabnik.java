@@ -50,15 +50,25 @@ public class Uporabnik {
 	public void dodajUporabnika() throws Exception {
 		try {
 			UporabnikDAO uporDAO = new UporabnikDAO(baza);
-
+			Email posljiEmail = new Email();
 			SportniCenter noviSportniCenter = new SportniCenter();
+
 			noviSportniCenter.setId_SportniCenter(1);
 
 			Uporabnik upor = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviSportniCenter);
-			System.out.println("Uporabnik1111:" + upor.toString());
+
 			uporDAO.shraniUporabnika(upor);
-			System.out.println("Uporabnik:" + upor);
-			System.out.println("Uporabnik dodan!");
+
+			System.out.println("REGISTRACIJA: Uporabnik dodan!");
+
+			try {
+				posljiEmail.posljiEmailRegister(email);
+			} catch (Exception e) {
+				System.out.println("Napaka! Pošiljanje email-a!" + e.toString());
+				FacesMessage message = new FacesMessage("Registracija ni uspela! Prosimo poskusite ponovno! ");
+				FacesContext.getCurrentInstance().addMessage(null, message);
+			}
+
 			FacesMessage message = new FacesMessage("Registracija uspešna! ");
 
 			ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -79,10 +89,15 @@ public class Uporabnik {
 	public void shraniSpremembe() throws Exception {
 		UporabnikDAO upDAO = new UporabnikDAO();
 		Uporabnik up = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, aktiven_Uporabnik);
+		try {
+			upDAO.updateUporabnik(up);
+			FacesMessage message = new FacesMessage("Urejanje profila uspešno! ");
 
-		System.out.println("Spremeni" + up.toString());
-		upDAO.updateUporabnik(up);
-		System.out.println("Napaka! uredi Uporabnika!");
+			FacesContext.getCurrentInstance().addMessage(null, message);
+			FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");
+		} catch (Exception e) {
+			System.out.println("Napaka! uredi Uporabnika!"+ e.toString());
+		}
 
 	}
 

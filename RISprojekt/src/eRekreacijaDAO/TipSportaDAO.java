@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
-import eRekreacija.SportniCenter;
 import eRekreacija.TipSporta;
 
 public class TipSportaDAO {

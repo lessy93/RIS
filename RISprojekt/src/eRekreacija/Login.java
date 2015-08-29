@@ -14,8 +14,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-
-import eRekreacijaDAO.SportniCenterDAO;
 import eRekreacijaDAO.UporabnikDAO;
 
 @ManagedBean(name = "loginBean")

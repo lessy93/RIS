@@ -32,11 +32,11 @@ public class TipSporta {
 	}
 
 	public void pridobiVseSporte() throws Exception {
-		TipSportaDAO sportDAO = new TipSportaDAO(baza);
-		vsiTipi = sportDAO.getTipSports();
-		System.out.println("Tip Sporta:");
-		for (TipSporta tipSporta : vsiTipi) {
-			System.out.println("Tip Sporta:" + tipSporta.toString());
+		try {
+			TipSportaDAO sportDAO = new TipSportaDAO(baza);
+			vsiTipi = sportDAO.getTipSports();
+		} catch (Exception e) {
+			System.out.println("NAPAKA! Pridobivanje vseh tipov sporta!");
 		}
 
 	}

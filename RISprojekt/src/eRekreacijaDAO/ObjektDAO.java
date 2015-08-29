@@ -36,7 +36,7 @@ public class ObjektDAO {
 			st.setString(1, objekt.getNaziv_Objekta());
 			st.setString(2, objekt.getTipObjekta());
 			st.setString(3, objekt.getOpis_Objekta());
-			st.setString(4, objekt.getCena_Objekta());
+			st.setDouble(4, objekt.getCena_Objekta());
 			st.setInt(5, objekt.getTipSporta().getId_TipSporta());
 			st.setInt(6, objekt.getSportniCenter().getId_SportniCenter());
 			st.executeUpdate();
@@ -83,7 +83,7 @@ public class ObjektDAO {
 				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
 				tempObjekt.setOpis_Objekta(rs.getString("opis_objekta"));
-				tempObjekt.setCena_Objekta(rs.getString("cena_objekta"));
+				tempObjekt.setCena_Objekta(rs.getDouble("cena_objekta"));
 				tempObjekt.setSportniCenter(sportniCenter);
 				tempObjekt.setTipSporta(tipSporta);
 
@@ -91,7 +91,7 @@ public class ObjektDAO {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Napaka Dvorana list!" + e.toString());
+			System.out.println("Napaka Objekt list!" + e.toString());
 		} finally {
 			conn.close();
 			System.out.println("Connection CLOSED!");
@@ -110,31 +110,27 @@ public class ObjektDAO {
 				System.out.println("Napaka Connection!");
 			}
 			String sql = "SELECT * FROM objekt o WHERE o.Sportnicenter_idSportnicenter= 1";
-			System.out.println("1");
 			PreparedStatement st = conn.prepareStatement(sql);
-			System.out.println("2");
 			ResultSet rs = st.executeQuery();
-			System.out.println("3");
+
 			while (rs.next()) {
 
 				Objekt tempObjekt = new Objekt();
 				SportniCenter sportniCenter = new SportniCenter();
 				TipSporta tipSporta = new TipSporta();
 
-				System.out.println("4");
 				sportniCenter.setId_SportniCenter(rs.getInt("sportnicenter_idSportniCenter"));
 				tipSporta.setId_TipSporta(rs.getInt("tipsporta_idTipSporta"));
 				tipSporta.setNaziv_TipSporta(rs.getString("ts.naziv_sporta"));
 
-				System.out.println("5");
 				tempObjekt.setId_Objekta(rs.getInt("idObjekta"));
 				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
 				tempObjekt.setOpis_Objekta(rs.getString("opis_objekta"));
-				tempObjekt.setCena_Objekta(rs.getString("cena_objekta"));
+				tempObjekt.setCena_Objekta(rs.getDouble("cena_objekta"));
 				tempObjekt.setSportniCenter(sportniCenter);
 				tempObjekt.setTipSporta(tipSporta);
-				System.out.println("6");
+
 				seznamObjektov.add(tempObjekt);
 			}
 
@@ -174,7 +170,7 @@ public class ObjektDAO {
 				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
 				tempObjekt.setOpis_Objekta(rs.getString("opis_objekta"));
-				tempObjekt.setCena_Objekta(rs.getString("cena_objekta"));
+				tempObjekt.setCena_Objekta(rs.getDouble("cena_objekta"));
 				tempObjekt.setSportniCenter(sportniCenter);
 				tempObjekt.setTipSporta(tipSporta);
 
@@ -231,7 +227,7 @@ public class ObjektDAO {
 			st.setString(1, objekt.getNaziv_Objekta());
 			st.setString(2, objekt.getTipObjekta());
 			st.setString(3, objekt.getOpis_Objekta());
-			st.setString(4, objekt.getCena_Objekta());
+			st.setDouble(4, objekt.getCena_Objekta());
 			st.setInt(5, objekt.getSportniCenter().getId_SportniCenter());
 			st.setInt(6, objekt.getTipSporta().getId_TipSporta());
 			st.setInt(7, objekt.getId_Objekta());
@@ -272,7 +268,7 @@ public class ObjektDAO {
 				center.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				center.setTipObjekta(rs.getString("tipObjekta"));
 				center.setOpis_Objekta(rs.getString("opis_objekta"));
-				center.setCena_Objekta(rs.getString("cena_objekta"));
+				center.setCena_Objekta(rs.getDouble("cena_objekta"));
 				center.setTipSporta(tipSporta);
 				center.setSportniCenter(sportniCenter);
 
@@ -319,7 +315,7 @@ public class ObjektDAO {
 				center.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				center.setTipObjekta(rs.getString("tipObjekta"));
 				center.setOpis_Objekta(rs.getString("opis_objekta"));
-				center.setCena_Objekta(rs.getString("cena_objekta"));
+				center.setCena_Objekta(rs.getDouble("cena_objekta"));
 
 				center.setTipSporta(tipSporta);
 				center.setSportniCenter(sportniCenter);
@@ -337,6 +333,41 @@ public class ObjektDAO {
 			System.out.println("Connection CLOSED!");
 		}
 		return centerVrni;
+	}
+
+	public Objekt getObjektIfo(int id_Objekta) throws Exception {
+		Objekt objektInfo = new Objekt();
+
+		Connection conn = null;
+		try {
+			try {
+				conn = baza.getConnection();
+				System.out.println("Connection OPEN!");
+			} catch (Exception e) {
+				System.out.println("Napaka Connection!");
+			}
+			String sql = "SELECT * FROM objekt WHERE idObjekta =?";
+			PreparedStatement prst = conn.prepareStatement(sql);
+			prst.setInt(1, id_Objekta);
+
+			ResultSet rs = prst.executeQuery();
+			if (rs.next()) // found
+			{
+
+				objektInfo.setId_Objekta(rs.getInt("idObjekta"));
+				objektInfo.setNaziv_Objekta(rs.getString("naziv_objekta"));
+				objektInfo.setTipObjekta(rs.getString("tipObjekta"));
+				objektInfo.setOpis_Objekta(rs.getString("opis_objekta"));
+				objektInfo.setCena_Objekta(rs.getDouble("cena_objekta"));
+
+			}
+		} catch (Exception e) {
+			System.out.println("Napaka! getObjektInfo!" + e.toString());
+		} finally {
+			conn.close();
+			System.out.println("Connection CLOSED!");
+		}
+		return objektInfo;
 	}
 
 }
