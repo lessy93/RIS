@@ -35,7 +35,11 @@
 
 						<p:outputLabel for="email" value="Email:" />
 						<p:inputText id="email" value="#{uporabnik.email}" required="true"
-							requiredMessage="Vnesite email!" />
+							requiredMessage="Vnesite email!"
+							validatorMessage="Nepravilen format email naslova!">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
 						<p:message for="email" class="error_message"></p:message>
 
 						<p:outputLabel for="pass1" value="Geslo:" />

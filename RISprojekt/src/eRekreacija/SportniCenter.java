@@ -53,7 +53,7 @@ public class SportniCenter {
 			System.out.println(noviCenter.toString());
 
 			UporabnikDAO uporDAO = new UporabnikDAO(baza);
-			Uporabnik noviUporabnik = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviCenter);
+			Uporabnik noviUporabnik = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviCenter, true);
 			uporDAO.shraniUporabnika(noviUporabnik);
 			Email posljiEmail = new Email();
 			posljiEmail.posljiEmailRegister(email);

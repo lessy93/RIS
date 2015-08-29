@@ -71,7 +71,7 @@
 							</h:form>
 						</p:column>
 						<p:column>
-							<h:form id="delete">
+							<h:form rendered="#{uporabnik.admin!=false}" id="add">
 								<h:link outcome="dodajObjekt" value="Dodaj objekt">
 								</h:link>
 							</h:form>

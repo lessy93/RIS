@@ -25,16 +25,11 @@ public class Uporabnik {
 	private String geslo;
 	private Boolean aktiven_Uporabnik;
 	private SportniCenter sportniCenter;
-	private boolean status_admin = false;
+	private boolean admin;
 	private List<SportniCenter> vrniMojCenter;
 
 	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
 	DataSource baza;
-
-	public void spremeniStatus() {
-		status_admin = true;
-		System.out.println("Status spremenjen");
-	}
 
 	public void test() throws Exception {
 
@@ -52,11 +47,11 @@ public class Uporabnik {
 			UporabnikDAO uporDAO = new UporabnikDAO(baza);
 			Email posljiEmail = new Email();
 			SportniCenter noviSportniCenter = new SportniCenter();
-
+			
 			noviSportniCenter.setId_SportniCenter(1);
 
-			Uporabnik upor = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviSportniCenter);
-
+			Uporabnik upor = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviSportniCenter, false);
+			System.out.println("REGISTRACIJA:"+ upor.toString());
 			uporDAO.shraniUporabnika(upor);
 
 			System.out.println("REGISTRACIJA: Uporabnik dodan!");
@@ -96,7 +91,7 @@ public class Uporabnik {
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");
 		} catch (Exception e) {
-			System.out.println("Napaka! uredi Uporabnika!"+ e.toString());
+			System.out.println("Napaka! uredi Uporabnika!" + e.toString());
 		}
 
 	}
@@ -163,6 +158,30 @@ public class Uporabnik {
 		this.geslo = geslo;
 		this.aktiven_Uporabnik = aktiven_Uporabnik;
 		this.sportniCenter = sportniCenter;
+	}
+
+	/**
+	 * @param id_Uporabnik
+	 * @param ime
+	 * @param priimek
+	 * @param email
+	 * @param geslo
+	 * @param aktiven_Uporabnik
+	 * @param sportniCenter
+	 * @param admin
+	 * @param vrniMojCenter
+	 */
+	public Uporabnik(int id_Uporabnik, String ime, String priimek, String email, String geslo,
+			Boolean aktiven_Uporabnik, SportniCenter sportniCenter, boolean admin) {
+		super();
+		this.id_Uporabnik = id_Uporabnik;
+		this.ime = ime;
+		this.priimek = priimek;
+		this.email = email;
+		this.geslo = geslo;
+		this.aktiven_Uporabnik = aktiven_Uporabnik;
+		this.sportniCenter = sportniCenter;
+		this.admin = admin;
 	}
 
 	/**
@@ -270,26 +289,40 @@ public class Uporabnik {
 		this.sportniCenter = sportniCenter;
 	}
 
-	public boolean isStatus_admin() {
-		return status_admin;
+	/**
+	 * @return the admin
+	 */
+	public boolean isAdmin() {
+		return admin;
 	}
 
-	public void setStatus_admin(boolean status_admin) {
-		this.status_admin = status_admin;
+	/**
+	 * @param admin
+	 *            the admin to set
+	 */
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	/**
+	 * @return the vrniMojCenter
+	 */
+	public List<SportniCenter> getVrniMojCenter() {
+		return vrniMojCenter;
+	}
+
+	/**
+	 * @param vrniMojCenter
+	 *            the vrniMojCenter to set
+	 */
+	public void setVrniMojCenter(List<SportniCenter> vrniMojCenter) {
+		this.vrniMojCenter = vrniMojCenter;
 	}
 
 	@Override
 	public String toString() {
 		return "Uporabnik [id=" + id_Uporabnik + ", ime=" + ime + ", priimek=" + priimek + ", email=" + email
 				+ ", geslo=" + geslo + ", aktiven=" + aktiven_Uporabnik + ", sportniObjekt=" + sportniCenter + "]";
-	}
-
-	public List<SportniCenter> getVrniMojCenter() {
-		return vrniMojCenter;
-	}
-
-	public void setVrniMojCenter(List<SportniCenter> vrniMojCenter) {
-		this.vrniMojCenter = vrniMojCenter;
 	}
 
 }

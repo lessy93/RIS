@@ -148,7 +148,8 @@ public class TerminiDAO {
 				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
 				tempObjekt.setSportniCenter(sportniCenter);
 				
-				Date zacetniCas = rs.getTimestamp("zacetniCas");
+				Date zacetniCas=rs.getTimestamp("zacetniCas");
+				
 				termini.setZacetniCas(zacetniCas);
 				java.sql.Date datum = rs.getDate("datum");
 				Date koncniCas = rs.getTimestamp("koncniCas");

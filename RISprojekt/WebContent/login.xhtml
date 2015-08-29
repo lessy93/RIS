@@ -18,7 +18,11 @@
 					<h:panelGrid columns="3">
 						<p:outputLabel for="username" value="Email:" />
 						<p:inputText value="#{loginBean.username}" required="true"
-							requiredMessage="Vnesi email!" id="username" />
+							requiredMessage="Vnesi email!"
+							validatorMessage="Nepravilen format email naslova!" id="username">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
 						<p:message for="username" class="error_message" />
 						<p:outputLabel for="pass" value="Geslo" />
 						<p:inputText type="password" value="#{loginBean.password}"

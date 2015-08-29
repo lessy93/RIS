@@ -49,15 +49,16 @@ public class UporabnikDAO {
 			}
 
 			PreparedStatement st = conn.prepareStatement(
-					"INSERT INTO uporabnik(ime, priimek, email, geslo, aktiven, Sportnicenter_idSportnicenter) VALUES (?,?,?,?,?,?)");
+					"INSERT INTO uporabnik(ime, priimek, email, geslo, aktiven, Sportnicenter_idSportnicenter, admin) VALUES (?,?,?,?,?,?,?)");
 			st.setString(1, upor.getIme());
 			st.setString(2, upor.getPriimek());
 			st.setString(3, upor.getEmail());
 			st.setString(4, sha1(upor.getGeslo())); // kodiranje gesla v SHA1
 			st.setBoolean(5, upor.getAktiven_Uporabnik());
 			st.setInt(6, upor.getSportniCenter().getId_SportniCenter());
+			st.setBoolean(7, upor.isAdmin());
 			st.executeUpdate();
-
+			
 		} finally {
 			conn.close();
 			System.out.println("Connection CLOSED!");
@@ -89,6 +90,7 @@ public class UporabnikDAO {
 				upor.setGeslo(rs.getString("geslo"));
 				upor.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
 				upor.setId_Uporabnik(rs.getInt("idUporabnik"));
+				upor.setAktiven_Uporabnik(rs.getBoolean("admin"));
 				tempCenter.setId_SportniCenter(rs.getInt("sportniCenter_idSportnicenter"));
 				tempCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
 				tempCenter.setOpis_SportniCenter(rs.getString("opis_centra"));
@@ -196,6 +198,7 @@ public class UporabnikDAO {
 				up.setGeslo(rs.getString("geslo"));
 				up.setSportniCenter(objekt);
 				up.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
+				up.setAdmin(rs.getBoolean("admin"));
 
 			}
 		} catch (SQLException e) {
