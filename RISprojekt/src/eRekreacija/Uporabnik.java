@@ -322,7 +322,7 @@ public class Uporabnik {
 	@Override
 	public String toString() {
 		return "Uporabnik [id=" + id_Uporabnik + ", ime=" + ime + ", priimek=" + priimek + ", email=" + email
-				+ ", geslo=" + geslo + ", aktiven=" + aktiven_Uporabnik + ", sportniObjekt=" + sportniCenter + "]";
+				+ ", geslo=" + geslo + ", aktiven=" + aktiven_Uporabnik + ",admin=" + admin + ", sportniObjekt=" + sportniCenter + "]";
 	}
 
 }

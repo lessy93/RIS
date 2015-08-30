@@ -36,7 +36,7 @@
 
 
 
-						<p:outputPanel>
+							<p:outputPanel>
 								<h:panelGrid border="0" columns="2" cellpadding="15"
 									width="500px">
 
@@ -59,7 +59,7 @@
 
 
 								</h:panelGrid>
-								
+
 							</p:outputPanel>
 						</h:panelGrid>
 						<p:separator />
@@ -73,7 +73,9 @@
 						rendered="#{loginBean.username!=null}">
 						<h3 style="margin-top: 0">Rezerviraj termin</h3>
 						<p:schedule id="schedule" value="#{urnikBean.eventModel}"
-							locale="slo" widgetVar="myschedule" timeZone="GMT+2">
+							locale="slo" widgetVar="myschedule" timeZone="GMT+2"
+							minTime="8:00" draggable="false" resizable="false"
+							maxTime="22:00" axisFormat="HH:mm" view="agendaWeek" allDaySlot="false"  >
 
 							<p:ajax event="dateSelect" listener="#{urnikBean.onDateSelect}"
 								update="eventDetails" oncomplete="PF('eventDialog').show();" />
@@ -98,7 +100,7 @@
 
 							<p:outputLabel for="to" value="Do:" />
 							<p:calendar id="to" value="#{urnikBean.event.endDate}"
-								timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
+								timeZone="GMT+2"  pattern="dd/MM/yyyy HH:mm" />
 
 
 
@@ -141,7 +143,7 @@
 
 				<style type="text/css">
 .value {
-	width: 1000px;
+	width: 800px;
 }
 </style>
 			</f:view>

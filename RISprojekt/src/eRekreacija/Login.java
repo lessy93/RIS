@@ -26,6 +26,7 @@ public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
+	private Uporabnik noviUporabnik;
 
 	public boolean isLogged = false;
 
@@ -60,6 +61,7 @@ public class Login implements Serializable {
 			if (!uporabnik.equals(null)) {
 				// get Http Session and store username
 				username = uporabnik.getEmail();
+				noviUporabnik=uporabnik;
 
 				HttpSession session = Util.getSession();
 				session.setAttribute("username", uporabnik.getEmail());
@@ -149,5 +151,13 @@ public class Login implements Serializable {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Uporabnik getNoviUporabnik() {
+		return noviUporabnik;
+	}
+
+	public void setNoviUporabnik(Uporabnik noviUporabnik) {
+		this.noviUporabnik = noviUporabnik;
 	}
 }

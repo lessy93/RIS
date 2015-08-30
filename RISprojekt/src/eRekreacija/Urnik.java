@@ -51,6 +51,7 @@ public class Urnik implements Serializable {
 	@PostConstruct
 	public void init() {
 		eventModel = new DefaultScheduleModel();
+		((DefaultScheduleModel) eventModel).setEventLimit(true);
 
 		TerminiDAO terminDAO = new TerminiDAO(baza);
 		System.out.println("Pridobivanje vseh rezervacij za objekt:");
@@ -116,6 +117,7 @@ public class Urnik implements Serializable {
 
 	public void addEvent(ActionEvent actionEvent) throws Exception {
 		if (event.getId() == null) {
+			
 			eventModel.addEvent(event);
 			Date zacetniCas = event.getStartDate();
 			Date koncniCas = event.getEndDate();

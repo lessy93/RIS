@@ -51,22 +51,17 @@
 									<h:outputText value="#{objekt.tipObjekta}"
 										style="font-weight: bold" />
 
-									<h:outputText value="Cena:" />
-									<h:outputText value="#{objekt.cena_Objekta}"
-										style="font-weight: bold" />
+								<h:outputText value="Cena:" style="font-weight: bold" />
+									<h:outputText value="#{objekt.cena_Objekta}">
+										<f:convertNumber type="currency" />
+									</h:outputText>
 
-									<f:facet name="footer">
-										<h:link outcome=" " value="Rezerviraj">
-											<f:param name="id_Objekta" value="#{objekt.id_Objekta}" />
-										</h:link>
-									</f:facet>
+									<h:outputText value="Tip športa: " style="font-weight: bold" />
+									<h:outputText value="#{objekt.tipSporta.naziv_TipSporta}" />
+
 								</h:panelGrid>
 							</p:outputPanel>
-							<h:panelGrid border="0" columns="1" cellpadding="10">
-								<f:facet name="header"> 
-            					Tipi športov 
-         					</f:facet>
-							</h:panelGrid>
+							
 						</h:panelGrid>
 						<p:separator />
 					</p:dataScroller>

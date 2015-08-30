@@ -1,6 +1,9 @@
 package eRekreacija;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,16 +39,39 @@ public class RezervacijaTermina {
 																// seje
 		System.out.println("Uporabnik" + upor.toString());
 
-		if (upor != null) {
+		if (upor != null&&upor.isAdmin()==false) {
 
 			try {
 				seznamRezervacijZaUporabnika = rezervacijaDAO.getRezervacijeByIdUpo(upor.getId_Uporabnik());
 			} catch (Exception e) {
-				System.out.println("Napaka! pridobi rezervacije");
+				System.out.println("Napaka! pridobi rezervacije za uporabnika");
+				e.printStackTrace();
+			}
+		}else if (upor != null&&upor.isAdmin()==true) {
+
+			try {
+				seznamRezervacijZaUporabnika = rezervacijaDAO.getRezervacijeByIdCentra(upor.getSportniCenter().getId_SportniCenter());
+			} catch (Exception e) {
+				System.out.println("Napaka! pridobi rezervacije za sportni center");
 				e.printStackTrace();
 			}
 		}
 	}
+	
+	public void prekliciRezervacijo() throws IOException {
+		RezervacijaTerminaDAO rezervacijaDAO = new RezervacijaTerminaDAO(baza);
+	
+		System.out.println("id:"+ id_RezervacijaTermina );
+
+			try {
+			rezervacijaDAO.prekliciRezervacijoById(id_RezervacijaTermina);
+			} catch (Exception e) {
+				System.out.println("Napaka! preklièi rezervacije za uporabnika");
+				e.printStackTrace();
+			}
+	}
+	
+	
 
 	/**
 	 * @return the id_RezervacijaTermina

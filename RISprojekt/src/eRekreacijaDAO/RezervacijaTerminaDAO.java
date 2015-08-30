@@ -3,6 +3,7 @@ package eRekreacijaDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,8 +57,6 @@ public class RezervacijaTerminaDAO {
 
 	}
 
-
-
 	public List<RezervacijaTermina> getRezervacijeByIdUpo(int idUporabnika) throws Exception {
 		List<RezervacijaTermina> seznamRezervacij = new ArrayList<RezervacijaTermina>();
 		Connection conn = null;
@@ -95,14 +94,12 @@ public class RezervacijaTerminaDAO {
 				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
 				tempObjekt.setSportniCenter(sportniCenter);
-				
+
 				Date zacetniCas = rs.getTimestamp("zacetniCas");
 				termini.setZacetniCas(zacetniCas);
 				java.sql.Date datum = rs.getDate("datum");
 				Date koncniCas = rs.getTimestamp("koncniCas");
 
-		
-			
 				termini.setKoncniCas(koncniCas);
 				termini.setId_Termini(rs.getInt("idTermini"));
 				termini.setDatum(datum);
@@ -125,8 +122,100 @@ public class RezervacijaTerminaDAO {
 		}
 		return seznamRezervacij;
 	}
-}
 
+	public List<RezervacijaTermina> getRezervacijeByIdCentra(int idCenter) throws Exception {
+		List<RezervacijaTermina> seznamRezervacij = new ArrayList<RezervacijaTermina>();
+		Connection conn = null;
+		try {
+			try {
+				conn = baza.getConnection();
+				System.out.println("Connection OPEN!");
+			} catch (Exception e) {
+				System.out.println("Napaka Connection!");
+			}
+
+			String sql = "SELECT * FROM rezervacijatermina r, uporabnik u, termini t, objekt o, sportnicenter sc WHERE r.uporabnik_idUporabnik=u.idUporabnik AND r.termini_idTermini=t.idTermini AND o.idObjekta=t.Objekt_idObjekt AND o.sportnicenter_idSportnicenter=sc.idSportniCenter AND sc.idSportniCenter = ?";
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, idCenter);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+
+				RezervacijaTermina rezervacija = new RezervacijaTermina();
+				SportniCenter sportniCenter = new SportniCenter();
+				Termini termini = new Termini();
+				Uporabnik uporabnik = new Uporabnik();
+				Objekt tempObjekt = new Objekt();
+
+				uporabnik.setId_Uporabnik(rs.getInt("idUporabnik"));
+				uporabnik.setIme(rs.getString("ime"));
+				uporabnik.setPriimek(rs.getString("priimek"));
+				uporabnik.setEmail(rs.getString("email"));
+				uporabnik.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
+
+				sportniCenter.setId_SportniCenter(rs.getInt("idSportnicenter"));
+				sportniCenter.setLokacija(rs.getString("lokacija_centra"));
+				sportniCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
+
+				tempObjekt.setId_Objekta(rs.getInt("objekt_idObjekt"));
+				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
+				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
+				tempObjekt.setSportniCenter(sportniCenter);
+
+				Date zacetniCas = rs.getTimestamp("zacetniCas");
+				termini.setZacetniCas(zacetniCas);
+				java.sql.Date datum = rs.getDate("datum");
+				Date koncniCas = rs.getTimestamp("koncniCas");
+
+				termini.setKoncniCas(koncniCas);
+				termini.setId_Termini(rs.getInt("idTermini"));
+				termini.setDatum(datum);
+				termini.setZasedenost(rs.getBoolean("zasedenost"));
+				termini.setCenaTermina(rs.getDouble("cenaTermina"));
+				termini.setObjekt(tempObjekt);
+
+				rezervacija.setId_RezervacijaTermina(rs.getInt("idRezervacijaTermina"));
+				rezervacija.setTermini(termini);
+				rezervacija.setUporabnik(uporabnik);
+
+				seznamRezervacij.add(rezervacija);
+			}
+		} catch (Exception e) {
+			System.out.println("Napaka! rezervacija termina!!");
+			e.printStackTrace();
+		} finally {
+			conn.close();
+			System.out.println("Connection CLOSED!");
+		}
+		return seznamRezervacij;
+	}
+
+	public void prekliciRezervacijoById(int idRezervacija) throws Exception {
+	
+		Connection conn = null;
+		System.out.println("IDDD!"+ idRezervacija);
+		try {
+			try {
+				conn = baza.getConnection();
+				System.out.println("Connection OPEN!");
+			} catch (Exception e) {
+				System.out.println("Napaka Connection!!");
+			}
+		
+			String sql = "DELETE rezervacijatermina WHERE idRezervacijatermina = ?";
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, idRezervacija);
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+
+			System.out.println("Napaka! Izbris rezervacije");
+		} finally {
+			conn.close();
+			System.out.println("Connection CLOSED!");
+		}
+		
+	}
+}
 /*
  * public List<RezervacijaTermina> getRezervacijeByIdObjekt(int idObjekt) throws
  * Exception{ List<RezervacijaTermina> seznamRezervacij = new

@@ -27,7 +27,7 @@
 				<p:dataTable id="table3"
 					value="#{rezervacija.seznamRezervacijZaUporabnika}" var="tempRez"
 					border="1">
-					<p:column>
+					<p:column rendered="#{uporabnik.admin!=true}">
 						<f:facet name="header">
 							<h:outputText value="Naziv centra" />
 						</f:facet>
@@ -59,7 +59,7 @@
 
 
 						<h:outputLabel value="#{tempRez.termini.datum}">
-							<f:convertDateTime pattern="dd.MM.yyyy" />
+							<f:convertDateTime pattern="dd.MM.yyyy"  timeZone="GMT+2"/>
 						</h:outputLabel>
 					</p:column>
 
@@ -68,7 +68,7 @@
 							<h:outputText value="Od" />
 						</f:facet>
 						<h:outputLabel value="#{tempRez.termini.zacetniCas}">
-							<f:convertDateTime pattern="HH:mm" />
+							<f:convertDateTime pattern="HH:mm"  timeZone="GMT+2"/>
 						</h:outputLabel>
 					</p:column>
 
@@ -77,8 +77,18 @@
 							<h:outputText value="Do" />
 						</f:facet>
 						<h:outputLabel value="#{tempRez.termini.koncniCas}">
-							<f:convertDateTime pattern="HH:mm" />
+							<f:convertDateTime pattern="HH:mm" timeZone="GMT+2" />
 						</h:outputLabel>
+					</p:column>
+						<p:column rendered="#{uporabnik.admin!=false}">
+						<f:facet name="header">
+							<h:outputText value="Uporabnik" />
+						</f:facet>
+						
+							<h:outputLabel
+								value="#{tempRez.uporabnik.ime} #{tempRez.uporabnik.priimek} " />
+					
+
 					</p:column>
 
 					<p:column>
@@ -91,8 +101,8 @@
 							<f:convertNumber type="currency" />
 						</h:outputLabel>
 					</p:column>
-
-
+					
+				
 				</p:dataTable>
 
 

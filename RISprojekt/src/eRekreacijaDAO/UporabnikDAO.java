@@ -90,7 +90,7 @@ public class UporabnikDAO {
 				upor.setGeslo(rs.getString("geslo"));
 				upor.setAktiven_Uporabnik(rs.getBoolean("aktiven"));
 				upor.setId_Uporabnik(rs.getInt("idUporabnik"));
-				upor.setAktiven_Uporabnik(rs.getBoolean("admin"));
+				upor.setAdmin(rs.getBoolean("admin"));
 				tempCenter.setId_SportniCenter(rs.getInt("sportniCenter_idSportnicenter"));
 				tempCenter.setNaziv_SportniCenter(rs.getString("naziv_centra"));
 				tempCenter.setOpis_SportniCenter(rs.getString("opis_centra"));

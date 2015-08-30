@@ -78,34 +78,10 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<h:form>
-					<p:dataTable id="table3" value="#{uporabnik.vrniMojCenter}"
-						var="upo" border="1">
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Naziv" />
-							</f:facet>
-							<b><h:outputText value="#{upo.naziv_centra}" /></b>
-						</p:column>
 
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Opis" />
-							</f:facet>
-							<h:outputText value="#{upo.opis_centra}" />
-						</p:column>
 
-						<p:column>
-							<f:facet name="header">
-								<h:outputText value="Lokacija" />
-							</f:facet>
-							<h:outputText value="#{upo.lokacija_centra}" />
-						</p:column>
-					</p:dataTable>
-				</h:form>
-
-				<h:form id="form2">
-					<p:dataScroller  value="#{objekt.seznamObjektovCenter}" var="objekt"
+				<h:form id="form2" rendered="#{uporabnik.admin!=false}">
+					<p:dataScroller value="#{objekt.seznamObjektovCenter}" var="objekt"
 						chunkSize="10">
 						<f:facet name="header">
             			Seznam objektov športnega centra
