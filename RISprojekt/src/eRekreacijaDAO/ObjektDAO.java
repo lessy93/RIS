@@ -270,7 +270,7 @@ public class ObjektDAO {
 				center.setOpis_Objekta(rs.getString("opis_objekta"));
 				center.setCena_Objekta(rs.getDouble("cena_objekta"));
 				tipSporta.setId_TipSporta(rs.getInt("idTipSporta"));
-				tipSporta.setNaziv_TipSporta(rs.getString("naziv_sporta"));				
+				tipSporta.setNaziv_TipSporta(rs.getString("naziv_sporta"));
 				center.setTipSporta(tipSporta);
 				center.setSportniCenter(sportniCenter);
 

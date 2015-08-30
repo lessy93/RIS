@@ -58,7 +58,7 @@ public class TerminiDAO {
 			upor = (Uporabnik) session.getAttribute("uporabnik");// uporabnika
 																	// pridobimo
 																	// iz seje
-			
+
 			st.setDate(1, new java.sql.Date(termin.getZacetniCas().getTime()));
 			st.setString(2, formatedZacetniCas);
 			st.setString(3, formateKoncniCas);
@@ -67,7 +67,7 @@ public class TerminiDAO {
 			st.setDouble(6, cena);
 
 			st.executeUpdate();
-			
+
 			try {
 				posljiEmail.posljiEmailRezervacija(upor, termin, ob, cena);// pošiljanje
 																			// email-a
@@ -109,7 +109,7 @@ public class TerminiDAO {
 
 		return cenaRezervacije;
 	}
-	
+
 	public List<Termini> getTermineByIdUpo(int idUporabnika) throws Exception {
 		List<Termini> seznamRezervacij = new ArrayList<Termini>();
 		Connection conn = null;
@@ -147,15 +147,13 @@ public class TerminiDAO {
 				tempObjekt.setNaziv_Objekta(rs.getString("naziv_objekta"));
 				tempObjekt.setTipObjekta(rs.getString("tipObjekta"));
 				tempObjekt.setSportniCenter(sportniCenter);
-				
-				Date zacetniCas=rs.getTimestamp("zacetniCas");
-				
+
+				Date zacetniCas = rs.getTimestamp("zacetniCas");
+
 				termini.setZacetniCas(zacetniCas);
 				java.sql.Date datum = rs.getDate("datum");
 				Date koncniCas = rs.getTimestamp("koncniCas");
 
-		
-			
 				termini.setKoncniCas(koncniCas);
 				termini.setId_Termini(rs.getInt("idTermini"));
 				termini.setDatum(datum);
@@ -178,7 +176,6 @@ public class TerminiDAO {
 		}
 		return seznamRezervacij;
 	}
-
 
 	public ArrayList<Termini> getTerminiBYidObjekt(int idObjekta) throws Exception {
 		ArrayList<Termini> seznamTerminov = new ArrayList<Termini>();

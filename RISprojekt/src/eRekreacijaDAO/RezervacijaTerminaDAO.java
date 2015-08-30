@@ -190,9 +190,9 @@ public class RezervacijaTerminaDAO {
 	}
 
 	public void prekliciRezervacijoById(int idRezervacija) throws Exception {
-	
+
 		Connection conn = null;
-		System.out.println("IDDD!"+ idRezervacija);
+		System.out.println("IDDD!" + idRezervacija);
 		try {
 			try {
 				conn = baza.getConnection();
@@ -200,7 +200,7 @@ public class RezervacijaTerminaDAO {
 			} catch (Exception e) {
 				System.out.println("Napaka Connection!!");
 			}
-		
+
 			String sql = "DELETE rezervacijatermina WHERE idRezervacijatermina = ?";
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, idRezervacija);
@@ -213,7 +213,7 @@ public class RezervacijaTerminaDAO {
 			conn.close();
 			System.out.println("Connection CLOSED!");
 		}
-		
+
 	}
 }
 /*

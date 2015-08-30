@@ -39,7 +39,7 @@ public class RezervacijaTermina {
 																// seje
 		System.out.println("Uporabnik" + upor.toString());
 
-		if (upor != null&&upor.isAdmin()==false) {
+		if (upor != null && upor.isAdmin() == false) {
 
 			try {
 				seznamRezervacijZaUporabnika = rezervacijaDAO.getRezervacijeByIdUpo(upor.getId_Uporabnik());
@@ -47,31 +47,30 @@ public class RezervacijaTermina {
 				System.out.println("Napaka! pridobi rezervacije za uporabnika");
 				e.printStackTrace();
 			}
-		}else if (upor != null&&upor.isAdmin()==true) {
+		} else if (upor != null && upor.isAdmin() == true) {
 
 			try {
-				seznamRezervacijZaUporabnika = rezervacijaDAO.getRezervacijeByIdCentra(upor.getSportniCenter().getId_SportniCenter());
+				seznamRezervacijZaUporabnika = rezervacijaDAO
+						.getRezervacijeByIdCentra(upor.getSportniCenter().getId_SportniCenter());
 			} catch (Exception e) {
 				System.out.println("Napaka! pridobi rezervacije za sportni center");
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public void prekliciRezervacijo() throws IOException {
 		RezervacijaTerminaDAO rezervacijaDAO = new RezervacijaTerminaDAO(baza);
-	
-		System.out.println("id:"+ id_RezervacijaTermina );
 
-			try {
+		System.out.println("id:" + id_RezervacijaTermina);
+
+		try {
 			rezervacijaDAO.prekliciRezervacijoById(id_RezervacijaTermina);
-			} catch (Exception e) {
-				System.out.println("Napaka! preklièi rezervacije za uporabnika");
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			System.out.println("Napaka! preklièi rezervacije za uporabnika");
+			e.printStackTrace();
+		}
 	}
-	
-	
 
 	/**
 	 * @return the id_RezervacijaTermina

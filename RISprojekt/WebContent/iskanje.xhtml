@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="commonLayout.xhtml">
+		<ui:define name="content">
+
+			<h:form>
+				<h:dataTable id="table3" value="#{objekt.isci(id_Objekta)}"
+					var="center" border="0">
+				</h:dataTable>
+			</h:form>
+
+			<f:view>
+				<h:form>
+				<h2>Iskanje</h2>
+				<h:inputText value="#{center.povp}"/>
+				
+				<h:commandButton actionListener="#{center.iskanjePoPovp()}" value="Iskanje"/>
+				</h:form>
+				<br/>
+				<br/>
+				<h:form id="form">
+					<p:dataScroller value="#{center.iskaniCentri}"
+						var="tempCenter" chunkSize="10">
+						<f:facet name="header">
+            			Rezultati iskanja
+       				</f:facet>
+
+						<h:panelGrid columns="3" style="width:90%; padding-left:100px;"
+							border="0" columnClasses="logo,detail">
+
+							<p:graphicImage name="/images/no_image.png" height="190px" />
+
+							<p:outputPanel>
+								<h:panelGrid border="0" columns="2" cellpadding="15"
+									width="500px">
+									<h:outputText value="Naziv:" />
+									<h:outputText value="#{tempCenter.naziv_SportniCenter}"
+										style="font-weight: bold" />
+				
+									<h:outputText value="Opis:" />
+									<h:outputText value="#{tempCenter.opis_SportniCenter}"
+										style="font-weight: bold" />
+
+									<h:outputText value="Lokacija:" />
+									<h:outputText value="#{tempCenter.lokacija}"
+										style="font-weight: bold" />
+
+
+
+									<f:facet name="footer">
+										<h:link outcome="sportnicenter" value="Podrobnosti centra">
+											<f:param name="id_SportniCenter"
+												value="#{tempCenter.id_SportniCenter}" />
+										</h:link>
+
+									</f:facet>
+								</h:panelGrid>
+
+							</p:outputPanel>
+				</h:panelGrid>
+				<p:separator />
+				</p:dataScroller>
+				
+				</h:form>
+			</f:view>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

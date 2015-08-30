@@ -47,11 +47,11 @@ public class Uporabnik {
 			UporabnikDAO uporDAO = new UporabnikDAO(baza);
 			Email posljiEmail = new Email();
 			SportniCenter noviSportniCenter = new SportniCenter();
-			
+
 			noviSportniCenter.setId_SportniCenter(1);
 
 			Uporabnik upor = new Uporabnik(id_Uporabnik, ime, priimek, email, geslo, true, noviSportniCenter, false);
-			System.out.println("REGISTRACIJA:"+ upor.toString());
+			System.out.println("REGISTRACIJA:" + upor.toString());
 			uporDAO.shraniUporabnika(upor);
 
 			System.out.println("REGISTRACIJA: Uporabnik dodan!");
@@ -322,7 +322,8 @@ public class Uporabnik {
 	@Override
 	public String toString() {
 		return "Uporabnik [id=" + id_Uporabnik + ", ime=" + ime + ", priimek=" + priimek + ", email=" + email
-				+ ", geslo=" + geslo + ", aktiven=" + aktiven_Uporabnik + ",admin=" + admin + ", sportniObjekt=" + sportniCenter + "]";
+				+ ", geslo=" + geslo + ", aktiven=" + aktiven_Uporabnik + ",admin=" + admin + ", sportniObjekt="
+				+ sportniCenter + "]";
 	}
 
 }

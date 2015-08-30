@@ -58,7 +58,7 @@ public class UporabnikDAO {
 			st.setInt(6, upor.getSportniCenter().getId_SportniCenter());
 			st.setBoolean(7, upor.isAdmin());
 			st.executeUpdate();
-			
+
 		} finally {
 			conn.close();
 			System.out.println("Connection CLOSED!");

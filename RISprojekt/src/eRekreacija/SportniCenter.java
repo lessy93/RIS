@@ -36,6 +36,8 @@ public class SportniCenter {
 	private List<TipSporta> tipiSportov;
 	private List<SportniCenter> enCenter;
 	private List<SportniCenter> seznamVsehCentrov = new ArrayList<SportniCenter>();
+	private String povp; // povprasevanje
+	private List<SportniCenter> iskaniCentri = new ArrayList<SportniCenter>();
 
 	@Resource(lookup = "java:jboss/datasources/eRekreacija/")
 	DataSource baza;
@@ -108,6 +110,17 @@ public class SportniCenter {
 		izbraniSportniCenter = scDAO.getCenterByIdEna(id);
 		HttpSession session = Util.getSession();
 		session.setAttribute("izbraniCenter", id);
+	}
+
+	public List<SportniCenter> iskanjePoPovp() throws Exception {
+		SportniCenterDAO cDAO = new SportniCenterDAO(baza);
+		System.out.println("Sem se povezal");
+		System.out.println("Išèem: " + povp);
+		iskaniCentri = cDAO.iskanjePoPovp(povp);
+		System.out.println("Izvedel sem iskanje");
+		System.out.println("iskanCenter: " + iskaniCentri.toString());
+		System.out.println("iskanCenter: " + iskaniCentri.size());
+		return iskaniCentri;
 	}
 
 	public List<SportniCenter> isci(int id_SportniCenter) throws Exception {
@@ -335,6 +348,51 @@ public class SportniCenter {
 
 	public void setEnCenter(List<SportniCenter> enCenter) {
 		this.enCenter = enCenter;
+	}
+
+	/**
+	 * @return the id_sc
+	 */
+	public int getId_sc() {
+		return id_sc;
+	}
+
+	/**
+	 * @param id_sc
+	 *            the id_sc to set
+	 */
+	public void setId_sc(int id_sc) {
+		this.id_sc = id_sc;
+	}
+
+	/**
+	 * @return the povp
+	 */
+	public String getPovp() {
+		return povp;
+	}
+
+	/**
+	 * @param povp
+	 *            the povp to set
+	 */
+	public void setPovp(String povp) {
+		this.povp = povp;
+	}
+
+	/**
+	 * @return the iskaniCentri
+	 */
+	public List<SportniCenter> getIskaniCentri() {
+		return iskaniCentri;
+	}
+
+	/**
+	 * @param iskaniCentri
+	 *            the iskaniCentri to set
+	 */
+	public void setIskaniCentri(List<SportniCenter> iskaniCentri) {
+		this.iskaniCentri = iskaniCentri;
 	}
 
 }

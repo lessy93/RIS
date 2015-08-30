@@ -168,6 +168,50 @@ public class SportniCenterDAO {
 		return seznamSportniCenter;
 	}
 
+	public List<SportniCenter> iskanjePoPovp(String povp) throws SQLException {
+		List<SportniCenter> centerVrni = new ArrayList<SportniCenter>();
+
+		Connection conn = null;
+		try {
+			try {
+				conn = baza.getConnection();
+				System.out.println("Connection OPEN iskanje!");
+			} catch (Exception e) {
+				System.out.println("Napaka Connection iskanje!");
+			}
+			String sql = "SELECT * FROM sportnicenter WHERE naziv_centra LIKE ? OR lokacija_centra LIKE ? OR opis_centra LIKE ?";
+			PreparedStatement prst = conn.prepareStatement(sql);
+			prst.setString(1, "%" + povp + "%");
+			prst.setString(2, "%" + povp + "%");
+			prst.setString(3, "%" + povp + "%");
+
+			ResultSet rs = prst.executeQuery();
+			while (rs.next()) {
+				SportniCenter center = new SportniCenter();
+
+				center.setId_SportniCenter(rs.getInt("idSportnicenter"));
+				center.setLokacija(rs.getString("lokacija_centra"));
+				center.setNaziv_SportniCenter(rs.getString("naziv_centra"));
+				center.setOpis_SportniCenter(rs.getString("opis_centra"));
+				center.setMapsLat(rs.getFloat("mapsLat"));
+				center.setMapsLng(rs.getFloat("mapsLng"));
+				center.setAktiven__SportniCenter(rs.getBoolean("aktiven"));
+
+				centerVrni.add(center);
+
+			}
+			if (!rs.first()) {
+				System.out.println("NI ZADETKOV iskanja!");
+			}
+		} catch (Exception e) {
+			System.out.println("Napaka! iskanje " + e.toString());
+		} finally {
+			conn.close();
+			System.out.println("Connection CLOSED iskanje!");
+		}
+		return centerVrni;
+	}
+
 	public List<SportniCenter> getSportniCenterByTipSporta(TipSporta sport) throws Exception {
 		List<SportniCenter> seznamSportniObjekt = new ArrayList<SportniCenter>();
 		Connection conn = null;
